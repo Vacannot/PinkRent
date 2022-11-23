@@ -1,6 +1,12 @@
+import ProductDetails from "../components/ProductDetails/ProductDetails";
+
+
+
 function LoginPage() {
     return (
-        <div>Hejsan</div>
+        <div>
+            <ProductDetails />
+        </div>
     )
 }
 
