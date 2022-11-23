@@ -1,16 +1,15 @@
-import "./App.scss";
-import { Button, Typography } from "@mui/material";
-
+import { Routes, BrowserRouter, Route } from "react-router-dom";
+import StartPage from "./pages/Layout";
+import LoginPage from "./pages/LoginPage";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Button color="primary" variant="contained">
-          <Typography fontWeight={"bold"} fontSize={40}>
-            test
-          </Typography>
-        </Button>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<StartPage />} />
+          <Route path="loginPage" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
