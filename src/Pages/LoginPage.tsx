@@ -1,6 +1,6 @@
 function LoginPage() {
     return (
-        <div>Hejsan</div>
+        <div>Sommar</div>
     )
 }
 

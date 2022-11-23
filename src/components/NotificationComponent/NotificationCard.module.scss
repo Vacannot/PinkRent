@@ -1,0 +1,28 @@
+.container1 {
+    width: 100%;
+}
+.container {
+    display: flex;
+    height: 5rem;
+    justify-content: space-around;
+}
+.line {
+    height: .1rem;
+    width: 80%;
+    background-color: rgb(15, 15, 15);
+    opacity: 0.2;
+}
+.name {
+    font-weight: bold;
+}
+.colorGreen {
+    color: green;
+    margin-right: 1rem;
+}
+.colorRed {
+    color: red;
+}
+.icons {
+    display: flex;
+    align-items: end;
+}

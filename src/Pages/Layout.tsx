@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function StartPage() {
+function Layout() {
     return (
     <Link to="loginPage">
         <button>Hejsan</button>
@@ -9,4 +9,4 @@ function StartPage() {
     )
 }
 
-export default StartPage;
+export default Layout;
