@@ -1,7 +1,7 @@
 # PinkRent
 
 Tech Stack:
-React, Typescript, MUI, Theme UI, i18n, NodeJS, Firebase, SASS
+React, Typescript, MUI, i18n, NodeJS, Firebase, SASS
 
 # Rules:
 
@@ -9,5 +9,3 @@ React, Typescript, MUI, Theme UI, i18n, NodeJS, Firebase, SASS
 - PR naming Bug/Feature-Firstnamn-nameofPR Example: Feature-Simon-Startpage or Bug-Maximillian-LoginPage
 - 2 Reviewers on every PR
 - Connect each issue to PR
-
-
