@@ -1,7 +1,11 @@
+import Header from "../components/Header/Header";
+
 function LoginPage() {
-    return (
-        <div>Hejsan</div>
-    )
+  return (
+    <>
+      <Header />
+    </>
+  );
 }
 
 export default LoginPage;
