@@ -1,13 +1,5 @@
-import ProductDetails from "../components/ProductDetails/ProductDetails";
-
-
-
 function LoginPage() {
-    return (
-        <div>
-            <ProductDetails />
-        </div>
-    )
+  return <div>hej</div>;
 }
 
 export default LoginPage;

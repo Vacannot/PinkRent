@@ -1,6 +1,8 @@
+import pic from "./assets/Womenpainting.jpg";
+
 const mockData = [
   {
-    image: `/Image2.jpg`,
+    image: pic,
     title: `Tavla av kvinna 1843, väldigt fin och väldigt gammal. hyres
     endast till mig.`,
     location: `Västra Götaland, Borås`,

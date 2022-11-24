@@ -10,7 +10,7 @@ const ProductDetails = () => {
   return (
     <div>
       {mockData.map((data) => (
-        <div className={styles.main}>
+        <div key={data.image} className={styles.main}>
           <Card sx={{ maxWidth: 345 }}>
             <CardActionArea>
               <CardMedia
