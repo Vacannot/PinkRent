@@ -2,6 +2,7 @@ import pic from "./assets/Womenpainting.jpg";
 
 const mockData = [
   {
+    id: 1,
     image: pic,
     title: `Tavla av kvinna 1843, väldigt fin och väldigt gammal. hyres
     endast till mig.`,
