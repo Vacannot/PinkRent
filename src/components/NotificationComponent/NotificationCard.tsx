@@ -5,10 +5,9 @@ import * as React from 'react';
       import Card from '@mui/material/Card';
       import CardActions from '@mui/material/CardActions';
       import CardContent from '@mui/material/CardContent';
-      import Button from '@mui/material/Button';
       import Typography from '@mui/material/Typography';
 import { IconButton } from "@mui/material";
-import { color } from "@mui/system";
+
       
 function NotificationCard() {
     return (
@@ -34,7 +33,6 @@ function NotificationCard() {
       </>
       <Card className="cardComponent" sx={{ width: "80%", display: "flex", mx: "auto",
         '@media screen and (max-width: 650px)': { display: 'none',}, }}>
-          
           <CardContent sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-around" }}>
             <img src="Rectangle42.png" alt="" />
             <Typography gutterBottom variant="h5" component="div">
