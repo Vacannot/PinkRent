@@ -1,22 +1,11 @@
-.container1 {
-    width: 100%;
-}
-.container {
-    display: flex;
-    height: 5rem;
-    justify-content: space-around;
-    align-items: center;
-}
+
 .line {
     height: .1rem;
     width: 80%;
     background-color: rgb(15, 15, 15);
     opacity: 0.2;
 }
-.name {
-    font-weight: bold;
-   
-}
+
 .colorGreen {
     color: green;
     margin-right: 1rem;
@@ -31,8 +20,4 @@
 }
 
 
-@media(min-width: 650px) {
-  .container1{
-    display: none;
-  }
-  }
+

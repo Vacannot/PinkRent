@@ -1,40 +1,40 @@
 import styles from "./NotificationCard.module.scss"
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import * as React from 'react';
-      import Card from '@mui/material/Card';
-      import CardActions from '@mui/material/CardActions';
-      import CardContent from '@mui/material/CardContent';
-      import Typography from '@mui/material/Typography';
-import { IconButton } from "@mui/material";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CarImage from '../../assets/Rectangle42.png'
+import { IconButton, Box } from "@mui/material";
+
 
       
 function NotificationCard() {
     return (
       <><>
-        <div className={styles.container1}>
-          <div className={styles.container}>
-
-            <div>
-              <p className={styles.name}>Max Andersson</p>
-              <p className={styles.margin} >Request to rent Ferrari</p>
-            </div>
-            <div>
+        <Box sx={{ width:"100%", '@media screen and (min-width: 800px)': { display: 'none',} }}>
+          <Box sx={{ display: "flex", justifyContent:"space-around", alignItems:"end"}}>
+            <Box>
+              <Typography variant="h6" > Max Andersson</Typography>
+              <Typography>Request to rent Ferrari</Typography>
+             </Box>
+            <Box >
             <IconButton aria-label="delete"  color="success"  >
               <CheckIcon />
             </IconButton>
             <IconButton aria-label="delete"  color="error"   >
               <CloseIcon/>
             </IconButton>
-            </div>
-          </div>
+            </Box>
+          </Box>
              <hr className={styles.line}></hr>
-        </div>
+        </Box>
       </>
-      <Card className="cardComponent" sx={{ width: "80%", display: "flex", mx: "auto",
-        '@media screen and (max-width: 650px)': { display: 'none',}, }}>
+      <Card sx={{ width: "80%", display: "flex", mx: "auto",
+        '@media screen and (max-width: 800px)': { display: 'none',}, }}>
           <CardContent sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-around" }}>
-            <img src="Rectangle42.png" alt="" />
+            <img src={CarImage} alt="" />
             <Typography gutterBottom variant="h5" component="div">
               Lizard
             </Typography>

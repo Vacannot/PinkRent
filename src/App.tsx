@@ -1,7 +1,7 @@
 import { Routes, BrowserRouter, Route } from "react-router-dom";
-import LoginPage from "./Pages/LoginPage";
-import Layout from "./Pages/Layout";
-import NotificationPage from "./Pages/NotificationPage";
+import LoginPage from "./pages/LoginPage";
+import Layout from "./pages/Layout";
+import NotificationPage from "./pages/NotificationPage";
 function App() {
   return (
     <div>
