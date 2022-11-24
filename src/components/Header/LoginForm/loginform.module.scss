@@ -1,0 +1,22 @@
+div {
+  max-width: 466px;
+
+  & .orSignUp {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  & .forgotPassword {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  & .loginFormControl {
+    @media (min-width: 400px) {
+      width: 322px;
+    }
+  }
+  
+}
