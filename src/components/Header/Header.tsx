@@ -8,6 +8,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
 export default function Header() {
@@ -103,9 +104,11 @@ export default function Header() {
             Add Product
           </CustomizedButton>
 
-          <CustomizedButton variant="contained">
-            <NotificationsIcon color="primary" />
-          </CustomizedButton>
+          <Link to="/NotificationPage">
+            <CustomizedButton variant="contained">
+               <NotificationsIcon color="primary" />
+             </CustomizedButton>
+           </Link>
 
           <CustomizedButton
             startIcon={<AccountCircleIcon color="primary" />}
