@@ -3,14 +3,22 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, Box } from "@mui/material";
-import styles from "./ProductDetails.module.scss";
 import mockData from "../../mockData";
 
 const ProductDetails = () => {
   return (
-    <div>
+    <>
       {mockData.map((data) => (
-        <div key={data.id} className={styles.main}>
+        <Box
+          key={data.id}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "8rem",
+          }}
+        >
           <Card sx={{ maxWidth: 345 }}>
             <CardActionArea>
               <CardMedia
@@ -39,13 +47,23 @@ const ProductDetails = () => {
               </CardContent>
             </CardActionArea>
           </Card>
-          <div>
-            <div>
-              <h4>DESCRIPTION</h4>
-              <p className={styles.p}>{data.desc}</p>
-            </div>
+          <Box>
+            <Box>
+              <Typography
+                variant="subtitle1"
+                sx={{ marginBottom: 3, marginTop: 3 }}
+              >
+                DESCRIPTION
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ maxWidth: "21rem", marginBottom: 3 }}
+              >
+                {data.desc}
+              </Typography>
+            </Box>
 
-            <div className={styles.gap}>
+            <Box sx={{ gap: "10px", display: "flex" }}>
               <Button
                 size="medium"
                 sx={{ color: "white", background: "#F06A6A" }}
@@ -63,11 +81,11 @@ const ProductDetails = () => {
               >
                 REQUEST RENTAL
               </Button>
-            </div>
-          </div>
-        </div>
+            </Box>
+          </Box>
+        </Box>
       ))}
-    </div>
+    </>
   );
 };
 export default ProductDetails;
