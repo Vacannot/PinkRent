@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 
 function StartPage() {
-    return (
+  return (
     <Link to="loginPage">
-        <button>Hejsan</button>
+      <button>HejHej</button>
     </Link>
-    
-    )
+  );
 }
 
 export default StartPage;
