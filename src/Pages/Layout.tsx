@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import {AddUser} from "../components/Forms/addUser/addUser";
 
 function StartPage() {
   return (
-    <Link to="loginPage">
-      <button>HejHej</button>
-    </Link>
+    <>
+      <Link to="loginPage">login</Link>
+      <AddUser />
+    </>
   );
 }
 
