@@ -101,7 +101,7 @@ function RegisterForm() {
           REGISTER
         </Button>
         <Link
-          to="/login"
+          to="/loginPage"
           style={{
             color: "#7E7E7E",
             textDecoration: "underline",

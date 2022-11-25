@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
   return (
@@ -109,15 +110,16 @@ function LoginForm() {
         >
           LOGIN
         </Button>
-        <p
+        <Link
+          to="/registerPage"
           style={{
             color: "#7E7E7E",
             textDecoration: "underline",
           }}
-          className={styles.orSignUp}
+          className={styles.orRegister}
         >
           Or sign up
-        </p>
+        </Link>
       </Box>
     </div>
   );
