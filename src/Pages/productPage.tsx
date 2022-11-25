@@ -1,9 +1,12 @@
-import ProductCard from "../components/ProductComponent/ProductCard";
-
+import ProductPageComponent from "../components/ProductComponent/ProductPageComponent";
+import Header from "../components/Header/Header";
 
 function ProductPage() {
     return (
-        <ProductCard />
+        <>
+        <Header />
+        <ProductPageComponent />
+        </>
     )
 }
 
