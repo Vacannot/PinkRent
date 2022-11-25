@@ -7,9 +7,22 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
+import React from "react";
 
 function RegisterForm() {
+  const [values, setValues] = React.useState({
+    password: "",
+    showPassword: false,
+  });
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
   return (
     <div className={styles.registerform}>
       <Box
@@ -78,13 +91,28 @@ function RegisterForm() {
           <Input
             id="register-form-password"
             placeholder="Type your password"
-            type="password"
+            type={values.showPassword ? "text" : "password"}
             sx={{
               paddingBottom: "16px",
+              position: "relative",
+              paddingRight: "2.5rem",
             }}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlinedIcon />
+                <IconButton
+                  sx={{
+                    position: "absolute",
+                    right: "0",
+                  }}
+                  onClick={handleClickShowPassword}
+                >
+                  {values.showPassword ? (
+                    <VisibilityOutlinedIcon />
+                  ) : (
+                    <VisibilityOffOutlinedIcon />
+                  )}
+                </IconButton>
               </InputAdornment>
             }
           />
