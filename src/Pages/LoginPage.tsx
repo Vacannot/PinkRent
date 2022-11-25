@@ -1,11 +1,5 @@
-import Header from "../components/Header/Header";
-
 function LoginPage() {
-  return (
-    <>
-      <Header />
-    </>
-  );
+  return <div>hej</div>;
 }
 
 export default LoginPage;
