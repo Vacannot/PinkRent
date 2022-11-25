@@ -53,7 +53,7 @@ function NotificationCard() {
          <Box sx={{ display: "flex", mx: "auto",
            '@media screen and (max-width: 800px)': { display: 'none',}, }}>
            <CardContent sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-around" }}>
-            <img src={CarImage} alt="" />
+            <img src={CarImage} alt="CarImage" />
             <Typography gutterBottom variant="h5" component="div">
               Car            </Typography>
             <Typography variant="body2" color="text.secondary">
