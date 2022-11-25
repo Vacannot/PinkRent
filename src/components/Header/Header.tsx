@@ -30,7 +30,7 @@ export default function Header() {
   `;
 
   const { width } = useWindowDimensions();
-  if (width < 900)
+  if (width < 970)
     return (
       <Box
         sx={{

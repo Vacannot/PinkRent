@@ -1,4 +1,4 @@
-import styles from "./NotificationCard.module.scss"
+
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import Card from '@mui/material/Card';
@@ -28,7 +28,7 @@ function NotificationCard() {
             </IconButton>
             </Box>
           </Box>
-             <hr className={styles.line}></hr>
+             <hr style={{ height:".1rem", width:"80%", backgroundColor:"black", opacity:".2"  }}></hr>
         </Card>
       </>
 
@@ -48,7 +48,7 @@ function NotificationCard() {
           </Box>
 
          </Box>
-          <hr className={styles.lineInCard}></hr>
+          <hr style={{ height:".1rem", width:"90%", backgroundColor:"black", opacity:".2"  }}></hr>
 
          <Box sx={{ display: "flex", mx: "auto",
            '@media screen and (max-width: 800px)': { display: 'none',}, }}>
@@ -70,7 +70,7 @@ function NotificationCard() {
           </CardContent>
           </Box>
 
-          <hr className={styles.lineInCard}></hr>
+          <hr style={{ height:".1rem", width:"90%", backgroundColor:"black", opacity:".2"}}></hr>
           
     
         </Card>
