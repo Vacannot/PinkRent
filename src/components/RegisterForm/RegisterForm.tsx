@@ -24,122 +24,121 @@ function RegisterForm() {
   };
 
   return (
-    <div className={styles.registerform}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+    <Box
+      className={styles.registerform}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h2
+        style={{
+          marginBottom: "55px",
         }}
       >
-        <h2
-          style={{
-            marginBottom: "55px",
-          }}
-        >
-          CREATE ACCOUNT
-        </h2>
-        <FormControl
+        CREATE ACCOUNT
+      </h2>
+      <FormControl
+        sx={{
+          width: "267px",
+          marginBottom: "50px",
+          paddingTop: "8px",
+        }}
+        className={styles.registerFormControl}
+        variant="standard"
+      >
+        <InputLabel
           sx={{
-            width: "267px",
-            marginBottom: "50px",
-            paddingTop: "8px",
+            color: "black",
+            letterSpacing: "-3%",
           }}
-          className={styles.registerFormControl}
-          variant="standard"
+          htmlFor="register-form-username"
         >
-          <InputLabel
-            sx={{
-              color: "black",
-              letterSpacing: "-3%",
-            }}
-            htmlFor="register-form-username"
-          >
-            Username
-          </InputLabel>
-          <Input
-            id="register-form-username"
-            placeholder="Type your username"
-            sx={{
-              paddingBottom: "16px",
-            }}
-            startAdornment={
-              <InputAdornment position="start">
-                <AccountCircleOutlinedIcon />
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <FormControl
+          Username
+        </InputLabel>
+        <Input
+          id="register-form-username"
+          placeholder="Type your username"
           sx={{
-            width: "267px",
-            paddingTop: "8px",
+            paddingBottom: "16px",
           }}
-          className={styles.registerFormControl}
-          variant="standard"
-        >
-          <InputLabel
-            sx={{
-              marginBottom: "22px",
-              color: "black",
-              letterSpacing: "-3%",
-            }}
-            htmlFor="register-form-password"
-          >
-            Password
-          </InputLabel>
-          <Input
-            id="register-form-password"
-            placeholder="Type your password"
-            type={values.showPassword ? "text" : "password"}
-            sx={{
-              paddingBottom: "16px",
-              position: "relative",
-              paddingRight: "2.5rem",
-            }}
-            startAdornment={
-              <InputAdornment position="start">
-                <LockOutlinedIcon />
-                <IconButton
-                  sx={{
-                    position: "absolute",
-                    right: "0",
-                  }}
-                  onClick={handleClickShowPassword}
-                >
-                  {values.showPassword ? (
-                    <VisibilityOutlinedIcon />
-                  ) : (
-                    <VisibilityOffOutlinedIcon />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <Button
+          startAdornment={
+            <InputAdornment position="start">
+              <AccountCircleOutlinedIcon />
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+      <FormControl
+        sx={{
+          width: "267px",
+          paddingTop: "8px",
+        }}
+        className={styles.registerFormControl}
+        variant="standard"
+      >
+        <InputLabel
           sx={{
-            width: "266px",
-            color: "white",
-            marginTop: "74px",
-            marginBottom: "94px",
+            marginBottom: "22px",
+            color: "black",
+            letterSpacing: "-3%",
           }}
-          variant="contained"
+          htmlFor="register-form-password"
         >
-          REGISTER
-        </Button>
-        <Link
-          to="/loginPage"
-          style={{
-            color: "#7E7E7E",
-            textDecoration: "underline",
+          Password
+        </InputLabel>
+        <Input
+          id="register-form-password"
+          placeholder="Type your password"
+          type={values.showPassword ? "text" : "password"}
+          sx={{
+            paddingBottom: "16px",
+            position: "relative",
+            paddingRight: "2.5rem",
           }}
-          className={styles.orLogin}
-        >
-          Or login
-        </Link>
-      </Box>
-    </div>
+          startAdornment={
+            <InputAdornment position="start">
+              <LockOutlinedIcon />
+              <IconButton
+                sx={{
+                  position: "absolute",
+                  right: "0",
+                }}
+                onClick={handleClickShowPassword}
+              >
+                {values.showPassword ? (
+                  <VisibilityOutlinedIcon />
+                ) : (
+                  <VisibilityOffOutlinedIcon />
+                )}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+      <Button
+        sx={{
+          width: "266px",
+          color: "white",
+          marginTop: "74px",
+          marginBottom: "94px",
+        }}
+        variant="contained"
+      >
+        REGISTER
+      </Button>
+      <Link
+        to="/loginPage"
+        style={{
+          color: "#7E7E7E",
+          textDecoration: "underline",
+        }}
+        className={styles.orLogin}
+      >
+        Or login
+      </Link>
+    </Box>
   );
 }
 
