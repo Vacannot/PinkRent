@@ -29,17 +29,16 @@ export default function Header() {
   `;
 
   const { width } = useWindowDimensions();
-  if (width < 600)
+  if (width < 970)
     return (
       <Box
         sx={{
+          display:"flex",
+          flexDirection:"column",
           width: "100vw",
           height: 64,
-          display: "flex",
-          justifyContent: "space-evenly",
           alignItems: "center",
-          flexDirection: "column",
-          position: "absolute",
+          
         }}
       >
         <img src={LogoMobile} alt="yo" />
