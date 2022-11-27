@@ -8,8 +8,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />} />
-          <Route path="Notifications" element={<NotificationPage />} />
+          <Route path="notifications" element={<NotificationPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </div>
