@@ -1,6 +1,6 @@
 import NotificationCard from "../components/NotificationComponent/NotificationCard";
 
-function NotificationPage() {
+function ProfilePage() {
   return (
     <>
       <NotificationCard />
@@ -8,4 +8,4 @@ function NotificationPage() {
   );
 }
 
-export default NotificationPage;
+export default ProfilePage;
