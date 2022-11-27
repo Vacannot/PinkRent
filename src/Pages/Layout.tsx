@@ -1,11 +1,15 @@
-import { Link } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import Header from "../components/Header/Header";
 
-function StartPage() {
+function Layout() {
+  window.scrollTo(0, 0);
+  const navigate = useNavigate();
   return (
-    <Link to="loginPage">
-      <button>HejHej</button>
-    </Link>
+    <div>
+      <Header />
+      <Outlet />
+    </div>
   );
 }
 
-export default StartPage;
+export default Layout;
