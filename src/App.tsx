@@ -10,9 +10,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />} />
-          <Route path="NotificationPage" element={<NotificationPage />} />
-          <Route path="loginPage" element={<LoginPage />} />
-          <Route path="registerPage" element={<RegisterPage />} />
+          <Route path="notifications" element={<NotificationPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="profile" element={<RegisterPage />} />
+          <Route path="add" element={<RegisterPage />} />
+          <Route path="/detail/:id" element={<RegisterPage />} />
+          <Route path="catalog" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
     </div>
