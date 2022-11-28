@@ -1,5 +1,9 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
+  Collapse,
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -10,10 +14,14 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { DeleteOutlineOutlined, EditOutlined, ExpandLess, ExpandMore } from "@mui/icons-material";
+import { useState } from "react";
+import womanImg from "../../assets/Womenpainting.jpg";
 
 export const UserProfileListings = () => {
   const theme = useTheme();
   const mobileScreenSize = useMediaQuery(theme.breakpoints.up("xs"));
+  const [open, setOpen] = useState(false);
 
   return (
     <Box>
@@ -34,12 +42,34 @@ export const UserProfileListings = () => {
               <TableCell align="left">
                 <Typography variant="subtitle1">Price</Typography>
               </TableCell>
-              <TableCell align="left">
-                <Typography variant="subtitle1">Remove</Typography>
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
+            <TableRow>
+              <TableCell>
+                <img src={womanImg} alt="woman" height={60} />
+              </TableCell>
+              <TableCell>Woman Painting</TableCell>
+              <TableCell>123kr</TableCell>
+              {open ? (
+                <IconButton onClick={() => setOpen(false)}>
+                  <ExpandLess />
+                </IconButton>
+              ) : (
+                <IconButton onClick={() => setOpen(true)}>
+                  <ExpandMore />
+                </IconButton>
+              )}
+              <Collapse in={open}>
+                <Typography>Description: Lorem, ipsum.</Typography>
+                <Typography>Category: Lorem.</Typography>
+                <Typography>Rented: True</Typography>
+                <ButtonGroup>
+                  <Button startIcon={<EditOutlined />}>Edit</Button>
+                  <Button endIcon={<DeleteOutlineOutlined/>} color="error" variant="contained">Delete</Button>
+                </ButtonGroup>
+              </Collapse>
+            </TableRow>
             {/* {products.map((product) => {
             return <AdminProductList key={product.id} product={product} />;
           })} */}
