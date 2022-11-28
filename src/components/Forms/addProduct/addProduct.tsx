@@ -21,16 +21,16 @@ const initialValues = {
   password: "",
 };
 
-export const AddUser = () => {
+export const AddProduct = () => {
   const db = getFirestore();
 
-  const users = collection(db, "users");
+  const categories = collection(db, "products");
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      addDoc(users, {
+      addDoc(categories, {
         Email: values.email,
         Name: values.name,
         Password: values.password,

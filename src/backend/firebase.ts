@@ -1,7 +1,7 @@
-import {initializeApp} from "firebase/app";
+import {FirebaseApp, initializeApp} from "firebase/app";
 import {collection, getDocs, getFirestore} from "firebase/firestore";
+import {getAuth} from "firebase/auth"
 
-export const FBTest = () => {
   const firebaseConfig = {
     apiKey: "AIzaSyBuYIaKbJ0QAceMYFqdRKcDn_jDig7PKKI",
     authDomain: "pinkrent-a3337.firebaseapp.com",
@@ -13,10 +13,11 @@ export const FBTest = () => {
   };
 
   // Initialize FireBase app
-  initializeApp(firebaseConfig);
+  export const app = initializeApp(firebaseConfig);
 
   // Initialize services
-  const db = getFirestore();
+  export const db = getFirestore();
+  export const auth = getAuth(app)
 
   // collection ref
   const colUsers = collection(db, "users");
@@ -61,4 +62,5 @@ export const FBTest = () => {
     .catch((err) => {
       console.log(err.message);
     });
-};
+  
+
