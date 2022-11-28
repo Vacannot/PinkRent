@@ -38,7 +38,6 @@ export default function Header() {
 
   if (breakpoint)
     return (
-      <Link to={"productPage"}>
       <Box
         sx={{
           display: "flex",
@@ -48,7 +47,9 @@ export default function Header() {
           alignItems: "center",
         }}
         >
+        <Link to={"/productPage"}>
         <img src={LogoMobile} alt="yo" />
+        </Link>
         <Box
           sx={{
             height: 0,
@@ -57,8 +58,7 @@ export default function Header() {
             borderColor: "black",
           }}
           ></Box>
-      </Box>
-          </Link>
+          </Box>
     );
   return (
     <Box
@@ -82,7 +82,9 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
+        <Link to="/productPage" >
         <img src={LogoDesktop} alt="yo" />
+        </Link>
         <Button variant="text">
           <Typography variant="body1" sx={{ color: "grey" }}>
             ABOUT
