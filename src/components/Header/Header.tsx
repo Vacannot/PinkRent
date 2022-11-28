@@ -31,6 +31,7 @@ export default function Header() {
   const { width } = useWindowDimensions();
   if (width < 970)
     return (
+      <Link to={"productPage"}>
       <Box
         sx={{
           display:"flex",
@@ -40,7 +41,7 @@ export default function Header() {
           alignItems: "center",
           
         }}
-      >
+        >
         <img src={LogoMobile} alt="yo" />
         <Box
           sx={{
@@ -49,8 +50,9 @@ export default function Header() {
             borderBottom: 1,
             borderColor: "black",
           }}
-        ></Box>
+          ></Box>
       </Box>
+          </Link>
     );
   return (
     <Box

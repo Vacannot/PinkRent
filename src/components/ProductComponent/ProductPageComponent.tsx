@@ -16,37 +16,29 @@ function ProductPageComponent() {
         </Box>
         <ImageList sx={{ width: "auto", height: 340, ml:"2rem",mr:"2rem" , '@media screen and (max-width: 600px)': { height:"200px"} }}  rowHeight={164}>
         <Box sx={{ display:"flex"}} >
-        <ProductCard />
-          <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-          <ProductCard />
-        <ProductCard />
-      
+           <ProductCard />
+           <ProductCard />
+           <ProductCard />
+           <ProductCard />
+           <ProductCard />
+           <ProductCard />
+           <ProductCard />
         </Box>
        
         </ImageList>
 
         <Box sx={{ mt:"4rem", ml:"2rem" }} >
-            <Typography> Frequently visited in residence</Typography>
-            <IconButton aria-label="delete"  >
-                <Typography  >Rent now</Typography>
-              <CheckIcon />
-            </IconButton>
+            <Typography > Frequently visited in residence</Typography>
+            <Typography color="text.secondary" >Currently trending items on PinkRent</Typography>
         </Box>
         <ImageList sx={{ width: "auto", height: 340, ml:"2rem",mr:"2rem" , '@media screen and (max-width: 600px)': { height:"200px"}  }}  rowHeight={164}>
         <Box sx={{ display:"flex",}} >
              <ProductCard />
-               <ProductCard />
-               <ProductCard />
-               <ProductCard />
-               <ProductCard />
-               <ProductCard />
-               <ProductCard />
-            <ProductCard />
+             <ProductCard />
+             <ProductCard />
+             <ProductCard />
+             <ProductCard />
+             <ProductCard />
          </Box>
        </ImageList>
 
