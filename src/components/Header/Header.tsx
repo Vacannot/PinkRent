@@ -8,9 +8,18 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
 export default function Header() {
+  const { width } = useWindowDimensions();
+  let breakpoint = false;
+  if (width < 971) {
+    breakpoint = true;
+  }
+
+  let onHover = false;
+
   const CustomizedButton = styled(Button)`
     color: #626262;
 
@@ -27,18 +36,15 @@ export default function Header() {
     }
   `;
 
-  const { width } = useWindowDimensions();
-  if (width < 600)
+  if (breakpoint)
     return (
       <Box
         sx={{
+          display: "flex",
+          flexDirection: "column",
           width: "100vw",
           height: 64,
-          display: "flex",
-          justifyContent: "space-evenly",
           alignItems: "center",
-          flexDirection: "column",
-          position: "absolute",
         }}
       >
         <img src={LogoMobile} alt="yo" />
@@ -103,12 +109,35 @@ export default function Header() {
             Add Product
           </CustomizedButton>
 
-          <CustomizedButton variant="contained">
-            <NotificationsIcon color="primary" />
-          </CustomizedButton>
+          <Link to="/NotificationPage">
+            <CustomizedButton
+              variant="contained"
+              onMouseEnter={() => {
+                onHover = true;
+              }}
+              onMouseLeave={() => {
+                onHover = false;
+              }}
+            >
+              {onHover && <NotificationsIcon sx={{ color: "white" }} />}
+              {!onHover && <NotificationsIcon color="primary" />}
+            </CustomizedButton>
+          </Link>
 
           <CustomizedButton
-            startIcon={<AccountCircleIcon color="primary" />}
+            onMouseEnter={() => {
+              onHover = true;
+            }}
+            onMouseLeave={() => {
+              onHover = false;
+            }}
+            startIcon={
+              onHover ? (
+                <AccountCircleIcon sx={{ color: "white" }} />
+              ) : (
+                <AccountCircleIcon color="primary" />
+              )
+            }
             variant="contained"
           >
             Profile
