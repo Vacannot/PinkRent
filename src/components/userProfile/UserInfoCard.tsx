@@ -1,17 +1,19 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import { BorderColorOutlined, LanguageOutlined } from "@mui/icons-material";
+import styles from "./userProfile.module.scss";
 
 export const UserInfoCard = () => {
   return (
-    <Card>
+    <Card sx={{ width: 335 }}>
       <CardContent>
-        <Typography variant="h6" fontWeight={400}>
+        <Typography className={styles.spacing} variant="h6" fontWeight={400}>
           PERSONAL DETAILS <BorderColorOutlined />
         </Typography>
-        <Typography>Name: Simon Eriksson</Typography>
-        <Typography>Position: Västra Götaland, Borås</Typography>
-        <Typography>Phone: 0722358232</Typography>
-        <Typography>Password: ********</Typography>
+        <Typography className={styles.spacing}>Simon Eriksson</Typography>
+        <Typography className={styles.spacing}>
+          Västra Götaland, Borås
+        </Typography>
+        <Typography className={styles.spacing}>0722358232</Typography>
         <Typography>
           Language: English <LanguageOutlined />
         </Typography>

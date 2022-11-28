@@ -1,7 +1,5 @@
 import {
-  Card,
-  CardContent,
-  Paper,
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -9,11 +7,16 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 
 export const UserProfileListings = () => {
+  const theme = useTheme();
+  const mobileScreenSize = useMediaQuery(theme.breakpoints.up("xs"));
+
   return (
-    <>
+    <Box>
       <Typography variant="h6" fontWeight={400}>
         YOUR PRODUCTS
       </Typography>
@@ -43,6 +46,6 @@ export const UserProfileListings = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 };

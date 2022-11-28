@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function LoginForm() {
   return (
     <Box
-      className={styles.loginform}
+      className={styles.loginForm}
       sx={{
         display: "flex",
         flexDirection: "column",
