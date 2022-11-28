@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography,ImageListItem, ImageList } from "@mui/material";
 import ProductCard from "./ProductCard";
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -7,32 +7,50 @@ function ProductPageComponent() {
     return (
 
         <>
-        <Box  >
+        <Box sx={{ ml:"2rem" }} >
             <Typography> Popular on PinkRent</Typography>
             <IconButton aria-label="delete"  >
                 <Typography  >Rent now</Typography>
               <CheckIcon />
             </IconButton>
         </Box>
-        <Box sx={{ display:"flex" }} >
+        <ImageList sx={{ width: "auto", height: 340, ml:"2rem",mr:"2rem" , '@media screen and (max-width: 600px)': { height:"200px"} }}  rowHeight={164}>
+        <Box sx={{ display:"flex"}} >
         <ProductCard />
+          <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+          <ProductCard />
         <ProductCard />
-        <ProductCard />
+      
         </Box>
-        <Box sx={{ mt:"4rem" }} >
+       
+        </ImageList>
+
+        <Box sx={{ mt:"4rem", ml:"2rem" }} >
             <Typography> Frequently visited in residence</Typography>
             <IconButton aria-label="delete"  >
                 <Typography  >Rent now</Typography>
               <CheckIcon />
             </IconButton>
         </Box>
-        <Box sx={{ display:"flex" }} >
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        </Box>
+        <ImageList sx={{ width: "auto", height: 340, ml:"2rem",mr:"2rem" , '@media screen and (max-width: 600px)': { height:"200px"}  }}  rowHeight={164}>
+        <Box sx={{ display:"flex",}} >
+             <ProductCard />
+               <ProductCard />
+               <ProductCard />
+               <ProductCard />
+               <ProductCard />
+               <ProductCard />
+               <ProductCard />
+            <ProductCard />
+         </Box>
+       </ImageList>
 
-        </>
+      </>
     )
 }
 
