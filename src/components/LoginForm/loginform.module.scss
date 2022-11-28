@@ -1,7 +1,5 @@
 div {
-  max-width: 466px;
-
-  & .orSignUp {
+  & .orRegister {
     &:hover {
       cursor: pointer;
     }
@@ -18,5 +16,4 @@ div {
       width: 322px;
     }
   }
-  
 }

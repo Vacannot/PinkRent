@@ -12,6 +12,14 @@ import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
 export default function Header() {
+  const { width } = useWindowDimensions();
+  let breakpoint = false;
+  if (width < 971) {
+    breakpoint = true;
+  }
+
+  let onHover = false;
+
   const CustomizedButton = styled(Button)`
     color: #626262;
 
@@ -28,18 +36,16 @@ export default function Header() {
     }
   `;
 
-  const { width } = useWindowDimensions();
-  if (width < 970)
+  if (breakpoint)
     return (
       <Link to={"productPage"}>
       <Box
         sx={{
-          display:"flex",
-          flexDirection:"column",
+          display: "flex",
+          flexDirection: "column",
           width: "100vw",
           height: 64,
           alignItems: "center",
-          
         }}
         >
         <img src={LogoMobile} alt="yo" />
@@ -106,13 +112,34 @@ export default function Header() {
           </CustomizedButton>
 
           <Link to="/NotificationPage">
-            <CustomizedButton variant="contained">
-               <NotificationsIcon color="primary" />
-             </CustomizedButton>
-           </Link>
+            <CustomizedButton
+              variant="contained"
+              onMouseEnter={() => {
+                onHover = true;
+              }}
+              onMouseLeave={() => {
+                onHover = false;
+              }}
+            >
+              {onHover && <NotificationsIcon sx={{ color: "white" }} />}
+              {!onHover && <NotificationsIcon color="primary" />}
+            </CustomizedButton>
+          </Link>
 
           <CustomizedButton
-            startIcon={<AccountCircleIcon color="primary" />}
+            onMouseEnter={() => {
+              onHover = true;
+            }}
+            onMouseLeave={() => {
+              onHover = false;
+            }}
+            startIcon={
+              onHover ? (
+                <AccountCircleIcon sx={{ color: "white" }} />
+              ) : (
+                <AccountCircleIcon color="primary" />
+              )
+            }
             variant="contained"
           >
             Profile
