@@ -14,7 +14,13 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DeleteOutlineOutlined, EditOutlined, ExpandLess, ExpandMore } from "@mui/icons-material";
+import {
+  CheckOutlined,
+  DeleteOutlineOutlined,
+  EditOutlined,
+  ExpandLess,
+  ExpandMore,
+} from "@mui/icons-material";
 import { useState } from "react";
 import womanImg from "../../assets/Womenpainting.jpg";
 
@@ -22,6 +28,7 @@ export const UserProfileListings = () => {
   const theme = useTheme();
   const mobileScreenSize = useMediaQuery(theme.breakpoints.up("xs"));
   const [open, setOpen] = useState(false);
+  const [editting, setEditting] = useState(false);
 
   return (
     <Box>
@@ -31,8 +38,7 @@ export const UserProfileListings = () => {
       <TableContainer>
         <Table aria-label="collapsible table">
           <TableHead>
-            <TableRow>
-              <TableCell />
+            <TableRow sx={{ display: "flex", alignItems: "center" }}>
               <TableCell align="left">
                 <Typography variant="subtitle1">Image</Typography>
               </TableCell>
@@ -45,28 +51,65 @@ export const UserProfileListings = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
+            <TableRow
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr .5fr",
+              }}
+            >
               <TableCell>
                 <img src={womanImg} alt="woman" height={60} />
               </TableCell>
               <TableCell>Woman Painting</TableCell>
               <TableCell>123kr</TableCell>
               {open ? (
-                <IconButton onClick={() => setOpen(false)}>
+                <IconButton
+                  onClick={() => setOpen(false)}
+                  sx={{ width: "2rem", height: "2rem" }}
+                >
                   <ExpandLess />
                 </IconButton>
               ) : (
-                <IconButton onClick={() => setOpen(true)}>
+                <IconButton
+                  onClick={() => setOpen(true)}
+                  sx={{ width: "2rem", height: "2rem" }}
+                >
                   <ExpandMore />
                 </IconButton>
               )}
-              <Collapse in={open}>
+              <Collapse in={open} sx={{ gridColumn: "1/5" }}>
                 <Typography>Description: Lorem, ipsum.</Typography>
                 <Typography>Category: Lorem.</Typography>
                 <Typography>Rented: True</Typography>
                 <ButtonGroup>
-                  <Button startIcon={<EditOutlined />}>Edit</Button>
-                  <Button endIcon={<DeleteOutlineOutlined/>} color="error" variant="contained">Delete</Button>
+                  {editting ? (
+                    <Button
+                      startIcon={<CheckOutlined />}
+                      color="success"
+                      variant="contained"
+                      sx={{ color: "white" }}
+                      onClick={() => setEditting(false)}
+                    >
+                      Save
+                    </Button>
+                  ) : (
+                    <Button
+                      startIcon={<EditOutlined />}
+                      color="info"
+                      variant="contained"
+                      sx={{ color: "white" }}
+                      onClick={() => setEditting(true)}
+                    >
+                      Edit
+                    </Button>
+                  )}
+                  <Button
+                    endIcon={<DeleteOutlineOutlined />}
+                    color="error"
+                    variant="contained"
+                  >
+                    Delete
+                  </Button>
                 </ButtonGroup>
               </Collapse>
             </TableRow>
