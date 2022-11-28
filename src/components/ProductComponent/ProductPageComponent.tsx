@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography,ImageListItem, ImageList } from "@mui/material";
+import { Box, IconButton, Typography , ImageList } from "@mui/material";
 import ProductCard from "./ProductCard";
 import CheckIcon from '@mui/icons-material/Check';
 
