@@ -3,7 +3,11 @@ import {
   Button,
   ButtonGroup,
   Collapse,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -24,6 +28,7 @@ import {
 } from "@mui/icons-material";
 import { useState } from "react";
 import womanImg from "../../assets/Womenpainting.jpg";
+import { fontSize } from "@mui/system";
 
 export const UserProfileListings = () => {
   const theme = useTheme();
@@ -88,49 +93,91 @@ export const UserProfileListings = () => {
 
               <Collapse
                 in={open}
-                sx={{ gridColumn: "1/5", position: "relative" }}
+                sx={{
+                  gridColumn: "1/5",
+                  position: "relative",
+                }}
               >
-                {editing ? (
-                  <TextField
-                    required
-                    multiline
-                    label="Description"
-                    variant="standard"
-                    inputProps={{ style: { fontSize: ".9rem" } }}
-                    InputLabelProps={{ style: { fontSize: ".9rem" } }}
-                  />
-                ) : (
-                  <Typography sx={{ mb: ".7rem", mt: ".5rem" }}>
-                    Description: Lorem ipsum, dolor sit amet consectetur
-                    adipisicing elit. Id rerum aut consectetur exercitationem
-                    tenetur alias corporis esse, explicabo corrupti ipsa nihil
-                    nam?
-                  </Typography>
-                )}
-                {editing ? (
-                  <TextField
-                    required
-                    multiline
-                    label="Category"
-                    variant="standard"
-                    inputProps={{ style: { fontSize: ".9rem" } }}
-                    InputLabelProps={{ style: { fontSize: ".9rem" } }}
-                  />
-                ) : (
-                  <Typography sx={{ mb: ".7rem" }}>Category: Lorem.</Typography>
-                )}
-                {editing ? (
-                  <TextField
-                    required
-                    multiline
-                    label="Rented"
-                    variant="standard"
-                    inputProps={{ style: { fontSize: ".9rem" } }}
-                    InputLabelProps={{ style: { fontSize: ".9rem" } }}
-                  />
-                ) : (
-                  <Typography>Rented: True</Typography>
-                )}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    maxWidth: "25em",
+                    columnGap: "2rem",
+                    mt: ".5rem",
+                  }}
+                >
+                  {editing ? (
+                    <TextField
+                      required
+                      multiline
+                      label="Description"
+                      variant="standard"
+                      sx={{ width: "25rem" }}
+                      inputProps={{ style: { fontSize: ".9rem" } }}
+                      InputLabelProps={{ style: { fontSize: ".9rem" } }}
+                    />
+                  ) : (
+                    <Typography sx={{ mb: ".7rem", mt: ".5rem" }}>
+                      Description: Lorem ipsum, dolor sit amet consectetur
+                      adipisicing elit. Id rerum aut consectetur exercitationem
+                      tenetur alias corporis esse, explicabo corrupti ipsa nihil
+                      nam?
+                    </Typography>
+                  )}
+                  {editing ? (
+                    <FormControl
+                      sx={{ mt: ".5rem", width: "13rem" }}
+                      variant="standard"
+                    >
+                      <InputLabel
+                        sx={{ fontSize: ".9rem" }}
+                        id="demo-simple-select-standard-label"
+                      >
+                        Category*
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        label="Age"
+                      >
+                        <MenuItem value="VEHICLES">VEHICLES</MenuItem>
+                        <MenuItem value="HOME">HOME</MenuItem>
+                        <MenuItem value="CLOTHING">CLOTHING</MenuItem>
+                        <MenuItem value="ELECTRONICS">ELECTRONICS</MenuItem>
+                        <MenuItem value="RESIDENCE">RESIDENCE</MenuItem>
+                        <MenuItem value="HOBBY">HOBBY</MenuItem>
+                      </Select>
+                    </FormControl>
+                  ) : (
+                    <Typography sx={{ mb: ".7rem" }}>
+                      Category: Lorem.
+                    </Typography>
+                  )}
+                  {editing ? (
+                    <FormControl
+                      sx={{ mt: ".5rem", width: "10rem" }}
+                      variant="standard"
+                    >
+                      <InputLabel
+                        sx={{ fontSize: ".9rem" }}
+                        id="demo-simple-select-standard-label"
+                      >
+                        Rented*
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        label="Rented"
+                      >
+                        <MenuItem value="RENTED">RENTED</MenuItem>
+                        <MenuItem value="NOT RENTED">NOT RENTED</MenuItem>
+                      </Select>
+                    </FormControl>
+                  ) : (
+                    <Typography>Rented: True</Typography>
+                  )}
+                </Box>
                 <ButtonGroup sx={{ position: "absolute", right: 0, bottom: 0 }}>
                   {editing ? (
                     <Button
