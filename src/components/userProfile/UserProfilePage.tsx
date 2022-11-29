@@ -8,7 +8,8 @@ export const UserProfilePage = () => {
       sx={{
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
-        rowGap: "35px",
+        alignItems: { xs: "center", md: "flex-start" },
+        rowGap: "45px",
         columnGap: { md: "4rem" },
         maxWidth: "1000px",
         margin: "auto",

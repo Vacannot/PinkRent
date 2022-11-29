@@ -16,7 +16,6 @@ import {
   TableRow,
   TextField,
   Typography,
-  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import {
@@ -28,11 +27,10 @@ import {
 } from "@mui/icons-material";
 import { useState } from "react";
 import womanImg from "../../assets/Womenpainting.jpg";
-import { fontSize } from "@mui/system";
 
 export const UserProfileListings = () => {
-  const theme = useTheme();
-  const mobileScreenSize = useMediaQuery(theme.breakpoints.up("xs"));
+  //const theme = useTheme();
+  //const mobileScreenSize = useMediaQuery(theme.breakpoints.up("xs"));
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(false);
 
@@ -41,9 +39,10 @@ export const UserProfileListings = () => {
       sx={{
         minWidth: "335px",
         width: "80%",
+        mt: "1rem",
       }}
     >
-      <Typography variant="h6" fontWeight={400}>
+      <Typography sx={{ pb: "2.5rem" }} variant="h6" fontWeight={400}>
         YOUR PRODUCTS
       </Typography>
       <TableContainer>
@@ -90,7 +89,6 @@ export const UserProfileListings = () => {
                   </IconButton>
                 )}
               </TableCell>
-
               <Collapse
                 in={open}
                 sx={{
