@@ -1,5 +1,5 @@
 import { Routes, BrowserRouter, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/LoginPage"
 import RegisterPage from "./pages/RegisterPage";
 import Layout from "./layout/Layout";
 import NotificationPage from "./pages/NotificationPage";
@@ -15,7 +15,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />} />
-          <Route path="NotificationPage" element={<NotificationPage />} />
           <Route path="loginPage" element={<LoginPage />} />
           <Route path="/productPage" element={<ProductPage />} />
           <Route path="notifications" element={<NotificationPage />} />
