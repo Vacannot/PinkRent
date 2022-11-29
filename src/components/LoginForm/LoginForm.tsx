@@ -7,9 +7,22 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { Link } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import React from "react";
 
 function LoginForm() {
+  const [values, setValues] = React.useState({
+    password: "",
+    showPassword: false,
+  });
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
   return (
     <Box
       className={styles.loginform}
@@ -78,13 +91,26 @@ function LoginForm() {
         <Input
           id="login-form-password"
           placeholder="Type your password"
-          type="password"
+          type={values.showPassword ? "text" : "password"}
           sx={{
             paddingBottom: "16px",
           }}
           startAdornment={
             <InputAdornment position="start">
               <LockOutlinedIcon />
+              <IconButton
+                sx={{
+                  position: "absolute",
+                  right: "0",
+                }}
+                onClick={handleClickShowPassword}
+              >
+                {values.showPassword ? (
+                  <VisibilityOutlinedIcon />
+                ) : (
+                  <VisibilityOffOutlinedIcon />
+                )}
+              </IconButton>
             </InputAdornment>
           }
         />
@@ -111,7 +137,7 @@ function LoginForm() {
         LOGIN
       </Button>
       <Link
-        to="/registerPage"
+        to="/register"
         style={{
           color: "#7E7E7E",
           textDecoration: "underline",
