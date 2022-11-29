@@ -22,7 +22,7 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="add" element={<AddProductPage />} />
-          <Route path="/detail/:id" element={<ProductDetailPage />} />
+          <Route path="details" element={<ProductDetailPage />} />
           <Route path="catalog" element={<CatalogPage />} />
         </Routes>
       </BrowserRouter>
