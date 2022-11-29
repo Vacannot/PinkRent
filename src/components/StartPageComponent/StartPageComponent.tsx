@@ -11,7 +11,64 @@ function StartPageComponent() {
     breakpoint = true;
   }
   if (breakpoint) {
-    return null;
+    return (
+      <>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "12vh",
+            marginLeft: "9vw",
+            gap: 5,
+          }}
+        >
+          <Box>
+            <Typography variant="h4">SHARING MADE</Typography>
+            <Typography variant="h4" color="primary" fontWeight={600}>
+              EASIER.
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                color: "white",
+                maxWidth: "200px",
+                borderRadius: "15px",
+              }}
+            >
+              GET STARTED
+            </Button>
+            <Button
+              variant="contained"
+              color="info"
+              sx={{ color: "#626262", maxWidth: "200px", borderRadius: "15px" }}
+            >
+              REGISTER
+            </Button>
+          </Box>
+        </Box>
+        <Box
+          className={styles.waveMobile}
+          sx={{
+            boxSizing: "border-box",
+            bottom: 0,
+            right: 0,
+            borderBottom: "3px solid",
+            borderColor: "white",
+            marginTop: "30vh",
+          }}
+        >
+          <StartWave />
+        </Box>
+      </>
+    );
   }
   return (
     <>
