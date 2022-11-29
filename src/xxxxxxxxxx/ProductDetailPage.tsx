@@ -1,7 +1,7 @@
-import RegisterForm from "../components/RegisterForm/RegisterForm";
+import ProductDetails from "../components/ProductDetails/ProductDetails";
 
 function ProductDetailPage() {
-  return <RegisterForm />;
+  return <ProductDetails />;
 }
 
 export default ProductDetailPage;
