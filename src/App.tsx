@@ -1,12 +1,12 @@
 import { Routes, BrowserRouter, Route } from "react-router-dom";
-import LoginPage from "./xxxxxxxxxx/LoginPage";
-import RegisterPage from "./xxxxxxxxxx/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import Layout from "./layout/Layout";
-import NotificationPage from "./xxxxxxxxxx/NotificationPage";
-import ProfilePage from "./xxxxxxxxxx/ProfilePage";
-import AddProductPage from "./xxxxxxxxxx/AddProductPage";
-import ProductDetailPage from "./xxxxxxxxxx/ProductDetailPage";
-import CatalogPage from "./xxxxxxxxxx/CatalogPage";
+import NotificationPage from "./pages/NotificationPage";
+import ProfilePage from "./pages/ProfilePage";
+import AddProductPage from "./pages/AddProductPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import CatalogPage from "./pages/CatalogPage";
 
 function App() {
   return (
