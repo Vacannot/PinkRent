@@ -48,14 +48,16 @@ export const UserProfileListings = () => {
       <TableContainer>
         <Table aria-label="collapsible table">
           <TableHead sx={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}>
-            <TableRow sx={{ display: "flex", alignItems: "center" }}>
-              <Typography sx={{ ml: "1rem" }} variant="subtitle1">
+            <TableRow
+              sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr .5fr" }}
+            >
+              <Typography sx={{ padding: "16px" }} variant="subtitle1">
                 Image
               </Typography>
-              <Typography sx={{ ml: "3.6rem" }} variant="subtitle1">
+              <Typography sx={{ padding: "16px" }} variant="subtitle1">
                 Title
               </Typography>
-              <Typography sx={{ ml: "3.6rem" }} variant="subtitle1">
+              <Typography sx={{ padding: "16px" }} variant="subtitle1">
                 Price
               </Typography>
             </TableRow>
@@ -70,7 +72,7 @@ export const UserProfileListings = () => {
               <TableCell>
                 <img src={womanImg} alt="woman" height={60} />
               </TableCell>
-              <TableCell sx={{ mt: "1rem" }}>Woman Painting</TableCell>
+              <TableCell sx={{ mt: "1.5rem" }}>Woman Painting</TableCell>
               <TableCell sx={{ mt: "1.5rem" }}>123kr</TableCell>
               <TableCell sx={{ mt: "1rem" }}>
                 {open ? (
@@ -208,6 +210,7 @@ export const UserProfileListings = () => {
                 </ButtonGroup>
               </Collapse>
             </TableRow>
+
             {/* {products.map((product) => {
             return <AdminProductList key={product.id} product={product} />;
           })} */}
