@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { Card } from '@mui/material';
+import { Button, Card, Typography } from '@mui/material';
 
 
 
@@ -34,7 +34,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchIconComponent() {
   return (
     <Box sx={{ flexGrow: 1, '@media screen and (max-width: 970px)': { display:"none"} }}>
-      <Toolbar sx={{ diplay:"flex", justifyContent:"end" }} >
+      <Toolbar sx={{ diplay:"flex", justifyContent:"space-around" }} >
+        <Button>VEHICLES</Button>
+          <hr style={{ height:"1.7rem", margin:"0", backgroundColor:"pink" }} />
+        <Button>HOME</Button>
+        <hr style={{ height:"1.7rem", margin:"0", backgroundColor:"pink" }} />
+        <Button>CLOTHING</Button>
+        <hr style={{ height:"1.7rem", margin:"0", backgroundColor:"pink" }} />
+        <Button>ELECTIONICS</Button>
+        <hr style={{ height:"1.7rem", margin:"0", backgroundColor:"pink" }} />
+        <Button>RESIDENCE</Button>
+        <hr style={{ height:"1.7rem", margin:"0", backgroundColor:"pink" }} />
+        <Button>HOBBY</Button>
           <Card sx={{ display:"flex", alignItems:"center"}} >
             <SearchIconWrapper>
               <SearchIcon sx={{ color: "pink"}} />
