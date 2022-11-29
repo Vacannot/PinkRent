@@ -8,10 +8,10 @@ export const UserProfilePage = () => {
       sx={{
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
-        alignItems: "center",
         rowGap: "35px",
         columnGap: { md: "4rem" },
         maxWidth: "1000px",
+        margin: "auto",
       }}
     >
       <UserInfoCard />

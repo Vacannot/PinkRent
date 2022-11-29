@@ -10,6 +10,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
   useMediaQuery,
   useTheme,
@@ -28,7 +29,7 @@ export const UserProfileListings = () => {
   const theme = useTheme();
   const mobileScreenSize = useMediaQuery(theme.breakpoints.up("xs"));
   const [open, setOpen] = useState(false);
-  const [editting, setEditting] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   return (
     <Box
@@ -85,89 +86,59 @@ export const UserProfileListings = () => {
                 )}
               </TableCell>
 
-              <Collapse in={open} sx={{ gridColumn: "1/5" }}>
-                <Typography>Description: Lorem, ipsum.</Typography>
-                <Typography>Category: Lorem.</Typography>
-                <Typography>Rented: True</Typography>
-                <ButtonGroup>
-                  {editting ? (
-                    <Button
-                      startIcon={<CheckOutlined />}
-                      color="success"
-                      variant="contained"
-                      sx={{ color: "white" }}
-                      onClick={() => setEditting(false)}
-                    >
-                      Save
-                    </Button>
-                  ) : (
-                    <Button
-                      startIcon={<EditOutlined />}
-                      color="info"
-                      variant="contained"
-                      sx={{ color: "white" }}
-                      onClick={() => setEditting(true)}
-                    >
-                      Edit
-                    </Button>
-                  )}
-                  <Button
-                    endIcon={<DeleteOutlineOutlined />}
-                    color="error"
-                    variant="contained"
-                  >
-                    Delete
-                  </Button>
-                </ButtonGroup>
-              </Collapse>
-            </TableRow>
-            {/* {products.map((product) => {
-            return <AdminProductList key={product.id} product={product} />;
-          })} */}
-          </TableBody>
-
-          <TableBody>
-            <TableRow
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr .5fr",
-              }}
-            >
-              <TableCell>
-                <img src={womanImg} alt="woman" height={60} />
-              </TableCell>
-              <TableCell sx={{ mt: "1rem" }}>Woman Painting</TableCell>
-              <TableCell sx={{ mt: "1.5rem" }}>123kr</TableCell>
-              <TableCell sx={{ mt: "1rem" }}>
-                {open ? (
-                  <IconButton
-                    onClick={() => setOpen(false)}
-                    sx={{ width: "2rem", height: "2rem", margin: "auto" }}
-                  >
-                    <ExpandLess />
-                  </IconButton>
+              <Collapse
+                in={open}
+                sx={{ gridColumn: "1/5", position: "relative" }}
+              >
+                {editing ? (
+                  <TextField
+                    required
+                    multiline
+                    label="Description"
+                    variant="standard"
+                    inputProps={{ style: { fontSize: ".9rem" } }}
+                    InputLabelProps={{ style: { fontSize: ".9rem" } }}
+                  />
                 ) : (
-                  <IconButton
-                    onClick={() => setOpen(true)}
-                    sx={{ width: "2rem", height: "2rem", margin: "auto" }}
-                  >
-                    <ExpandMore />
-                  </IconButton>
+                  <Typography sx={{ mb: ".7rem", mt: ".5rem" }}>
+                    Description: Lorem ipsum, dolor sit amet consectetur
+                    adipisicing elit. Id rerum aut consectetur exercitationem
+                    tenetur alias corporis esse, explicabo corrupti ipsa nihil
+                    nam?
+                  </Typography>
                 )}
-              </TableCell>
-
-              <Collapse in={open} sx={{ gridColumn: "1/5" }}>
-                <Typography>Description: Lorem, ipsum.</Typography>
-                <Typography>Category: Lorem.</Typography>
-                <Typography>Rented: True</Typography>
-                <ButtonGroup>
-                  {editting ? (
+                {editing ? (
+                  <TextField
+                    required
+                    multiline
+                    label="Category"
+                    variant="standard"
+                    inputProps={{ style: { fontSize: ".9rem" } }}
+                    InputLabelProps={{ style: { fontSize: ".9rem" } }}
+                  />
+                ) : (
+                  <Typography sx={{ mb: ".7rem" }}>Category: Lorem.</Typography>
+                )}
+                {editing ? (
+                  <TextField
+                    required
+                    multiline
+                    label="Rented"
+                    variant="standard"
+                    inputProps={{ style: { fontSize: ".9rem" } }}
+                    InputLabelProps={{ style: { fontSize: ".9rem" } }}
+                  />
+                ) : (
+                  <Typography>Rented: True</Typography>
+                )}
+                <ButtonGroup sx={{ position: "absolute", right: 0, bottom: 0 }}>
+                  {editing ? (
                     <Button
                       startIcon={<CheckOutlined />}
                       color="success"
                       variant="contained"
                       sx={{ color: "white" }}
-                      onClick={() => setEditting(false)}
+                      onClick={() => setEditing(false)}
                     >
                       Save
                     </Button>
@@ -177,7 +148,7 @@ export const UserProfileListings = () => {
                       color="info"
                       variant="contained"
                       sx={{ color: "white" }}
-                      onClick={() => setEditting(true)}
+                      onClick={() => setEditing(true)}
                     >
                       Edit
                     </Button>
