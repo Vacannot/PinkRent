@@ -17,18 +17,47 @@ import AuthProvider from "./backend/Context";
 
 const theme = createTheme({
   palette: {
+    action: {
+      disabledBackground: "#F5BBDC",
+      disabled: "#FFFFFF",
+    },
     primary: {
-      main: "#ED80BE",
+      main: "#F360B4",
+      "100": "#ED80BE",
+      "200": "#DB7A7A",
+      "300": "#FF3B9D",
+      "400": "#FF8CC6",
+      "500": "#FF69B4",
     },
     secondary: {
       main: "#F5BBDC",
+      "100": "#404040",
+      "200": "#91C98C",
+    },
+    error: {
+      main: "#E11010",
     },
     info: {
-      main: "#FFFFFF",
+      main: "#5CA9F0",
     },
+    success: {
+      main: "#94DB5D",
+    },
+    warning: {
+      main: "#91C98C",
+    }
   },
   typography: {
     fontFamily: "Montserrat, sans-serif",
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 400,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
   },
 });
 
