@@ -4,10 +4,10 @@ import { UserProfilePage } from "../components/userProfile/UserProfilePage";
 function StartPage() {
   return (
     <div>
-    <Link to="loginPage">
-      <button>HejHej</button>
-    </Link>
-    <UserProfilePage />
+      <Link to="loginPage">
+        <button>HejHej</button>
+      </Link>
+      <UserProfilePage />
     </div>
   );
 }

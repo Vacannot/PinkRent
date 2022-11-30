@@ -45,6 +45,9 @@ const theme = createTheme({
     warning: {
       main: "#91C98C",
     },
+    info: {
+      main: "#FFFFFF",
+    },
   },
   typography: {
     fontFamily: "Montserrat, sans-serif",

@@ -6,12 +6,11 @@
         cursor: pointer;
       }
     }
-  
-    & .registerFormControl {
-      @media (min-width: 400px) {
-        width: 322px;
-      }
-    }
-    
   }
-  
+
+  & .registerFormControl {
+    @media (min-width: 400px) {
+      width: 322px;
+    }
+  }
+}
