@@ -16,7 +16,6 @@ import {
   TableRow,
   TextField,
   Typography,
-  useTheme,
 } from "@mui/material";
 import {
   CheckOutlined,
@@ -27,12 +26,14 @@ import {
 } from "@mui/icons-material";
 import { useState } from "react";
 import womanImg from "../../assets/Womenpainting.jpg";
+import { RemoveProductConfirmation } from "./DeleteProductConfirmation";
 
 export const UserProfileListings = () => {
   //const theme = useTheme();
   //const mobileScreenSize = useMediaQuery(theme.breakpoints.up("xs"));
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
 
   return (
     <Box
@@ -204,7 +205,9 @@ export const UserProfileListings = () => {
                     endIcon={<DeleteOutlineOutlined />}
                     color="error"
                     variant="contained"
+                    onClick={() => setOpenConfirm(true)}
                   >
+                    {openConfirm ? <RemoveProductConfirmation /> : undefined}
                     Delete
                   </Button>
                 </ButtonGroup>
