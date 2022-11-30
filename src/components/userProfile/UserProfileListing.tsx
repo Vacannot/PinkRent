@@ -35,6 +35,12 @@ export const UserProfileListings = () => {
   const [editing, setEditing] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
 
+  const check = () => {
+    console.log("before", openConfirm);
+    setOpenConfirm(true);
+    console.log("after", openConfirm);
+  };
+
   return (
     <Box
       sx={{
@@ -205,7 +211,7 @@ export const UserProfileListings = () => {
                     endIcon={<DeleteOutlineOutlined />}
                     color="error"
                     variant="contained"
-                    onClick={() => setOpenConfirm(true)}
+                    onClick={() => check()}
                   >
                     {openConfirm ? <RemoveProductConfirmation /> : undefined}
                     Delete

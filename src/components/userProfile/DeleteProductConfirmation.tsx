@@ -1,5 +1,5 @@
+import { ResetTv } from "@mui/icons-material";
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -14,6 +14,12 @@ export const RemoveProductConfirmation = () => {
 
   const handleClose = () => {
     setOpenConfirmation(false);
+    console.log("modal component", openConfirmation);
+  };
+
+  const handleDeleteItem = () => {
+    //something...
+    handleClose();
   };
 
   return (
@@ -21,20 +27,19 @@ export const RemoveProductConfirmation = () => {
       open={openConfirmation}
       onClose={handleClose}
       aria-labelledby="responsive-dialog-title"
+      aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="responsive-dialog-title">
-        {"Use Google's location service?"}
+        {"Are you sure you want to remove this item?"}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Are you sure you want to remove this item?
-        </DialogContentText>
+        <DialogContentText>This action cannot be reverted.</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose}>
           NO
         </Button>
-        <Button onClick={handleClose} autoFocus>
+        <Button onClick={handleDeleteItem} autoFocus>
           YES
         </Button>
       </DialogActions>
