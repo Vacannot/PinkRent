@@ -11,7 +11,6 @@ import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";
 
-
 function App() {
   return (
     <div>

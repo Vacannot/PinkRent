@@ -1,4 +1,3 @@
-import styles from "./aboutPageComponent.module.scss";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 
