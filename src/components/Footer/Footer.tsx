@@ -1,8 +1,8 @@
-import { Box } from "@mui/system";
+import {Box} from "@mui/system";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
+import {IconButton} from "@mui/material";
+import {Link} from "react-router-dom";
 
 import HomeIcon from "@mui/icons-material/Home";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -11,7 +11,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function Footer() {
-  const { width } = useWindowDimensions();
+  const {width} = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
@@ -32,28 +32,28 @@ export default function Footer() {
         }}
       >
         <Link to="/">
-          <IconButton sx={{ border: 1, borderColor: "white" }}>
-            <HomeIcon sx={{ color: "white" }} />
+          <IconButton sx={{border: 1, borderColor: "white"}}>
+            <HomeIcon sx={{color: "white"}} />
           </IconButton>
         </Link>
         <Link to="/notifications">
-          <IconButton sx={{ border: 1, borderColor: "white" }}>
-            <NotificationsIcon sx={{ color: "white" }} />
+          <IconButton sx={{border: 1, borderColor: "white"}}>
+            <NotificationsIcon sx={{color: "white"}} />
           </IconButton>
         </Link>
         <Link to="/add">
-          <IconButton sx={{ border: 1, borderColor: "white" }}>
-            <AddCircleOutlineIcon sx={{ color: "white" }} />
+          <IconButton sx={{border: 1, borderColor: "white"}}>
+            <AddCircleOutlineIcon sx={{color: "white"}} />
           </IconButton>
         </Link>
         <Link to="/catalog">
-          <IconButton sx={{ border: 1, borderColor: "white" }}>
-            <SearchIcon sx={{ color: "white" }} />
+          <IconButton sx={{border: 1, borderColor: "white"}}>
+            <SearchIcon sx={{color: "white"}} />
           </IconButton>
         </Link>
         <Link to="/profile">
-          <IconButton sx={{ border: 1, borderColor: "white" }}>
-            <AccountCircleIcon sx={{ color: "white" }} />
+          <IconButton sx={{border: 1, borderColor: "white"}}>
+            <AccountCircleIcon sx={{color: "white"}} />
           </IconButton>
         </Link>
       </Box>

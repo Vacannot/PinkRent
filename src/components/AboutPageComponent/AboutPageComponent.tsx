@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import {Typography} from "@mui/material";
 
 function AboutPageComponent() {
   return (
@@ -10,7 +10,7 @@ function AboutPageComponent() {
         alignItems: "center",
       }}
     >
-      <Typography style={{ maxWidth: "600px" }} sx={{ marginTop: 3 }}>
+      <Typography style={{maxWidth: "600px"}} sx={{marginTop: 3}}>
         PinkRent started in 2022 as a small indie team of developers looking to
         lower the basic living costs in the city of Gothenburg, Sweden. It's a
         small renting ecosystem in which people can rent out things for free or
