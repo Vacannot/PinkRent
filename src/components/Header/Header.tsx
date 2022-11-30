@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -9,9 +8,18 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
 export default function Header() {
+  const { width } = useWindowDimensions();
+  let breakpoint = false;
+  if (width < 971) {
+    breakpoint = true;
+  }
+
+  let onHover = false;
+
   const CustomizedButton = styled(Button)`
     color: #626262;
 
@@ -28,21 +36,20 @@ export default function Header() {
     }
   `;
 
-  const { width } = useWindowDimensions();
-  if (width < 600)
+  if (breakpoint)
     return (
       <Box
         sx={{
+          display: "flex",
+          flexDirection: "column",
           width: "100vw",
           height: 64,
-          display: "flex",
-          justifyContent: "space-evenly",
           alignItems: "center",
-          flexDirection: "column",
-          position: "absolute",
         }}
-      >
+        >
+        <Link to={"/productPage"}>
         <img src={LogoMobile} alt="yo" />
+        </Link>
         <Box
           sx={{
             height: 0,
@@ -50,8 +57,8 @@ export default function Header() {
             borderBottom: 1,
             borderColor: "black",
           }}
-        ></Box>
-      </Box>
+          ></Box>
+          </Box>
     );
   return (
     <Box
@@ -75,18 +82,27 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
-        <img src={LogoDesktop} alt="yo" />
-        <Button variant="text">
-          <Typography variant="body1" sx={{ color: "grey" }}>
-            ABOUT
-          </Typography>
-        </Button>
-        <Button variant="text">
-          <Typography variant="body1" sx={{ color: "grey" }}>
-            {" "}
-            CONTACT US
-          </Typography>
-        </Button>
+
+        <Link to="/productPage" >
+        <img src={LogoDesktop} alt="DesktopLogoAlt" />
+        </Link>
+
+        <Link to="/about" style={{ textDecoration: "none" }}>
+          <Button variant="text">
+            <Typography variant="body1" sx={{ color: "grey" }}>
+              ABOUT
+            </Typography>
+          </Button>
+        </Link>
+        
+        <Link to="/contact" style={{ textDecoration: "none" }}>
+          <Button variant="text">
+            <Typography variant="body1" sx={{ color: "grey" }}>
+              CONTACT US
+            </Typography>
+          </Button>
+        </Link>
+
       </Box>
       <Box
         sx={{
@@ -97,23 +113,56 @@ export default function Header() {
         }}
       >
         <Stack spacing={4} direction="row">
-          <CustomizedButton
-            startIcon={<AddCircleOutlineIcon color="primary" />}
-            variant="contained"
-          >
-            Add Product
-          </CustomizedButton>
-
-          <CustomizedButton variant="contained">
-            <NotificationsIcon color="primary" />
-          </CustomizedButton>
-
-          <CustomizedButton
-            startIcon={<AccountCircleIcon color="primary" />}
-            variant="contained"
-          >
-            Profile
-          </CustomizedButton>
+          <Link to="/add" style={{ textDecoration: "none" }}>
+            <CustomizedButton
+              startIcon={<AddCircleOutlineIcon color="primary" />}
+              variant="contained"
+            >
+              <Typography variant="body1" sx={{ color: "grey" }}>
+                ADD PRODUCT
+              </Typography>
+            </CustomizedButton>
+          </Link>
+          <Link to="/notifications">
+            <CustomizedButton
+              variant="contained"
+              onMouseEnter={() => {
+                onHover = true;
+              }}
+              onMouseLeave={() => {
+                onHover = false;
+              }}
+            >
+              {onHover && <NotificationsIcon sx={{ color: "white" }} />}
+              {!onHover && <NotificationsIcon color="primary" />}
+            </CustomizedButton>
+          </Link>
+          {false ? (
+            <></>
+          ) : (
+            <Link to="/profile" style={{ textDecoration: "none" }}>
+              <CustomizedButton
+                onMouseEnter={() => {
+                  onHover = true;
+                }}
+                onMouseLeave={() => {
+                  onHover = false;
+                }}
+                startIcon={
+                  onHover ? (
+                    <AccountCircleIcon sx={{ color: "white" }} />
+                  ) : (
+                    <AccountCircleIcon color="primary" />
+                  )
+                }
+                variant="contained"
+              >
+                <Typography variant="body1" sx={{ color: "grey" }}>
+                  {false ? "USERNAME" : "PROFILE"}
+                </Typography>
+              </CustomizedButton>
+            </Link>
+          )}
         </Stack>
       </Box>
     </Box>

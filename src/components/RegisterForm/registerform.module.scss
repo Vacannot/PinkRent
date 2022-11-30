@@ -1,0 +1,13 @@
+div {
+  & .orLogin {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  & .registerFormControl {
+    @media (min-width: 400px) {
+      width: 322px;
+    }
+  }
+}
