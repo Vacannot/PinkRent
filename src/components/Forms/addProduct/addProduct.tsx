@@ -1,7 +1,7 @@
 import {
   Button,
   FormControl,
-  FormHelperText,
+  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -10,6 +10,7 @@ import {
 import * as yup from "yup";
 import {useFormik} from "formik";
 import {addDoc, collection, getFirestore} from "firebase/firestore";
+import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "../../../backend/firebase";
 import {useCollection} from "react-firebase-hooks/firestore";
@@ -19,6 +20,7 @@ const initialValues = {
   price: 0,
   description: "",
   category: "",
+  image: "",
 };
 
 const validationSchema = yup.object({
@@ -26,36 +28,25 @@ const validationSchema = yup.object({
   price: yup.number().required("Product needs a price"),
   description: yup.string().required("Product needs a description"),
   category: yup.string().required("Proudct needs a category"),
+  image: yup.string().required("Fuck off"),
 });
 
-interface categoryTypes {
-  name: string;
-  id: string;
-}
+export const uuid = () => {
+  let dt = new Date().getTime();
+
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (dt + Math.random() * 16) % 16 | 0;
+    dt = Math.floor(dt / 16);
+    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+};
 
 export const AddProduct = () => {
   const db = getFirestore();
+  const storage = getStorage();
   const productCol = collection(db, "products");
   const categoriesCol = collection(db, "categories");
-  const [snapshot, loading, error] = useCollection(categoriesCol);
-
-  // const [categories, setCategories] = useState<any[]>([]);
-  // useEffect(() => {
-  //   getDocs(categoriesCol)
-  //     .then((snapshot) => {
-  //       let lel: any[] = [];
-  //       snapshot.docs.forEach((doc) => {
-  //         // setCategories([...categories, {...doc.data(), id: doc.id}]);
-  //         lel.push({...doc.data(), id: doc.id});
-  //       });
-  //
-  //       setCategories([...lel]);
-  //       console.log(categories);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }, []);
+  const [snapshot] = useCollection(categoriesCol);
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -69,6 +60,7 @@ export const AddProduct = () => {
             description: values.description,
             category: values.category,
             userID: user.uid,
+            image: values.image,
           });
         } else {
           prompt("To add a product you need to be signed in");
@@ -81,6 +73,21 @@ export const AddProduct = () => {
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
+        <Input
+          id="image"
+          name="Image"
+          type="file"
+          inputProps={{accept: "image/*"}}
+          onChange={(event) => {
+            const file = (event.currentTarget as HTMLInputElement).files![0];
+            const storageRef = ref(storage, uuid() + " " + file.name);
+            uploadBytes(storageRef, file).then((snapshot) => {
+              getDownloadURL(snapshot.ref).then((downloadURL) => {
+                formik.setFieldValue("image", downloadURL);
+              });
+            });
+          }}
+        />
         <TextField
           id="title"
           name="title"
@@ -105,6 +112,7 @@ export const AddProduct = () => {
           id="description"
           name="description"
           label="Description"
+          multiline
           value={formik.values.description}
           onChange={formik.handleChange}
           error={
