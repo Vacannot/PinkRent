@@ -1,7 +1,46 @@
 import styles from "./wave.module.scss";
 import Box from "@mui/material/Box";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 function Wave() {
+  const { width } = useWindowDimensions();
+  let breakpoint = false;
+  if (width < 971) {
+    breakpoint = true;
+  }
+  if (breakpoint)
+    return (
+      <Box className={styles.waveBottomPosistion}>
+        <Box
+          className={`${styles.waveWrapperMobile} ${styles.waveAnimationMobile}`}
+        >
+          <Box className={`${styles.waveWrapperInnerMobile} ${styles.bgTop}`}>
+            <Box
+              className={`${styles.wave} ${styles.waveTopMobile}`}
+              sx={{
+                backgroundImage: `url('http://front-end-noobs.com/jecko/img/wave-top.png')`,
+              }}
+            ></Box>
+          </Box>
+          <Box className={`${styles.waveWrapperInner} ${styles.bgMiddle}`}>
+            <Box
+              className={`${styles.wave} ${styles.waveMiddleMobile}`}
+              sx={{
+                backgroundImage: `url('http://front-end-noobs.com/jecko/img/wave-mid.png')`,
+              }}
+            ></Box>
+          </Box>
+          <Box className={`${styles.waveWrapperInner} ${styles.bgBottom}`}>
+            <Box
+              className={`${styles.wave} ${styles.waveBottomMobile}`}
+              sx={{
+                backgroundImage: `url('http://front-end-noobs.com/jecko/img/wave-bot.png')`,
+              }}
+            ></Box>
+          </Box>
+        </Box>
+      </Box>
+    );
   return (
     <>
       <Box className={`${styles.waveWrapper} ${styles.waveAnimation}`}>
