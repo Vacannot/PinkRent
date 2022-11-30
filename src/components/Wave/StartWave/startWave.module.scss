@@ -26,13 +26,13 @@
   overflow: hidden;
   margin: auto;
   z-index: -100;
+  width: auto;
 }
 .waveWrapperInner {
   position: absolute;
   width: 100%;
   overflow: hidden;
   height: 500px;
-  bottom: -1px;
   background-image: linear-gradient(to top, #f5bbdc 20%, #ed80be 80%);
 }
 
