@@ -46,8 +46,10 @@ export default function Header() {
           height: 64,
           alignItems: "center",
         }}
-      >
+        >
+        <Link to={"/productPage"}>
         <img src={LogoMobile} alt="yo" />
+        </Link>
         <Box
           sx={{
             height: 0,
@@ -55,8 +57,8 @@ export default function Header() {
             borderBottom: 1,
             borderColor: "black",
           }}
-        ></Box>
-      </Box>
+          ></Box>
+          </Box>
     );
   return (
     <Box
@@ -80,7 +82,11 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
+
+        <Link to="/productPage" >
         <img src={LogoDesktop} alt="DesktopLogoAlt" />
+        </Link>
+
         <Link to="/about" style={{ textDecoration: "none" }}>
           <Button variant="text">
             <Typography variant="body1" sx={{ color: "grey" }}>
@@ -88,6 +94,7 @@ export default function Header() {
             </Typography>
           </Button>
         </Link>
+        
         <Link to="/contact" style={{ textDecoration: "none" }}>
           <Button variant="text">
             <Typography variant="body1" sx={{ color: "grey" }}>
@@ -95,6 +102,7 @@ export default function Header() {
             </Typography>
           </Button>
         </Link>
+
       </Box>
       <Box
         sx={{
