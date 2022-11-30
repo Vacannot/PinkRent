@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createTheme, ThemeProvider } from "@mui/material";
+import {createTheme, ThemeProvider} from "@mui/material";
 import "@fontsource/montserrat/100.css";
 import "@fontsource/montserrat/200.css";
 import "@fontsource/montserrat/300.css";
@@ -13,6 +13,7 @@ import "@fontsource/montserrat/600.css";
 import "@fontsource/montserrat/700.css";
 import "@fontsource/montserrat/800.css";
 import "@fontsource/montserrat/900.css";
+import AuthProvider from "./backend/Context";
 
 const theme = createTheme({
   palette: {
@@ -33,9 +34,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
 

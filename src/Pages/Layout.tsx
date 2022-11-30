@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
-import { LoginTest, SignupTest } from "../components/Forms/login/login";
+import {Link} from "react-router-dom";
+import {AddProduct} from "../components/Forms/addProduct/addProduct";
+import {LoginTest, SignupTest} from "../components/Forms/login/login";
 
 function StartPage() {
   return (
@@ -7,6 +8,7 @@ function StartPage() {
       <Link to="loginPage">login</Link>
       <LoginTest />
       <SignupTest />
+      <AddProduct />
     </>
   );
 }

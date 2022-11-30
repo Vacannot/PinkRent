@@ -1,66 +1,50 @@
-import {FirebaseApp, initializeApp} from "firebase/app";
+import {initializeApp} from "firebase/app";
 import {collection, getDocs, getFirestore} from "firebase/firestore";
-import {getAuth} from "firebase/auth"
+import {getAuth} from "firebase/auth";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBuYIaKbJ0QAceMYFqdRKcDn_jDig7PKKI",
-    authDomain: "pinkrent-a3337.firebaseapp.com",
-    projectId: "pinkrent-a3337",
-    storageBucket: "pinkrent-a3337.appspot.com",
-    messagingSenderId: "237688511860",
-    appId: "1:237688511860:web:69c3bb31f1a2f98bf36021",
-    measurementId: "G-VZ7HHRH0VM",
-  };
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+};
 
-  // Initialize FireBase app
-  export const app = initializeApp(firebaseConfig);
+// Initialize FireBase app
+export const app = initializeApp(firebaseConfig);
 
-  // Initialize services
-  export const db = getFirestore();
-  export const auth = getAuth(app)
+// Initialize services
+export const db = getFirestore();
+export const auth = getAuth(app);
 
-  // collection ref
-  const colUsers = collection(db, "users");
-  const colProducts = collection(db, "products");
-  const colNotifs = collection(db, "notifications");
+// collection ref
+const colProducts = collection(db, "products");
+const colNotifs = collection(db, "notifications");
 
-  // get user data
-  getDocs(colUsers)
-    .then((snapshot) => {
-      let users: any = [];
-      snapshot.docs.forEach((doc) => {
-        users.push({...doc.data(), id: doc.id});
-      });
-      console.log(users);
-    })
-    .catch((err) => {
-      console.log(err.message);
+//get products data
+getDocs(colProducts)
+  .then((snapshot) => {
+    let products: any = [];
+    snapshot.docs.forEach((doc) => {
+      products.push({...doc.data(), id: doc.id});
     });
+    console.log(products);
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
-  //get products data
-  getDocs(colProducts)
-    .then((snapshot) => {
-      let products: any = [];
-      snapshot.docs.forEach((doc) => {
-        products.push({...doc.data(), id: doc.id});
-      });
-      console.log(products);
-    })
-    .catch((err) => {
-      console.log(err.message);
+//get notifs data
+getDocs(colNotifs)
+  .then((snapshot) => {
+    let notifs: any = [];
+    snapshot.docs.forEach((doc) => {
+      notifs.push({...doc.data(), id: doc.id});
     });
-
-  //get notifs data
-  getDocs(colNotifs)
-    .then((snapshot) => {
-      let notifs: any = [];
-      snapshot.docs.forEach((doc) => {
-        notifs.push({...doc.data(), id: doc.id});
-      });
-      console.log(notifs);
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-  
-
+    console.log(notifs);
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });

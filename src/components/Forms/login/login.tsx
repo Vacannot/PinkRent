@@ -1,11 +1,9 @@
-import { Button, TextField } from "@mui/material";
-import { useFormik } from "formik";
+import {Button, TextField} from "@mui/material";
+import {useFormik} from "formik";
 import * as yup from "yup";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../../../backend/firebase";
+import {createUserWithEmailAndPassword} from "firebase/auth";
+import {auth} from "../../../backend/firebase";
+import {useAuth} from "../../../backend/Context";
 
 const validationSchema = yup.object({
   email: yup
@@ -21,10 +19,7 @@ const initialValues = {
 };
 
 export const LoginTest = () => {
-  const login = async (email: any, password: any) => {
-    const user = await signInWithEmailAndPassword(auth, email, password);
-    console.log(user);
-  };
+  const {login} = useAuth();
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -68,10 +63,7 @@ export const LoginTest = () => {
 };
 
 export const SignupTest = () => {
-  const signup = async (email: any, password: any) => {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
-    console.log(user);
-  };
+  const {signup} = useAuth();
 
   const formik = useFormik({
     initialValues: initialValues,
