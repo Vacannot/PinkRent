@@ -1,8 +1,9 @@
 import { Button, Typography } from "@mui/material";
-import { Box, maxWidth } from "@mui/system";
+import { Box } from "@mui/system";
 import StartWave from "../Wave/StartWave/StartWave";
 import styles from "./StartPageComponent.module.scss";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { Link } from "react-router-dom";
 
 function StartPageComponent() {
   const { width } = useWindowDimensions();
@@ -35,23 +36,33 @@ function StartPageComponent() {
               gap: 2,
             }}
           >
-            <Button
-              variant="contained"
-              sx={{
-                color: "white",
-                maxWidth: "200px",
-                borderRadius: "15px",
-              }}
-            >
-              GET STARTED
-            </Button>
-            <Button
-              variant="contained"
-              color="info"
-              sx={{ color: "#626262", maxWidth: "200px", borderRadius: "15px" }}
-            >
-              REGISTER
-            </Button>
+            <Link to="/catalog" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  color: "white",
+                  maxWidth: "200px",
+                  borderRadius: "15px",
+                  minWidth: "150px",
+                }}
+              >
+                GET STARTED
+              </Button>
+            </Link>
+            <Link to="/register" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                color="info"
+                sx={{
+                  color: "#626262",
+                  maxWidth: "200px",
+                  borderRadius: "15px",
+                  minWidth: "150px",
+                }}
+              >
+                REGISTER
+              </Button>
+            </Link>
           </Box>
         </Box>
         <Box
@@ -92,9 +103,14 @@ function StartPageComponent() {
           creates inspiring experiences for our buyers and sellers, providing
           opportunity to grow and thrive - no matter who they are.
         </Typography>
-        <Button variant="contained" sx={{ color: "white", maxWidth: "200px" }}>
-          GET STARTED
-        </Button>
+        <Link to="/catalog" style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            sx={{ color: "white", maxWidth: "200px" }}
+          >
+            GET STARTED
+          </Button>
+        </Link>
       </Box>
       <Box
         className={styles.wave}
