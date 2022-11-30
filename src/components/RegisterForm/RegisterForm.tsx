@@ -25,7 +25,7 @@ function RegisterForm() {
 
   return (
     <Box
-      className={styles.registerform}
+      className={styles.registerForm}
       sx={{
         display: "flex",
         flexDirection: "column",

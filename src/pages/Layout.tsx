@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
+import { UserProfilePage } from "../components/userProfile/UserProfilePage";
 
 function StartPage() {
   return (
-    <><Link to="loginPage">
-      <button>HejHej</button>
-    </Link>
-    <Link to="productPage">
-        <button>HejHej product</button>
-      </Link></>
+    <div>
+      <Link to="loginPage">
+        <button>HejHej</button>
+      </Link>
+      <UserProfilePage />
+    </div>
   );
 }
 
