@@ -5,7 +5,16 @@ import {
   signOut,
   User,
 } from "firebase/auth";
-import {addDoc, collection, getDocs, query, where} from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  documentId,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import {createContext, useContext, useState} from "react";
 import {auth, db} from "./firebase";
 
@@ -14,6 +23,7 @@ interface context {
   login: (email: string, password: string) => Promise<any>;
   logout: () => void;
   getProductsByUserID: (userid: string) => Promise<any[]>;
+  getCategories: () => Promise<any[]>;
   createNotification: (productID: string) => Promise<void>;
   currentUser?: User;
 }
@@ -24,6 +34,9 @@ export const AuthContext = createContext<context>({
   logout: () => {},
   createNotification: async () => {},
   getProductsByUserID: async (userid: string): Promise<any[]> => {
+    return [];
+  },
+  getCategories: async (): Promise<any[]> => {
     return [];
   },
 });
@@ -54,6 +67,18 @@ export function AuthProvider(props: any) {
       } else {
         prompt("To request a product you need to be signed in");
       }
+    });
+  };
+
+  const getCategories = async (): Promise<any[]> => {
+    const col = collection(db, "categories");
+    const docSnap = await getDocs(col);
+
+    return docSnap.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
     });
   };
 
@@ -116,6 +141,7 @@ export function AuthProvider(props: any) {
         logout,
         getProductsByUserID,
         createNotification,
+        getCategories,
       }}
     >
       {props.children}

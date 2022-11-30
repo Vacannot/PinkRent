@@ -1,11 +1,7 @@
-import NotificationCard from "../components/NotificationComponent/NotificationCard";
+import {UserProfilePage} from "../components/userProfile/UserProfilePage";
 
 function ProfilePage() {
-  return (
-    <>
-      <NotificationCard />
-    </>
-  );
+  return <UserProfilePage />;
 }
 
 export default ProfilePage;

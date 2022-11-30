@@ -5,7 +5,6 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 import {useAuth} from "../backend/Context";
 import {auth} from "../backend/firebase";
-import {AddProduct} from "../components/Forms/addProduct/addProduct";
 import {LoginTest, SignupTest} from "../components/Forms/login/login";
 
 function StartPage() {
@@ -29,7 +28,6 @@ function StartPage() {
       <Link to="loginPage">login</Link>
       <LoginTest />
       <SignupTest />
-      <AddProduct />
       {test.map((p) => {
         return (
           <Box key={p.id}>

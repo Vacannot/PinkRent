@@ -1,11 +1,13 @@
-import { Card, CardContent, IconButton, Typography } from "@mui/material";
-import { BorderColorOutlined, LanguageOutlined } from "@mui/icons-material";
+import {Card, CardContent, IconButton, Typography} from "@mui/material";
+import {BorderColorOutlined, LanguageOutlined} from "@mui/icons-material";
 import styles from "./userProfile.module.scss";
+import {getAuth} from "firebase/auth";
 
 export const UserInfoCard = () => {
+  const user = getAuth().currentUser;
   return (
-    <Card sx={{ width: 335, height: 250 }}>
-      <CardContent sx={{ paddingBottom: "5px" }}>
+    <Card sx={{width: 335, height: 250}}>
+      <CardContent sx={{paddingBottom: "5px"}}>
         <Typography
           sx={{
             display: "flex",
@@ -21,11 +23,9 @@ export const UserInfoCard = () => {
             <BorderColorOutlined />
           </IconButton>
         </Typography>
-        <Typography className={styles.spacing}>Simon Eriksson</Typography>
-        <Typography className={styles.spacing}>
-          Västra Götaland, Borås
-        </Typography>
-        <Typography sx={{mb:'9px'}}>0722358232</Typography>
+        <Typography className={styles.spacing}>{user?.displayName}</Typography>
+        <Typography className={styles.spacing}>{user?.email}</Typography>
+        <Typography sx={{mb: "9px"}}>{user?.phoneNumber}</Typography>
         <Typography
           sx={{
             display: "flex",
