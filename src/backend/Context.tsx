@@ -1,17 +1,21 @@
 import {
   createUserWithEmailAndPassword,
+  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   User,
 } from "firebase/auth";
+import {addDoc, collection, getDocs, query, where} from "firebase/firestore";
 import {createContext, useContext, useState} from "react";
-import {auth} from "./firebase";
+import {auth, db} from "./firebase";
 
 interface context {
   signup: (email: string, password: string) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => void;
+  getProductsByUserID: (userid: string) => Promise<any[]>;
+  createNotification: (productID: string) => Promise<void>;
   currentUser?: User;
 }
 
@@ -19,6 +23,10 @@ export const AuthContext = createContext<context>({
   signup: async () => {},
   login: async () => {},
   logout: () => {},
+  createNotification: async () => {},
+  getProductsByUserID: async (userid: string): Promise<any[]> => {
+    return [];
+  },
 });
 
 export function useAuth() {
@@ -34,6 +42,34 @@ export function AuthProvider(props: any) {
       console.log("Logged out");
     }
   });
+
+  const createNotification = async (productID: string) => {
+    const notificationCol = collection(db, "notifications");
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        addDoc(notificationCol, {
+          userID: user.uid,
+          productID: productID,
+          accepted: false,
+        });
+      } else {
+        prompt("To request a product you need to be signed in");
+      }
+    });
+  };
+
+  const getProductsByUserID = async (userid: string): Promise<any[]> => {
+    const q = query(collection(db, "products"), where("userID", "==", userid));
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+  };
 
   const login = async (email: any, password: any) => {
     await signInWithEmailAndPassword(auth, email, password)
@@ -79,6 +115,8 @@ export function AuthProvider(props: any) {
         login,
         signup,
         logout,
+        getProductsByUserID,
+        createNotification,
       }}
     >
       {props.children}
