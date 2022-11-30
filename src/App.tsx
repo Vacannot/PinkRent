@@ -7,7 +7,10 @@ import ProfilePage from "./pages/ProfilePage";
 import AddProductPage from "./pages/AddProductPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CatalogPage from "./pages/CatalogPage";
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";
+
 
 function App() {
   return (
@@ -23,6 +26,8 @@ function App() {
             <Route path="add" element={<AddProductPage />} />
             <Route path="details" element={<ProductDetailPage />} />
             <Route path="catalog" element={<CatalogPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="about" element={<AboutPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
