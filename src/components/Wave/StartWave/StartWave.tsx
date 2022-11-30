@@ -1,20 +1,18 @@
-import styles from "./wave.module.scss";
+import styles from "./startWave.module.scss";
 import Box from "@mui/material/Box";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
-function Wave() {
+function StartWave() {
   const { width } = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
   }
-  if (breakpoint)
+  if (breakpoint) {
     return (
-      <Box className={styles.waveBottomPosistion}>
-        <Box
-          className={`${styles.waveWrapperMobile} ${styles.waveAnimationMobile}`}
-        >
-          <Box className={`${styles.waveWrapperInnerMobile} ${styles.bgTop}`}>
+      <>
+        <Box className={`${styles.waveWrapper} ${styles.waveAnimationMobile}`}>
+          <Box className={`${styles.waveWrapperInner} ${styles.bgTop}`}>
             <Box
               className={`${styles.wave} ${styles.waveTopMobile}`}
               sx={{
@@ -39,8 +37,9 @@ function Wave() {
             ></Box>
           </Box>
         </Box>
-      </Box>
+      </>
     );
+  }
   return (
     <>
       <Box className={`${styles.waveWrapper} ${styles.waveAnimation}`}>
@@ -73,4 +72,4 @@ function Wave() {
   );
 }
 
-export default Wave;
+export default StartWave;

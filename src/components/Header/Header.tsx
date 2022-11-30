@@ -80,18 +80,21 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
-        <img src={LogoDesktop} alt="yo" />
-        <Button variant="text">
-          <Typography variant="body1" sx={{ color: "grey" }}>
-            ABOUT
-          </Typography>
-        </Button>
-        <Button variant="text">
-          <Typography variant="body1" sx={{ color: "grey" }}>
-            {" "}
-            CONTACT US
-          </Typography>
-        </Button>
+        <img src={LogoDesktop} alt="DesktopLogoAlt" />
+        <Link to="/about" style={{ textDecoration: "none" }}>
+          <Button variant="text">
+            <Typography variant="body1" sx={{ color: "grey" }}>
+              ABOUT
+            </Typography>
+          </Button>
+        </Link>
+        <Link to="/contact" style={{ textDecoration: "none" }}>
+          <Button variant="text">
+            <Typography variant="body1" sx={{ color: "grey" }}>
+              CONTACT US
+            </Typography>
+          </Button>
+        </Link>
       </Box>
       <Box
         sx={{
@@ -102,14 +105,17 @@ export default function Header() {
         }}
       >
         <Stack spacing={4} direction="row">
-          <CustomizedButton
-            startIcon={<AddCircleOutlineIcon color="primary" />}
-            variant="contained"
-          >
-            Add Product
-          </CustomizedButton>
-
-          <Link to="/NotificationPage">
+          <Link to="/add" style={{ textDecoration: "none" }}>
+            <CustomizedButton
+              startIcon={<AddCircleOutlineIcon color="primary" />}
+              variant="contained"
+            >
+              <Typography variant="body1" sx={{ color: "grey" }}>
+                ADD PRODUCT
+              </Typography>
+            </CustomizedButton>
+          </Link>
+          <Link to="/notifications">
             <CustomizedButton
               variant="contained"
               onMouseEnter={() => {
@@ -123,25 +129,32 @@ export default function Header() {
               {!onHover && <NotificationsIcon color="primary" />}
             </CustomizedButton>
           </Link>
-
-          <CustomizedButton
-            onMouseEnter={() => {
-              onHover = true;
-            }}
-            onMouseLeave={() => {
-              onHover = false;
-            }}
-            startIcon={
-              onHover ? (
-                <AccountCircleIcon sx={{ color: "white" }} />
-              ) : (
-                <AccountCircleIcon color="primary" />
-              )
-            }
-            variant="contained"
-          >
-            Profile
-          </CustomizedButton>
+          {false ? (
+            <></>
+          ) : (
+            <Link to="/profile" style={{ textDecoration: "none" }}>
+              <CustomizedButton
+                onMouseEnter={() => {
+                  onHover = true;
+                }}
+                onMouseLeave={() => {
+                  onHover = false;
+                }}
+                startIcon={
+                  onHover ? (
+                    <AccountCircleIcon sx={{ color: "white" }} />
+                  ) : (
+                    <AccountCircleIcon color="primary" />
+                  )
+                }
+                variant="contained"
+              >
+                <Typography variant="body1" sx={{ color: "grey" }}>
+                  {false ? "USERNAME" : "PROFILE"}
+                </Typography>
+              </CustomizedButton>
+            </Link>
+          )}
         </Stack>
       </Box>
     </Box>

@@ -11,51 +11,23 @@
 }
 @keyframes move_wave_mobile {
   0% {
-    transform: translateX(0) translateZ(0) scaleY(0.3);
+    transform: translateX(0) translateZ(0) scaleY(0.5);
   }
   50% {
-    transform: translateX(-25%) translateZ(0) scaleY(0.2);
+    transform: translateX(-25%) translateZ(0) scaleY(0.3);
   }
   100% {
-    transform: translateX(-50%) translateZ(0) scaleY(0.3);
+    transform: translateX(-50%) translateZ(0) scaleY(0.5);
   }
 }
-
-body {
-  overflow: hidden;
-}
-
-.waveBottomPosistion {
-  margin-top: 75vh;
-  bottom: 0;
-}
-
 .waveWrapper {
   position: relative;
-  height: 200px;
+  height: 400px;
   overflow: hidden;
   margin: auto;
   z-index: -100;
 }
-.waveWrapperMobile {
-  height: 180px;
-  bottom: 0;
-  overflow: hidden;
-  z-index: -100;
-  -webkit-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transform: rotate(180deg);
-  background-color: red;
-}
 .waveWrapperInner {
-  position: absolute;
-  width: 100%;
-  overflow: hidden;
-  height: 200px;
-  bottom: -1px;
-  background-image: linear-gradient(to top, #f5bbdc 20%, #ed80be 80%);
-}
-.waveWrapperInnerMobile {
   position: absolute;
   width: 100%;
   overflow: hidden;
@@ -89,7 +61,9 @@ body {
   background-size: 50% 100px;
 }
 .waveAnimationMobile .waveTopMobile {
-  animation: move_wave_mobile 10s linear infinite;
+  animation: move_wave_mobile 3s linear infinite;
+  -webkit-animation: move_wave_mobile 3s;
+  -webkit-animation-delay: 1s;
   animation-delay: 1s;
 }
 .waveAnimation .waveTop {
