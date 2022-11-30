@@ -32,7 +32,7 @@ body {
 
 .waveWrapper {
   position: relative;
-  height: 400px;
+  height: 200px;
   overflow: hidden;
   margin: auto;
   z-index: -100;
@@ -51,7 +51,7 @@ body {
   position: absolute;
   width: 100%;
   overflow: hidden;
-  height: 400px;
+  height: 200px;
   bottom: -1px;
   background-image: linear-gradient(to top, #f5bbdc 20%, #ed80be 80%);
 }
