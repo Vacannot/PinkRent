@@ -1,14 +1,9 @@
 import { Box } from "@mui/system";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import LogoDesktop from "../../assets/LogoDesktop.png";
-import LogoMobile from "../../assets/LogoMobile.png";
+
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { styled } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/Home";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
