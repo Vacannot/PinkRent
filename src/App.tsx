@@ -4,7 +4,6 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Layout from "./layout/Layout";
 import NotificationPage from "./pages/NotificationPage";
-import ProductPage from "./pages/productPage";
 import ProfilePage from "./pages/ProfilePage";
 import AddProductPage from "./pages/AddProductPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
