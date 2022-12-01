@@ -1,8 +1,11 @@
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  PhoneAuthCredential,
   signInWithEmailAndPassword,
   signOut,
+  updatePhoneNumber,
+  updateProfile,
   User,
 } from "firebase/auth";
 import {
@@ -19,7 +22,12 @@ import {createContext, useContext, useState} from "react";
 import {auth, db} from "./firebase";
 
 interface context {
-  signup: (email: string, password: string) => Promise<any>;
+  signup: (
+    email: string,
+    password: string,
+    displayName: string,
+    phoneNumber: string
+  ) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => void;
   getProductsByUserID: (userid: string) => Promise<any[]>;
@@ -108,9 +116,22 @@ export function AuthProvider(props: any) {
       });
   };
 
-  const signup = async (email: any, password: any) => {
+  const signup = async (
+    email: string,
+    password: string,
+    displayName: string,
+    phoneNumber: string
+  ) => {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        updateProfile(userCredential.user, {displayName: displayName});
+        updatePhoneNumber(
+          userCredential.user,
+          PhoneAuthCredential.fromJSON(phoneNumber)!
+        ).then(() => {
+          console.log("Updated phone number");
+        });
+        // userCredential.user.updateProfile();
         const user = userCredential.user;
         console.log(user);
       })

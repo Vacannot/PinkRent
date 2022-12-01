@@ -45,11 +45,6 @@ function ProductPageComponent() {
       >
         <Box sx={{display: "flex"}}>
           <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
         </Box>
       </ImageList>
     </>

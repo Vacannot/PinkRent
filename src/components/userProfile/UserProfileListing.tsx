@@ -25,7 +25,6 @@ import {
   ExpandMore,
 } from "@mui/icons-material";
 import {useEffect, useState} from "react";
-import womanImg from "../../assets/Womenpainting.jpg";
 import {RemoveProductConfirmation} from "./DeleteProductConfirmation";
 import {onAuthStateChanged} from "firebase/auth";
 import {useAuth} from "../../backend/Context";
@@ -103,6 +102,7 @@ export const UserProfileListings = () => {
               const category = getCategoryById(item.category);
               return (
                 <TableRow
+                  key={item.id}
                   sx={{
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr 1fr .5fr",
@@ -177,9 +177,9 @@ export const UserProfileListings = () => {
                             id="demo-simple-select-standard"
                             label="Age"
                           >
-                            {categories.map((item) => {
+                            {categories.map((item, i) => {
                               return (
-                                <MenuItem value={item.name}>
+                                <MenuItem key={i} value={item.name}>
                                   {item.name}
                                 </MenuItem>
                               );
@@ -255,10 +255,6 @@ export const UserProfileListings = () => {
                 </TableRow>
               );
             })}
-
-            {/* {products.map((product) => {
-            return <AdminProductList key={product.id} product={product} />;
-          })} */}
           </TableBody>
         </Table>
       </TableContainer>

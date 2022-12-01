@@ -5,7 +5,7 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 import {useAuth} from "../backend/Context";
 import {auth} from "../backend/firebase";
-import {LoginTest, SignupTest} from "../components/Forms/login/login";
+// import {LoginTest, SignupTest} from "../components/Forms/login/login";
 
 function StartPage() {
   const {getProductsByUserID, createNotification} = useAuth();
@@ -26,8 +26,8 @@ function StartPage() {
   return (
     <>
       <Link to="loginPage">login</Link>
-      <LoginTest />
-      <SignupTest />
+      {/* <LoginTest />
+      <SignupTest /> */}
       {test.map((p) => {
         return (
           <Box key={p.id}>
