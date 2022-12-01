@@ -21,6 +21,7 @@ function StartPageComponent() {
             marginTop: "12vh",
             marginLeft: "9vw",
             gap: 5,
+            width: "800px",
           }}
         >
           <Box>
@@ -49,7 +50,10 @@ function StartPageComponent() {
                 GET STARTED
               </Button>
             </Link>
-            <Link to="/register" style={{ textDecoration: "none" }}>
+            <Link
+              to="/register"
+              style={{ textDecoration: "none", maxWidth: "200px" }}
+            >
               <Button
                 variant="contained"
                 color="info"

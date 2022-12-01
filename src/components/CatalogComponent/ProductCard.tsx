@@ -14,34 +14,44 @@ function ProductCard() {
       <Box
         sx={{
           display: "flex",
-          "@media screen and (max-width: 600px)": {display: "none"},
+          "@media screen and (max-width: 600px)": { display: "none" },
         }}
       >
-        <Card sx={{width: "227px", height: "330px", m: "0.3rem"}}>
-          <img style={{width: "100%", height: "173px"}} src={CarImage} alt="" />
+        <Card sx={{ width: "227px", height: "330px", m: "0.3rem" }}>
+          <img
+            style={{ width: "100%", height: "173px" }}
+            src={CarImage}
+            alt=""
+          />
           <CardContent>
             <Typography
-              sx={{fontFamily: "sans-serif"}}
+              sx={{ fontFamily: "sans-serif" }}
               aria-label="Medium sizes"
               gutterBottom
               component="div"
+              variant="body2"
             >
               La Ferrari Pasta racer 2022
             </Typography>
           </CardContent>
           <Typography variant="body2" color="text.secondary">
-            <PlaceIcon sx={{color: "pink"}} /> västra göteborg
+            <PlaceIcon sx={{ color: "primary.main" }} /> västra göteborg
           </Typography>
-          <CardActions sx={{display: "flex", justifyContent: "space-between"}}>
-            <Typography sx={{ml: ".7rem"}}>230kr</Typography>
+          <CardActions
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              ml: "0.7rem",
+              mr: "0.7rem",
+            }}
+          >
+            <Typography>230kr</Typography>
             <Button
               size="small"
               sx={{
                 height: "1.5rem",
-                backgroundColor: "pink",
-                border: "1px solid white",
+                backgroundColor: "primary.main",
                 color: "white",
-                mr: ".7rem",
                 boxShadow: 3,
               }}
             >
@@ -56,11 +66,11 @@ function ProductCard() {
           height: "200px",
           width: "125px",
           mr: ".5rem",
-          "@media screen and (min-width: 600px)": {display: "none"},
+          "@media screen and (min-width: 600px)": { display: "none" },
         }}
       >
-        <img style={{width: "125px"}} src={CarImage} alt="car" />
-        <Typography sx={{fontSize: "1rem"}}> La Ferrari Pasta </Typography>
+        <img style={{ width: "125px" }} src={CarImage} alt="car" />
+        <Typography sx={{ fontSize: "1rem" }}> La Ferrari Pasta </Typography>
         <Typography variant="body2"> 230kr</Typography>
       </Box>
     </>

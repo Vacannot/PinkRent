@@ -6,9 +6,9 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CarImage from "../../assets/Rectangle42.png";
-import { IconButton, Box } from "@mui/material";
+import {IconButton, Box} from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import MuiAlert, {AlertProps} from "@mui/material/Alert";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -62,7 +62,7 @@ function NotificationCard() {
         <Card
           sx={{
             width: "100%",
-            "@media screen and (min-width: 800px)": { display: "none" },
+            "@media screen and (min-width: 800px)": {display: "none"},
           }}
         >
           <Box
@@ -111,10 +111,10 @@ function NotificationCard() {
           mt: "1rem",
           display: "flex",
           mx: "auto",
-          "@media screen and (max-width: 800px)": { display: "none" },
+          "@media screen and (max-width: 800px)": {display: "none"},
         }}
       >
-        <Typography variant="h5" sx={{ ml: "3.3rem" }}>
+        <Typography variant="h5" sx={{ml: "3.3rem"}}>
           {" "}
           NOTIFICATIONS{" "}
         </Typography>
@@ -124,18 +124,18 @@ function NotificationCard() {
         sx={{
           width: "80%",
           mx: "auto",
-          "@media screen and (max-width: 800px)": { display: "none" },
+          "@media screen and (max-width: 800px)": {display: "none"},
         }}
       >
         <Box
-          sx={{ display: "flex", justifyContent: "space-around", mt: ".5rem" }}
+          sx={{display: "flex", justifyContent: "space-around", mt: ".5rem"}}
         >
           <Typography> Image</Typography>
           <Typography> Title</Typography>
           <Typography> Reguest from</Typography>
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{display: "flex"}}>
             <Typography> Approve</Typography>
-            <Typography sx={{ ml: "1rem" }}> Decliene</Typography>
+            <Typography sx={{ml: "1rem"}}> Decliene</Typography>
           </Box>
         </Box>
         <hr
@@ -151,7 +151,7 @@ function NotificationCard() {
           sx={{
             display: "flex",
             mx: "auto",
-            "@media screen and (max-width: 800px)": { display: "none" },
+            "@media screen and (max-width: 800px)": {display: "none"},
           }}
         >
           <CardContent
@@ -173,7 +173,7 @@ function NotificationCard() {
               <IconButton
                 aria-label="delete"
                 color="success"
-                sx={{ mr: "2.5rem" }}
+                sx={{mr: "2.5rem"}}
                 onClick={() => handleClick("accept")}
               >
                 <CheckIcon />
@@ -199,12 +199,12 @@ function NotificationCard() {
         ></hr>
       </Card>
       <Snackbar open={accept} autoHideDuration={1000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="success" sx={{width: "100%"}}>
           Request confirmed! Renter will be notified!
         </Alert>
       </Snackbar>
       <Snackbar open={decline} autoHideDuration={1000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="error" sx={{width: "100%"}}>
           Request confirmed! Renter will be notified!
         </Alert>
       </Snackbar>
