@@ -2,12 +2,12 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, Box } from "@mui/material";
+import {Button, Box} from "@mui/material";
 import mockData from "../../mockData";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 const ProductDetails = () => {
-  const { width } = useWindowDimensions();
+  const {width} = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
@@ -26,7 +26,7 @@ const ProductDetails = () => {
               paddingTop: "8rem",
             }}
           >
-            <Card sx={{ maxWidth: 345 }}>
+            <Card sx={{maxWidth: 345}}>
               <CardMedia
                 component="img"
                 height="240"
@@ -35,7 +35,7 @@ const ProductDetails = () => {
               />
               <CardContent>
                 <Typography
-                  sx={{ fontSize: "1rem" }}
+                  sx={{fontSize: "1rem"}}
                   gutterBottom
                   variant="h6"
                   component="div"
@@ -60,22 +60,22 @@ const ProductDetails = () => {
               <Box>
                 <Typography
                   variant="subtitle1"
-                  sx={{ marginBottom: 3, marginTop: 3 }}
+                  sx={{marginBottom: 3, marginTop: 3}}
                 >
                   DESCRIPTION
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{ maxWidth: "21rem", marginBottom: 3 }}
+                  sx={{maxWidth: "21rem", marginBottom: 3}}
                 >
                   {data.desc}
                 </Typography>
               </Box>
 
-              <Box sx={{ gap: "10px", display: "flex" }}>
+              <Box sx={{gap: "10px", display: "flex"}}>
                 <Button
                   size="medium"
-                  sx={{ color: "white", background: "#F06A6A" }}
+                  sx={{color: "white", background: "#F06A6A"}}
                   variant="contained"
                 >
                   REPORT
@@ -110,16 +110,16 @@ const ProductDetails = () => {
             paddingTop: "8rem",
           }}
         >
-          <Card sx={{ display: "flex" }}>
+          <Card sx={{display: "flex"}}>
             <CardMedia
               component="img"
               image={data.image}
               alt="green iguana"
-              sx={{ width: "85%" }}
+              sx={{width: "85%"}}
             />
             <CardContent>
               <Typography
-                sx={{ fontSize: "1.8rem", fontWeight: "400" }}
+                sx={{fontSize: "1.8rem", fontWeight: "400"}}
                 gutterBottom
                 variant="h6"
                 component="div"
@@ -180,7 +180,7 @@ const ProductDetails = () => {
                   <span>Price:</span> {data.price} kr/ day
                 </Box>
               </div>
-              <Box sx={{ gap: "60px", display: "flex", marginTop: "2rem" }}>
+              <Box sx={{gap: "60px", display: "flex", marginTop: "2rem"}}>
                 <Button
                   sx={{
                     color: "white",
@@ -193,7 +193,7 @@ const ProductDetails = () => {
                 </Button>
                 <Button
                   size="medium"
-                  sx={{ color: "white", background: "#F06A6A" }}
+                  sx={{color: "white", background: "#F06A6A"}}
                   variant="contained"
                 >
                   REPORT

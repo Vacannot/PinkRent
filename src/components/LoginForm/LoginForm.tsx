@@ -9,8 +9,8 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { Link } from "react-router-dom";
-import { IconButton } from "@mui/material";
+import {Link} from "react-router-dom";
+import {IconButton} from "@mui/material";
 import React from "react";
 
 function LoginForm() {
@@ -20,7 +20,7 @@ function LoginForm() {
   });
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setValues({...values, showPassword: !values.showPassword});
   };
 
   return (

@@ -10,6 +10,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { auth } from "../../backend/firebase";
 
 export default function Header() {
   const { width } = useWindowDimensions();
@@ -17,6 +20,14 @@ export default function Header() {
   if (width < 971) {
     breakpoint = true;
   }
+
+  const [BSUpdate, setBSUpdate] = useState<any>(null);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) setBSUpdate("Hehehe");
+    });
+  }, []);
 
   let onHover = false;
 
@@ -82,7 +93,7 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
-        <Link to="/">
+        <Link to="/productPage">
           <img src={LogoDesktop} alt="DesktopLogoAlt" />
         </Link>
 
@@ -111,34 +122,57 @@ export default function Header() {
         }}
       >
         <Stack spacing={4} direction="row">
-          <Link to="/add" style={{ textDecoration: "none" }}>
-            <CustomizedButton
-              startIcon={<AddCircleOutlineIcon color="primary" />}
-              variant="contained"
-            >
-              <Typography variant="body1" sx={{ color: "grey" }}>
-                ADD PRODUCT
-              </Typography>
-            </CustomizedButton>
-          </Link>
-          <Link to="/notifications">
-            <CustomizedButton
-              variant="contained"
-              onMouseEnter={() => {
-                onHover = true;
-              }}
-              onMouseLeave={() => {
-                onHover = false;
-              }}
-            >
-              {onHover && <NotificationsIcon sx={{ color: "white" }} />}
-              {!onHover && <NotificationsIcon color="primary" />}
-            </CustomizedButton>
-          </Link>
-          {false ? (
-            <></>
+          {getAuth().currentUser ? (
+            <>
+              <Link to="/add" style={{ textDecoration: "none" }}>
+                <CustomizedButton
+                  startIcon={<AddCircleOutlineIcon color="primary" />}
+                  variant="contained"
+                >
+                  <Typography variant="body1" sx={{ color: "grey" }}>
+                    ADD PRODUCT
+                  </Typography>
+                </CustomizedButton>
+              </Link>
+              <Link to="/notifications">
+                <CustomizedButton
+                  variant="contained"
+                  onMouseEnter={() => {
+                    onHover = true;
+                  }}
+                  onMouseLeave={() => {
+                    onHover = false;
+                  }}
+                >
+                  {onHover && <NotificationsIcon sx={{ color: "white" }} />}
+                  {!onHover && <NotificationsIcon color="primary" />}
+                </CustomizedButton>
+              </Link>
+              <Link to="/profile" style={{ textDecoration: "none" }}>
+                <CustomizedButton
+                  onMouseEnter={() => {
+                    onHover = true;
+                  }}
+                  onMouseLeave={() => {
+                    onHover = false;
+                  }}
+                  startIcon={
+                    onHover ? (
+                      <AccountCircleIcon sx={{ color: "white" }} />
+                    ) : (
+                      <AccountCircleIcon color="primary" />
+                    )
+                  }
+                  variant="contained"
+                >
+                  <Typography variant="body1" sx={{ color: "grey" }}>
+                    {getAuth().currentUser!.uid}
+                  </Typography>
+                </CustomizedButton>
+              </Link>
+            </>
           ) : (
-            <Link to="/profile" style={{ textDecoration: "none" }}>
+            <Link to="/login" style={{ textDecoration: "none" }}>
               <CustomizedButton
                 onMouseEnter={() => {
                   onHover = true;
@@ -156,7 +190,7 @@ export default function Header() {
                 variant="contained"
               >
                 <Typography variant="body1" sx={{ color: "grey" }}>
-                  {false ? "USERNAME" : "PROFILE"}
+                  login
                 </Typography>
               </CustomizedButton>
             </Link>

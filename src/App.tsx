@@ -11,6 +11,7 @@ import CatalogPage from "./pages/CatalogPage";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";
+import ProductPage from "./pages/productPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="notifications" element={<NotificationPage />} />
             <Route path="login" element={<LoginPage />} />
+            <Route path="productPage" element={<ProductPage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="add" element={<AddProductPage />} />
