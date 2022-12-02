@@ -20,21 +20,7 @@ export const db = getFirestore();
 export const auth = getAuth(app);
 
 // collection ref
-const colProducts = collection(db, "products");
 const colNotifs = collection(db, "notifications");
-
-//get products data
-getDocs(colProducts)
-  .then((snapshot) => {
-    let products: any = [];
-    snapshot.docs.forEach((doc) => {
-      products.push({...doc.data(), id: doc.id});
-    });
-    console.log(products);
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
 
 //get notifs data
 getDocs(colNotifs)

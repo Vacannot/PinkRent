@@ -11,11 +11,13 @@ import {
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   documentId,
   getDoc,
   getDocs,
   query,
+  setDoc,
   where,
 } from "firebase/firestore";
 import {createContext, useContext, useState} from "react";
@@ -32,8 +34,21 @@ interface context {
   logout: () => void;
   getProductsByUserID: (userid: string) => Promise<any[]>;
   getCategories: () => Promise<any[]>;
+  getProducts: () => Promise<any[]>;
   createNotification: (productID: string) => Promise<void>;
   currentUser?: User;
+  filter: string | null;
+  setFilter: (category: string | null) => void;
+  setProduct: (
+    product: any,
+    values: {
+      category: string;
+      description: string;
+      price: string;
+      title: string;
+    }
+  ) => Promise<void>;
+  deleteProduct: (productID: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<context>({
@@ -47,6 +62,13 @@ export const AuthContext = createContext<context>({
   getCategories: async (): Promise<any[]> => {
     return [];
   },
+  getProducts: async (): Promise<any[]> => {
+    return [];
+  },
+  filter: null,
+  setFilter: () => Promise,
+  setProduct: async () => {},
+  deleteProduct: async () => {},
 });
 
 export function useAuth() {
@@ -55,6 +77,8 @@ export function useAuth() {
 
 export function AuthProvider(props: any) {
   const [currentUser, setCurrentUser] = useState<User>();
+  const [filter, setFilter] = useState<string | null>(null);
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log("Logged in");
@@ -90,6 +114,19 @@ export function AuthProvider(props: any) {
     });
   };
 
+  const getProducts = async (): Promise<any[]> => {
+    const colProducts = collection(db, "products");
+
+    let querySnapshot = await getDocs(colProducts);
+
+    return querySnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+  };
+
   const getProductsByUserID = async (userid: string): Promise<any[]> => {
     const q = query(collection(db, "products"), where("userID", "==", userid));
 
@@ -101,6 +138,30 @@ export function AuthProvider(props: any) {
         ...doc.data(),
       };
     });
+  };
+
+  const setProduct = async (
+    product: any,
+    values: {
+      category: string;
+      description: string;
+      price: string;
+      title: string;
+    }
+  ) => {
+    const col = doc(db, "products", product.id);
+    await setDoc(col, {
+      category: values.category,
+      description: values.description,
+      price: values.price,
+      title: values.title,
+      image: product.image,
+      userID: product.userID,
+    });
+  };
+
+  const deleteProduct = async (productID: string) => {
+    await deleteDoc(doc(db, "products", productID));
   };
 
   const login = async (email: any, password: any) => {
@@ -122,24 +183,19 @@ export function AuthProvider(props: any) {
     displayName: string,
     phoneNumber: string
   ) => {
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        updateProfile(userCredential.user, {displayName: displayName});
-        updatePhoneNumber(
-          userCredential.user,
-          PhoneAuthCredential.fromJSON(phoneNumber)!
-        ).then(() => {
-          console.log("Updated phone number");
-        });
-        // userCredential.user.updateProfile();
-        const user = userCredential.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
+    let userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    await updateProfile(userCredential.user, {displayName: displayName});
+    await updatePhoneNumber(
+      userCredential.user,
+      PhoneAuthCredential.fromJSON(phoneNumber)!
+    );
+    // userCredential.user.updateProfile();
+    const user = userCredential.user;
+    console.log(user);
   };
 
   const logout = async () => {
@@ -163,6 +219,11 @@ export function AuthProvider(props: any) {
         getProductsByUserID,
         createNotification,
         getCategories,
+        getProducts,
+        filter,
+        setFilter,
+        setProduct,
+        deleteProduct,
       }}
     >
       {props.children}

@@ -1,4 +1,4 @@
-import { ResetTv } from "@mui/icons-material";
+import {ResetTv} from "@mui/icons-material";
 import {
   Button,
   Dialog,
@@ -7,9 +7,11 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { useState } from "react";
+import {useState} from "react";
+import {useAuth} from "../../backend/Context";
 
-export const RemoveProductConfirmation = () => {
+export const RemoveProductConfirmation = ({product}: {product: any}) => {
+  const {deleteProduct} = useAuth();
   const [openConfirmation, setOpenConfirmation] = useState(true);
 
   const handleClose = () => {
@@ -18,7 +20,8 @@ export const RemoveProductConfirmation = () => {
   };
 
   const handleDeleteItem = () => {
-    //something...
+    deleteProduct(product.id);
+    // TODO: something... should happen pls :)))))))))))))))))))
     handleClose();
   };
 

@@ -4,6 +4,10 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import {Button, Card, Typography} from "@mui/material";
+import {useEffect, useState} from "react";
+import {onAuthStateChanged} from "firebase/auth";
+import {auth} from "../../backend/firebase";
+import {useAuth} from "../../backend/Context";
 
 const SearchIconWrapper = styled("div")(({theme}) => ({
   padding: theme.spacing(0, 2),
@@ -28,7 +32,20 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
   },
 }));
 
-export default function SearchIconComponent() {
+export default function SearchIconComponent(props: any) {
+  const {getCategories, filter, setFilter} = useAuth();
+  const [categories, setCategories] = useState<any[]>([]);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getCategories().then((categories) => {
+          setCategories(categories);
+        });
+      }
+    });
+  }, [getCategories]);
+
   return (
     <Box
       sx={{
@@ -37,7 +54,30 @@ export default function SearchIconComponent() {
       }}
     >
       <Toolbar sx={{diplay: "flex", justifyContent: "space-around"}}>
-        <Button>VEHICLES</Button>
+        <Button
+          onClick={() => {
+            setFilter(null);
+          }}
+        >
+          Remove Filter
+        </Button>
+        {categories.map((item) => {
+          return (
+            <>
+              <hr
+                style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}}
+              />
+              <Button
+                onClick={() => {
+                  setFilter(item.id);
+                }}
+              >
+                {item.name}
+              </Button>
+            </>
+          );
+        })}
+        {/* <Button>VEHICLES</Button>
         <hr style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}} />
         <Button>HOME</Button>
         <hr style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}} />
@@ -47,7 +87,7 @@ export default function SearchIconComponent() {
         <hr style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}} />
         <Button>RESIDENCE</Button>
         <hr style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}} />
-        <Button>HOBBY</Button>
+        <Button>HOBBY</Button> */}
         <Card sx={{display: "flex", alignItems: "center"}}>
           <SearchIconWrapper>
             <SearchIcon sx={{color: "pink"}} />
