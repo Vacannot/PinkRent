@@ -1,19 +1,58 @@
 import styles from "./registerform.module.scss";
 import InputAdornment from "@mui/material/InputAdornment";
-import Input from "@mui/material/Input";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import IconButton from "@mui/material/IconButton";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React from "react";
+import * as yup from "yup";
+import {useFormik} from "formik";
+import {useAuth} from "../../backend/Context";
+import {TextField} from "@mui/material";
+import {
+  AccountCircleOutlined,
+  AlternateEmailOutlined,
+  LocalPhoneOutlined,
+  LockOutlined,
+  VisibilityOffOutlined,
+  VisibilityOutlined,
+} from "@mui/icons-material";
+
+const validationSchema = yup.object({
+  displayName: yup.string().required("Please enter your name"),
+  phoneNumber: yup.string().required("Number is required"),
+  email: yup
+    .string()
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
+
+const initialValues = {
+  email: "",
+  password: "",
+  displayName: "",
+  phoneNumber: "",
+};
 
 function RegisterForm() {
+  const {signup} = useAuth();
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      await signup(
+        values.email,
+        values.password,
+        values.displayName,
+        values.phoneNumber
+      );
+      formik.resetForm();
+      navigate("/productPage");
+    },
+  });
   const [values, setValues] = React.useState({
     password: "",
     showPassword: false,
@@ -39,95 +78,120 @@ function RegisterForm() {
       >
         CREATE ACCOUNT
       </h2>
-      <FormControl
-        sx={{
-          width: "267px",
-          marginBottom: "50px",
-          paddingTop: "8px",
-        }}
-        className={styles.registerFormControl}
-        variant="standard"
-      >
-        <InputLabel
+      <form onSubmit={formik.handleSubmit} className={styles.centerForm}>
+        <TextField
           sx={{
-            color: "black",
-            letterSpacing: "-3%",
+            paddingBottom: "1rem",
+            width: "17rem",
+            paddingTop: ".5rem",
           }}
-          htmlFor="register-form-username"
-        >
-          Username
-        </InputLabel>
-        <Input
-          id="register-form-username"
-          placeholder="Type your username"
-          sx={{
-            paddingBottom: "16px",
-          }}
-          startAdornment={
-            <InputAdornment position="start">
-              <AccountCircleOutlinedIcon />
-            </InputAdornment>
+          id="displayName"
+          name="displayName"
+          label="Name"
+          value={formik.values.displayName}
+          onChange={formik.handleChange}
+          error={
+            formik.touched.displayName && Boolean(formik.errors.displayName)
           }
+          helperText={formik.touched.displayName && formik.errors.displayName}
+          variant="standard"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircleOutlined />
+              </InputAdornment>
+            ),
+          }}
         />
-      </FormControl>
-      <FormControl
-        sx={{
-          width: "267px",
-          paddingTop: "8px",
-        }}
-        className={styles.registerFormControl}
-        variant="standard"
-      >
-        <InputLabel
+        <TextField
           sx={{
-            marginBottom: "22px",
-            color: "black",
-            letterSpacing: "-3%",
+            paddingBottom: "1rem",
+            width: "17rem",
+            paddingTop: ".5rem",
           }}
-          htmlFor="register-form-password"
-        >
-          Password
-        </InputLabel>
-        <Input
-          id="register-form-password"
-          placeholder="Type your password"
+          id="phoneNumber"
+          name="phoneNumber"
+          label="Number"
+          type="tel"
+          value={formik.values.phoneNumber}
+          onChange={formik.handleChange}
+          error={
+            formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
+          }
+          helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+          variant="standard"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LocalPhoneOutlined />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextField
+          sx={{
+            paddingBottom: "1rem",
+            width: "17rem",
+            paddingTop: ".5rem",
+          }}
+          id="email"
+          name="email"
+          label="Email"
+          type="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+          variant="standard"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AlternateEmailOutlined />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextField
+          sx={{
+            paddingBottom: "1rem",
+            width: "17rem",
+            paddingTop: ".5rem",
+          }}
+          id="password"
+          name="password"
+          label="Password"
           type={values.showPassword ? "text" : "password"}
-          sx={{
-            paddingBottom: "16px",
-            position: "relative",
-            paddingRight: "2.5rem",
-          }}
-          startAdornment={
-            <InputAdornment position="start">
-              <LockOutlinedIcon />
-              <IconButton
-                sx={{
-                  position: "absolute",
-                  right: "0",
-                }}
-                onClick={handleClickShowPassword}
-              >
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+          variant="standard"
+          InputProps={{
+            startAdornment: <LockOutlined />,
+            endAdornment: (
+              <IconButton onClick={handleClickShowPassword}>
                 {values.showPassword ? (
-                  <VisibilityOutlinedIcon />
+                  <VisibilityOutlined />
                 ) : (
-                  <VisibilityOffOutlinedIcon />
+                  <VisibilityOffOutlined />
                 )}
               </IconButton>
-            </InputAdornment>
-          }
+            ),
+          }}
         />
-      </FormControl>
-      <Button
-        sx={{
-          width: "266px",
-          color: "white",
-          marginTop: "74px",
-          marginBottom: "94px",
-        }}
-        variant="contained"
-      >
-        REGISTER
-      </Button>
+        <Button
+          sx={{
+            width: "266px",
+            color: "white",
+            marginTop: "3rem",
+            marginBottom: "1rem",
+          }}
+          variant="contained"
+          type="submit"
+        >
+          Register
+        </Button>
+      </form>
       <Link
         to="/login"
         style={{

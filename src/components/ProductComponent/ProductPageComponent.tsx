@@ -24,12 +24,6 @@ function ProductPageComponent() {
       >
         <Box sx={{display: "flex"}}>
           <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
         </Box>
       </ImageList>
 
@@ -50,11 +44,6 @@ function ProductPageComponent() {
         rowHeight={164}
       >
         <Box sx={{display: "flex"}}>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
           <ProductCard />
         </Box>
       </ImageList>
