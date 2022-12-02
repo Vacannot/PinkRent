@@ -58,6 +58,10 @@ export default function SearchIconComponent() {
           style={{ height: "1.7rem", margin: "0", backgroundColor: "primary" }}
         />
         <Button>HOBBY</Button>
+        {/* <hr
+          style={{ height: "1.7rem", margin: "0", backgroundColor: "primary" }}
+        />
+        <Button>OTHER</Button> */}
         <Card sx={{ display: "flex", alignItems: "center" }}>
           <SearchIconWrapper>
             <SearchIcon sx={{ color: "pink" }} />
