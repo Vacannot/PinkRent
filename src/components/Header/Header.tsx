@@ -21,7 +21,7 @@ export default function Header() {
     breakpoint = true;
   }
 
-  const [BSUpdate, setBSUpdate] = useState<any>(null);
+  const [, setBSUpdate] = useState<any>(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -166,7 +166,7 @@ export default function Header() {
                   variant="contained"
                 >
                   <Typography variant="body1" sx={{color: "grey"}}>
-                    {getAuth().currentUser!.uid}
+                    {getAuth().currentUser!.displayName}
                   </Typography>
                 </CustomizedButton>
               </Link>
