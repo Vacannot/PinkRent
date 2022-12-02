@@ -1,7 +1,13 @@
-import RegisterForm from "../components/RegisterForm/RegisterForm";
+import ProductPageComponent from "../components/CatalogComponent/ProductPageComponent";
+import SearchIconComponent from "../components/CatalogComponent/searchCatalog";
 
 function CatalogPage() {
-  return <RegisterForm />;
+  return (
+    <>
+      <SearchIconComponent />
+      <ProductPageComponent />
+    </>
+  );
 }
 
 export default CatalogPage;

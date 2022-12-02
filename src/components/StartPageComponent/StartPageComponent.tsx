@@ -1,12 +1,12 @@
-import {Button, Typography} from "@mui/material";
-import {Box} from "@mui/system";
+import { Button, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import StartWave from "../Wave/StartWave/StartWave";
 import styles from "./StartPageComponent.module.scss";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function StartPageComponent() {
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
@@ -21,6 +21,7 @@ function StartPageComponent() {
             marginTop: "12vh",
             marginLeft: "9vw",
             gap: 5,
+            width: "800px",
           }}
         >
           <Box>
@@ -36,7 +37,7 @@ function StartPageComponent() {
               gap: 2,
             }}
           >
-            <Link to="/catalog" style={{textDecoration: "none"}}>
+            <Link to="/catalog" style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
                 sx={{
@@ -49,7 +50,10 @@ function StartPageComponent() {
                 GET STARTED
               </Button>
             </Link>
-            <Link to="/register" style={{textDecoration: "none"}}>
+            <Link
+              to="/register"
+              style={{ textDecoration: "none", maxWidth: "200px" }}
+            >
               <Button
                 variant="contained"
                 color="info"
@@ -98,13 +102,16 @@ function StartPageComponent() {
             EASIER.
           </Typography>
         </Box>
-        <Typography variant="body1" paragraph={true} sx={{maxWidth: "624px"}}>
+        <Typography variant="body1" paragraph={true} sx={{ maxWidth: "624px" }}>
           We connect people to create economic opportunites for all. PinkRent
           creates inspiring experiences for our buyers and sellers, providing
           opportunity to grow and thrive - no matter who they are.
         </Typography>
-        <Link to="/catalog" style={{textDecoration: "none"}}>
-          <Button variant="contained" sx={{color: "white", maxWidth: "200px"}}>
+        <Link to="/catalog" style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            sx={{ color: "white", maxWidth: "200px" }}
+          >
             GET STARTED
           </Button>
         </Link>
