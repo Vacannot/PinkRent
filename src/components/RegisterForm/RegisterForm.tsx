@@ -12,7 +12,6 @@ import {TextField} from "@mui/material";
 import {
   AccountCircleOutlined,
   AlternateEmailOutlined,
-  LocalPhoneOutlined,
   LockOutlined,
   VisibilityOffOutlined,
   VisibilityOutlined,
@@ -20,7 +19,6 @@ import {
 
 const validationSchema = yup.object({
   displayName: yup.string().required("Please enter your name"),
-  phoneNumber: yup.string().required("Number is required"),
   email: yup
     .string()
     .email("Enter a valid email")
@@ -32,7 +30,6 @@ const initialValues = {
   email: "",
   password: "",
   displayName: "",
-  phoneNumber: "",
 };
 
 function RegisterForm() {
@@ -43,12 +40,7 @@ function RegisterForm() {
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await signup(
-        values.email,
-        values.password,
-        values.displayName,
-        values.phoneNumber
-      );
+      await signup(values.email, values.password, values.displayName);
       formik.resetForm();
       navigate("/productPage");
     },
@@ -99,31 +91,6 @@ function RegisterForm() {
             startAdornment: (
               <InputAdornment position="start">
                 <AccountCircleOutlined />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          sx={{
-            paddingBottom: "1rem",
-            width: "17rem",
-            paddingTop: ".5rem",
-          }}
-          id="phoneNumber"
-          name="phoneNumber"
-          label="Number"
-          type="tel"
-          value={formik.values.phoneNumber}
-          onChange={formik.handleChange}
-          error={
-            formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
-          }
-          helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
-          variant="standard"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LocalPhoneOutlined />
               </InputAdornment>
             ),
           }}
