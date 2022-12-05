@@ -9,13 +9,14 @@ import {
 } from "@mui/material";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {addDoc, collection, getFirestore} from "firebase/firestore";
+import {collection} from "firebase/firestore";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
-import {onAuthStateChanged} from "firebase/auth";
 import {useCollection} from "react-firebase-hooks/firestore";
-import {auth} from "../backend/firebase";
+import {db} from "../backend/firebase";
+import {useAuth} from "../backend/Context";
 
 const initialValues = {
+  location: "",
   title: "",
   price: 0,
   description: "",
@@ -24,11 +25,12 @@ const initialValues = {
 };
 
 const validationSchema = yup.object({
+  location: yup.string().required("Product needs a location"),
   title: yup.string().required("Product needs a title"),
   price: yup.number().required("Product needs a price"),
   description: yup.string().required("Product needs a description"),
-  category: yup.string().required("Proudct needs a category"),
-  image: yup.string().required("Fuck off"),
+  category: yup.string().required("Product needs a category"),
+  image: yup.string().required("image is required"),
 });
 
 export const uuid = () => {
@@ -42,9 +44,10 @@ export const uuid = () => {
 };
 
 function AddProductPage() {
-  const db = getFirestore();
+  const {createProduct} = useAuth();
+
   const storage = getStorage();
-  const productCol = collection(db, "products");
+
   const categoriesCol = collection(db, "categories");
   const [snapshot] = useCollection(categoriesCol);
 
@@ -52,20 +55,7 @@ function AddProductPage() {
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          addDoc(productCol, {
-            title: values.title,
-            price: values.price,
-            description: values.description,
-            category: values.category,
-            userID: user.uid,
-            image: values.image,
-          });
-        } else {
-          prompt("To add a product you need to be signed in");
-        }
-      });
+      createProduct(values);
       formik.resetForm();
     },
   });
@@ -119,6 +109,16 @@ function AddProductPage() {
             formik.touched.description && Boolean(formik.errors.description)
           }
           helperText={formik.touched.description && formik.errors.description}
+          variant="standard"
+        />
+        <TextField
+          id="location"
+          name="location"
+          label="Location"
+          value={formik.values.location}
+          onChange={formik.handleChange}
+          error={formik.touched.location && Boolean(formik.errors.location)}
+          helperText={formik.touched.location && formik.errors.location}
           variant="standard"
         />
         <FormControl sx={{minWidth: 120}} required>

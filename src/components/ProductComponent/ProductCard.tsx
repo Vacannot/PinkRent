@@ -8,11 +8,13 @@ import {
 } from "@mui/material";
 import {onAuthStateChanged} from "firebase/auth";
 import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../backend/Context";
 import {auth} from "../../backend/firebase";
 
 function ProductCard() {
   const {getProducts, createNotification, filter} = useAuth();
+  const navigate = useNavigate();
 
   const [products, setProducts] = useState<any[]>([]);
 
@@ -27,7 +29,6 @@ function ProductCard() {
   }, [getProducts]);
   return (
     <>
-      <p>{filter}</p>
       {products
         .filter((item) => {
           if (filter === null) return true;
@@ -42,6 +43,9 @@ function ProductCard() {
                 "@media screen and (max-width: 600px)": {display: "none"},
               }}
               key={item.id}
+              onClick={() => {
+                navigate(`/details/${item.id}`);
+              }}
             >
               <Card sx={{width: "227px", height: "330px", m: "0.3rem"}}>
                 <img
@@ -73,13 +77,15 @@ function ProductCard() {
                       mr: ".7rem",
                       boxShadow: 3,
                     }}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
+
                       createNotification(item.id).then(() => {
                         console.log("Create Notification done");
                       });
                     }}
                   >
-                    Contact
+                    Request
                   </Button>
                 </CardActions>
               </Card>

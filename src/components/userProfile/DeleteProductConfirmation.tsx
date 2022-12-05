@@ -1,4 +1,3 @@
-import {ResetTv} from "@mui/icons-material";
 import {
   Button,
   Dialog,
@@ -33,7 +32,7 @@ export const RemoveProductConfirmation = ({product}: {product: any}) => {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="responsive-dialog-title">
-        {"Are you sure you want to remove this item?"}
+        Are you sure you want to remove this item?
       </DialogTitle>
       <DialogContent>
         <DialogContentText>This action cannot be reverted.</DialogContentText>
