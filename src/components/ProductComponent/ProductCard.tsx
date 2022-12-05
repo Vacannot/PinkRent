@@ -6,11 +6,9 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import {onAuthStateChanged} from "firebase/auth";
 import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../backend/Context";
-import {auth} from "../../backend/firebase";
 
 function ProductCard() {
   const {getProducts, createNotification, filter} = useAuth();
@@ -19,12 +17,8 @@ function ProductCard() {
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        getProducts().then((products) => {
-          setProducts(products);
-        });
-      }
+    getProducts().then((products) => {
+      setProducts(products);
     });
   }, [getProducts]);
   return (

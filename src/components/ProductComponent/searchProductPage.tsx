@@ -37,12 +37,8 @@ export default function SearchIconComponent(props: any) {
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        getCategories().then((categories) => {
-          setCategories(categories);
-        });
-      }
+    getCategories().then((categories) => {
+      setCategories(categories);
     });
   }, [getCategories]);
 
