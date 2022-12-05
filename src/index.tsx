@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import {createTheme, ThemeProvider} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material";
 import "@fontsource/montserrat/100.css";
 import "@fontsource/montserrat/200.css";
 import "@fontsource/montserrat/300.css";
@@ -38,14 +38,14 @@ const theme = createTheme({
       main: "#E11010",
     },
     info: {
-      main: "#5CA9F0",
+      main: "",
     },
     success: {
       main: "#94DB5D",
     },
     warning: {
       main: "#91C98C",
-    }
+    },
   },
   typography: {
     fontFamily: "Montserrat, sans-serif",

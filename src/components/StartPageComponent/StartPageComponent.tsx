@@ -55,11 +55,12 @@ function StartPageComponent() {
               style={{ textDecoration: "none", maxWidth: "200px" }}
             >
               <Button
-                variant="contained"
+                variant="outlined"
                 color="info"
                 sx={{
-                  color: "#626262",
+                  color: "#606060",
                   maxWidth: "200px",
+                  border: "2px solid #F5BBDC",
                   borderRadius: "15px",
                   minWidth: "150px",
                 }}
