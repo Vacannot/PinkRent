@@ -29,6 +29,219 @@ import {RemoveProductConfirmation} from "./DeleteProductConfirmation";
 import {onAuthStateChanged} from "firebase/auth";
 import {useAuth} from "../../backend/Context";
 import {auth} from "../../backend/firebase";
+import {useFormik} from "formik";
+import * as yup from "yup";
+
+const getCategoryById = (categories: any[], id: string) => {
+  for (let category of categories) {
+    if (category.id === id) {
+      return category;
+    }
+  }
+
+  return "ERROR";
+};
+
+const ProductInfo = ({
+  product,
+  category,
+  openConfirm,
+  setEditing,
+  check,
+}: {
+  product: any;
+  category: any;
+  openConfirm: boolean;
+  setEditing: (edit: boolean) => void;
+  check: () => void;
+}) => {
+  return (
+    <>
+      <Typography sx={{mb: ".7rem", mt: ".5rem"}}>
+        {product.description}
+      </Typography>
+      <Typography sx={{mb: ".7rem"}}>Category: {category.name}</Typography>
+      {/* <Typography>Rented: True</Typography> */}
+      <ButtonGroup sx={{position: "absolute", right: 0, bottom: 0}}>
+        <Button
+          startIcon={<EditOutlined />}
+          color="info"
+          variant="contained"
+          sx={{color: "white"}}
+          onClick={() => setEditing(true)}
+        >
+          Edit
+        </Button>
+        <Button
+          endIcon={<DeleteOutlineOutlined />}
+          color="error"
+          variant="contained"
+          onClick={() => check()}
+        >
+          {openConfirm ? (
+            <RemoveProductConfirmation product={product} />
+          ) : undefined}
+          Delete
+        </Button>
+      </ButtonGroup>
+    </>
+  );
+};
+
+const validationSchema = yup.object({
+  title: yup.string().required(),
+  description: yup.string().required(),
+  price: yup.string().required(),
+  category: yup.string().required(),
+});
+
+const EditProduct = ({
+  product,
+  categories,
+  openConfirm,
+  setEditing,
+  check,
+  update,
+}: {
+  product: any;
+  categories: any[];
+
+  openConfirm: boolean;
+  setEditing: (edit: boolean) => void;
+  check: () => void;
+  update: () => void;
+}) => {
+  const {setProduct} = useAuth();
+
+  const initialValues = {
+    title: product.title,
+    description: product.description,
+    price: product.price,
+    category: getCategoryById(categories, product.category).id,
+  };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      console.log(values);
+      await setProduct(product, values);
+      update();
+    },
+  });
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <TextField
+        required
+        id="title"
+        label="Title"
+        value={formik.values.title}
+        onChange={formik.handleChange}
+        error={formik.touched.title && Boolean(formik.errors.title)}
+        // helperText={formik.touched.description && formik.errors.description}
+        variant="standard"
+        sx={{width: "25rem"}}
+        inputProps={{style: {fontSize: ".9rem"}}}
+        InputLabelProps={{style: {fontSize: ".9rem"}}}
+      />
+      <TextField
+        required
+        multiline
+        id="description"
+        label="Description"
+        value={formik.values.description}
+        onChange={formik.handleChange}
+        error={formik.touched.description && Boolean(formik.errors.description)}
+        // helperText={formik.touched.description && formik.errors.description}
+        variant="standard"
+        sx={{width: "25rem"}}
+        inputProps={{style: {fontSize: ".9rem"}}}
+        InputLabelProps={{style: {fontSize: ".9rem"}}}
+      />
+      <TextField
+        required
+        multiline
+        id="price"
+        label="Price"
+        value={formik.values.price}
+        onChange={formik.handleChange}
+        error={formik.touched.price && Boolean(formik.errors.price)}
+        // helperText={formik.touched.description && formik.errors.description}
+        variant="standard"
+        sx={{width: "25rem"}}
+        inputProps={{style: {fontSize: ".9rem"}}}
+        InputLabelProps={{style: {fontSize: ".9rem"}}}
+      />
+
+      <FormControl sx={{mt: ".5rem", width: "13rem"}} variant="standard">
+        <InputLabel sx={{fontSize: ".9rem"}} id="category-label">
+          Category*
+        </InputLabel>
+        <Select
+          labelId="category-label"
+          id="category-select"
+          label="Category"
+          value={formik.values.category}
+          onChange={(event) => {
+            console.log("Change");
+            console.log(event.target.value);
+            formik.setFieldValue("category", event.target.value);
+          }}
+        >
+          {categories.map((item, i) => {
+            return (
+              <MenuItem key={i} value={item.id}>
+                {item.name}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+      <ButtonGroup sx={{position: "absolute", right: 0, bottom: 0}}>
+        <Button
+          startIcon={<CheckOutlined />}
+          color="success"
+          variant="contained"
+          sx={{color: "white"}}
+          onClick={() => {
+            setEditing(false);
+            formik.handleSubmit();
+          }}
+        >
+          Save
+        </Button>
+        <Button
+          endIcon={<DeleteOutlineOutlined />}
+          color="error"
+          variant="contained"
+          onClick={() => check()}
+        >
+          {openConfirm ? (
+            <RemoveProductConfirmation product={product} />
+          ) : undefined}
+          Delete
+        </Button>
+      </ButtonGroup>
+
+      {/* <FormControl sx={{mt: ".5rem", width: "10rem"}} variant="standard">
+        <InputLabel
+          sx={{fontSize: ".9rem"}}
+          id="demo-simple-select-standard-label"
+        >
+          Rented*
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          label="Rented"
+        >
+          <MenuItem value="RENTED">RENTED</MenuItem>
+          <MenuItem value="NOT RENTED">NOT RENTED</MenuItem>
+        </Select>
+      </FormControl> */}
+    </form>
+  );
+};
 
 export const UserProfileListings = () => {
   const {getProductsByUserID, getCategories} = useAuth();
@@ -67,6 +280,16 @@ export const UserProfileListings = () => {
     console.log("before", openConfirm);
     setOpenConfirm(true);
     console.log("after", openConfirm);
+  };
+
+  const update = () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getProductsByUserID(user.uid).then((products) => {
+          setProducts(products);
+        });
+      }
+    });
   };
 
   return (
@@ -147,110 +370,24 @@ export const UserProfileListings = () => {
                       }}
                     >
                       {editing ? (
-                        <TextField
-                          required
-                          multiline
-                          label="Description"
-                          variant="standard"
-                          sx={{width: "25rem"}}
-                          inputProps={{style: {fontSize: ".9rem"}}}
-                          InputLabelProps={{style: {fontSize: ".9rem"}}}
+                        <EditProduct
+                          product={item}
+                          categories={categories}
+                          openConfirm={openConfirm}
+                          setEditing={setEditing}
+                          check={check}
+                          update={update}
                         />
                       ) : (
-                        <Typography sx={{mb: ".7rem", mt: ".5rem"}}>
-                          {item.description}
-                        </Typography>
-                      )}
-                      {editing ? (
-                        <FormControl
-                          sx={{mt: ".5rem", width: "13rem"}}
-                          variant="standard"
-                        >
-                          <InputLabel
-                            sx={{fontSize: ".9rem"}}
-                            id="demo-simple-select-standard-label"
-                          >
-                            Category*
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            label="Age"
-                          >
-                            {categories.map((item, i) => {
-                              return (
-                                <MenuItem key={i} value={item.name}>
-                                  {item.name}
-                                </MenuItem>
-                              );
-                            })}
-                          </Select>
-                        </FormControl>
-                      ) : (
-                        <Typography sx={{mb: ".7rem"}}>
-                          Category: {category.name}
-                        </Typography>
-                      )}
-                      {editing ? (
-                        <FormControl
-                          sx={{mt: ".5rem", width: "10rem"}}
-                          variant="standard"
-                        >
-                          <InputLabel
-                            sx={{fontSize: ".9rem"}}
-                            id="demo-simple-select-standard-label"
-                          >
-                            Rented*
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            label="Rented"
-                          >
-                            <MenuItem value="RENTED">RENTED</MenuItem>
-                            <MenuItem value="NOT RENTED">NOT RENTED</MenuItem>
-                          </Select>
-                        </FormControl>
-                      ) : (
-                        <Typography>Rented: True</Typography>
+                        <ProductInfo
+                          product={item}
+                          category={category}
+                          openConfirm={openConfirm}
+                          setEditing={setEditing}
+                          check={check}
+                        />
                       )}
                     </Box>
-                    <ButtonGroup
-                      sx={{position: "absolute", right: 0, bottom: 0}}
-                    >
-                      {editing ? (
-                        <Button
-                          startIcon={<CheckOutlined />}
-                          color="success"
-                          variant="contained"
-                          sx={{color: "white"}}
-                          onClick={() => setEditing(false)}
-                        >
-                          Save
-                        </Button>
-                      ) : (
-                        <Button
-                          startIcon={<EditOutlined />}
-                          color="info"
-                          variant="contained"
-                          sx={{color: "white"}}
-                          onClick={() => setEditing(true)}
-                        >
-                          Edit
-                        </Button>
-                      )}
-                      <Button
-                        endIcon={<DeleteOutlineOutlined />}
-                        color="error"
-                        variant="contained"
-                        onClick={() => check()}
-                      >
-                        {openConfirm ? (
-                          <RemoveProductConfirmation />
-                        ) : undefined}
-                        Delete
-                      </Button>
-                    </ButtonGroup>
                   </Collapse>
                 </TableRow>
               );
