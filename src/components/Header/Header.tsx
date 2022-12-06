@@ -1,4 +1,4 @@
-import { Box } from "@mui/system";
+import {Box} from "@mui/system";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -8,26 +8,27 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Link } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth } from "../../backend/firebase";
+import {Link} from "react-router-dom";
+import {styled} from "@mui/material/styles";
+import {onAuthStateChanged} from "firebase/auth";
+import {useCallback, useEffect, useState} from "react";
+import {auth} from "../../backend/firebase";
 
 export default function Header() {
-  const { width } = useWindowDimensions();
+  const {width} = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
   }
 
-  const [, setBSUpdate] = useState<any>(null);
+  const [, updateState] = useState<any>();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) setBSUpdate("Hehehe");
+    onAuthStateChanged(auth, () => {
+      forceUpdate();
     });
-  }, []);
+  }, [forceUpdate]);
 
   let onHover = false;
 
@@ -93,7 +94,7 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
-        {getAuth().currentUser ? (
+        {auth.currentUser ? (
           <Link to="/catalog">
             <img src={LogoDesktop} alt="DesktopLogoAlt" />
           </Link>
@@ -103,17 +104,17 @@ export default function Header() {
           </Link>
         )}
 
-        <Link to="/about" style={{ textDecoration: "none" }}>
+        <Link to="/about" style={{textDecoration: "none"}}>
           <Button variant="text">
-            <Typography variant="body1" sx={{ color: "grey" }}>
+            <Typography variant="body1" sx={{color: "grey"}}>
               ABOUT
             </Typography>
           </Button>
         </Link>
 
-        <Link to="/contact" style={{ textDecoration: "none" }}>
+        <Link to="/contact" style={{textDecoration: "none"}}>
           <Button variant="text">
-            <Typography variant="body1" sx={{ color: "grey" }}>
+            <Typography variant="body1" sx={{color: "grey"}}>
               CONTACT US
             </Typography>
           </Button>
@@ -128,14 +129,14 @@ export default function Header() {
         }}
       >
         <Stack spacing={4} direction="row">
-          {getAuth().currentUser ? (
+          {auth.currentUser ? (
             <>
-              <Link to="/add" style={{ textDecoration: "none" }}>
+              <Link to="/add" style={{textDecoration: "none"}}>
                 <CustomizedButton
                   startIcon={<AddCircleOutlineIcon color="primary" />}
                   variant="contained"
                 >
-                  <Typography variant="body1" sx={{ color: "grey" }}>
+                  <Typography variant="body1" sx={{color: "grey"}}>
                     ADD PRODUCT
                   </Typography>
                 </CustomizedButton>
@@ -150,11 +151,11 @@ export default function Header() {
                     onHover = false;
                   }}
                 >
-                  {onHover && <NotificationsIcon sx={{ color: "white" }} />}
+                  {onHover && <NotificationsIcon sx={{color: "white"}} />}
                   {!onHover && <NotificationsIcon color="primary" />}
                 </CustomizedButton>
               </Link>
-              <Link to="/profile" style={{ textDecoration: "none" }}>
+              <Link to="/profile" style={{textDecoration: "none"}}>
                 <CustomizedButton
                   onMouseEnter={() => {
                     onHover = true;
@@ -164,21 +165,21 @@ export default function Header() {
                   }}
                   startIcon={
                     onHover ? (
-                      <AccountCircleIcon sx={{ color: "white" }} />
+                      <AccountCircleIcon sx={{color: "white"}} />
                     ) : (
                       <AccountCircleIcon color="primary" />
                     )
                   }
                   variant="contained"
                 >
-                  <Typography variant="body1" sx={{ color: "grey" }}>
-                    {getAuth().currentUser!.displayName}
+                  <Typography variant="body1" sx={{color: "grey"}}>
+                    {auth.currentUser!.displayName}
                   </Typography>
                 </CustomizedButton>
               </Link>
             </>
           ) : (
-            <Link to="/login" style={{ textDecoration: "none" }}>
+            <Link to="/login" style={{textDecoration: "none"}}>
               <CustomizedButton
                 onMouseEnter={() => {
                   onHover = true;
@@ -188,14 +189,14 @@ export default function Header() {
                 }}
                 startIcon={
                   onHover ? (
-                    <AccountCircleIcon sx={{ color: "white" }} />
+                    <AccountCircleIcon sx={{color: "white"}} />
                   ) : (
                     <AccountCircleIcon color="primary" />
                   )
                 }
                 variant="contained"
               >
-                <Typography variant="body1" sx={{ color: "grey" }}>
+                <Typography variant="body1" sx={{color: "grey"}}>
                   login
                 </Typography>
               </CustomizedButton>

@@ -6,11 +6,11 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { Link, useNavigate } from "react-router-dom";
-import { IconButton, TextField } from "@mui/material";
+import {Link, useNavigate} from "react-router-dom";
+import {IconButton, TextField} from "@mui/material";
 import React from "react";
-import { useFormik } from "formik";
-import { useAuth } from "../../backend/Context";
+import {useFormik} from "formik";
+import {useAuth} from "../../backend/Context";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
@@ -27,16 +27,18 @@ const initialValues = {
 };
 
 function LoginForm() {
-  const { login } = useAuth();
+  const {login} = useAuth();
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      await login(values.email, values.password);
+    onSubmit: (values) => {
+      login(values.email, values.password).then(() => {
+        navigate("/catalog");
+      });
+
       formik.resetForm();
-      navigate("/catalog");
     },
   });
   const [values, setValues] = React.useState({
@@ -45,7 +47,7 @@ function LoginForm() {
   });
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setValues({...values, showPassword: !values.showPassword});
   };
 
   return (

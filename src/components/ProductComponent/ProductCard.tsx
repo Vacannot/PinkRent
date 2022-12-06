@@ -62,6 +62,8 @@ function ProductCard() {
                   sx={{display: "flex", justifyContent: "space-between"}}
                 >
                   <Typography sx={{ml: ".7rem"}}>{item.price} kr</Typography>
+                  {item.rented ? <Typography>Rented</Typography> : <></>}
+
                   <Button
                     size="small"
                     sx={{
@@ -75,7 +77,7 @@ function ProductCard() {
                     onClick={(e) => {
                       e.stopPropagation();
 
-                      createNotification(item.id).then(() => {
+                      createNotification(item).then(() => {
                         console.log("Create Notification done");
                       });
                     }}
