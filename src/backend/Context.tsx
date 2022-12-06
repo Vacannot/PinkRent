@@ -136,7 +136,7 @@ export function AuthProvider(props: any) {
       };
     });
   };
-
+  
   const getProducts = async (): Promise<any[]> => {
     const colProducts = collection(db, "products");
 
@@ -215,6 +215,7 @@ export function AuthProvider(props: any) {
     displayName: string,
     phoneNumber: string
   ) => {
+
     let userCredential = await createUserWithEmailAndPassword(
       auth,
       email,

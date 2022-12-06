@@ -223,25 +223,10 @@ const EditProduct = ({
         </Button>
       </ButtonGroup>
 
-      {/* <FormControl sx={{mt: ".5rem", width: "10rem"}} variant="standard">
-        <InputLabel
-          sx={{fontSize: ".9rem"}}
-          id="demo-simple-select-standard-label"
-        >
-          Rented*
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          label="Rented"
-        >
-          <MenuItem value="RENTED">RENTED</MenuItem>
-          <MenuItem value="NOT RENTED">NOT RENTED</MenuItem>
-        </Select>
-      </FormControl> */}
     </form>
   );
 };
+
 
 export const UserProfileListings = () => {
   const {getProductsByUserID, getCategories} = useAuth();

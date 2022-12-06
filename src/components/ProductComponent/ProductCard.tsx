@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import {onAuthStateChanged} from "firebase/auth";
 import {useState, useEffect} from "react";
+
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../backend/Context";
 import {auth} from "../../backend/firebase";

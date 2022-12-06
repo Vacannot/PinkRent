@@ -1,4 +1,4 @@
-import {styled} from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
@@ -9,7 +9,7 @@ import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "../../backend/firebase";
 import {useAuth} from "../../backend/Context";
 
-const SearchIconWrapper = styled("div")(({theme}) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
   position: "absolute",
@@ -19,7 +19,7 @@ const SearchIconWrapper = styled("div")(({theme}) => ({
   justifyContent: "center",
 }));
 
-const StyledInputBase = styled(InputBase)(({theme}) => ({
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -50,7 +50,7 @@ export default function SearchIconComponent(props: any) {
     <Box
       sx={{
         flexGrow: 1,
-        "@media screen and (max-width: 970px)": {display: "none"},
+        "@media screen and (max-width: 970px)": { display: "none" },
       }}
     >
       <Toolbar sx={{diplay: "flex", justifyContent: "space-around"}}>
@@ -77,24 +77,13 @@ export default function SearchIconComponent(props: any) {
             </>
           );
         })}
-        {/* <Button>VEHICLES</Button>
-        <hr style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}} />
-        <Button>HOME</Button>
-        <hr style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}} />
-        <Button>CLOTHING</Button>
-        <hr style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}} />
-        <Button>ELECTRONICS</Button>
-        <hr style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}} />
-        <Button>RESIDENCE</Button>
-        <hr style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}} />
-        <Button>HOBBY</Button> */}
         <Card sx={{display: "flex", alignItems: "center"}}>
           <SearchIconWrapper>
-            <SearchIcon sx={{color: "pink"}} />
+            <SearchIcon sx={{ color: "pink" }} />
           </SearchIconWrapper>
           <StyledInputBase
             placeholder="Search…"
-            inputProps={{"aria-label": "search"}}
+            inputProps={{ "aria-label": "search" }}
           />
         </Card>
       </Toolbar>
