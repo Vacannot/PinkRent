@@ -93,9 +93,15 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
-        <Link to="/catalog">
-          <img src={LogoDesktop} alt="DesktopLogoAlt" />
-        </Link>
+        {getAuth().currentUser ? (
+          <Link to="/catalog">
+            <img src={LogoDesktop} alt="DesktopLogoAlt" />
+          </Link>
+        ) : (
+          <Link to="/">
+            <img src={LogoDesktop} alt="DesktopLogoAlt" />
+          </Link>
+        )}
 
         <Link to="/about" style={{ textDecoration: "none" }}>
           <Button variant="text">
