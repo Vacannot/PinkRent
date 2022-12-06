@@ -1,10 +1,11 @@
 import {
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
   onAuthStateChanged,
-  PhoneAuthCredential,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
   signOut,
-  updatePhoneNumber,
+  updatePassword,
   updateProfile,
   User,
 } from "firebase/auth";
@@ -26,11 +27,16 @@ interface context {
   signup: (
     email: string,
     password: string,
-    displayName: string,
-    phoneNumber: string
+    displayName: string
   ) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => void;
+  updateUser: (info: {displayName: string}) => void;
+  updateUserPassword: (info: {
+    oldPassword: string;
+    newPassword: string;
+  }) => Promise<void>;
+  deleteUser: (password: string) => Promise<void>;
   getProductsByUserID: (userid: string) => Promise<any[]>;
   getProductByID: (productID: string) => Promise<any>;
   getCategories: () => Promise<any[]>;
@@ -56,6 +62,9 @@ export const AuthContext = createContext<context>({
   signup: async () => {},
   login: async () => {},
   logout: () => {},
+  updateUser: () => {},
+  updateUserPassword: async () => {},
+  deleteUser: async () => {},
   createNotification: async () => {},
   createProduct: async () => {},
   getProductsByUserID: async (userid: string): Promise<any[]> => {
@@ -105,7 +114,7 @@ export function AuthProvider(props: any) {
           location: productValues.location,
         });
       } else {
-        prompt("To add a product you need to be signed in");
+        alert("To add a product you need to be signed in");
       }
     });
   };
@@ -120,7 +129,7 @@ export function AuthProvider(props: any) {
           accepted: false,
         });
       } else {
-        prompt("To request a product you need to be signed in");
+        alert("To request a product you need to be signed in");
       }
     });
   };
@@ -193,6 +202,7 @@ export function AuthProvider(props: any) {
   };
 
   const deleteProduct = async (productID: string) => {
+    // TODO: Delete all notications
     await deleteDoc(doc(db, "products", productID));
   };
 
@@ -212,8 +222,7 @@ export function AuthProvider(props: any) {
   const signup = async (
     email: string,
     password: string,
-    displayName: string,
-    phoneNumber: string
+    displayName: string
   ) => {
 
     let userCredential = await createUserWithEmailAndPassword(
@@ -222,25 +231,51 @@ export function AuthProvider(props: any) {
       password
     );
     await updateProfile(userCredential.user, {displayName: displayName});
-    await updatePhoneNumber(
-      userCredential.user,
-      PhoneAuthCredential.fromJSON(phoneNumber)!
-    );
-    // userCredential.user.updateProfile();
-    const user = userCredential.user;
-    console.log(user);
   };
 
   const logout = async () => {
-    await signOut(auth)
-      .then(() => {
-        console.log("loggedOut");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
+    await signOut(auth);
+  };
+
+  const updateUser = (info: {displayName: string}) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        updateProfile(user, {displayName: info.displayName}).catch(() => {
+          console.error("Failed to set Display Name");
+        });
+      }
+    });
+  };
+
+  const updateUserPassword = async (info: {
+    oldPassword: string;
+    newPassword: string;
+  }) => {
+    const user = auth.currentUser;
+    if (user && user.email) {
+      let auth = EmailAuthProvider.credential(user.email!, info.oldPassword);
+      let cred = await reauthenticateWithCredential(user, auth);
+      await updatePassword(cred.user, info.newPassword);
+    }
+  };
+
+  const deleteUser = async (password: string) => {
+    const user = auth.currentUser;
+    if (user && user.email) {
+      const col = collection(db, "products");
+      const q = query(col, where("userID", "==", user.uid));
+
+      const docs = await getDocs(q);
+      for (let doc of docs.docs) {
+        console.log(doc);
+        await deleteProduct(doc.id);
+      }
+
+      let auth = EmailAuthProvider.credential(user.email!, password);
+      let cred = await reauthenticateWithCredential(user, auth);
+      await cred.user.delete();
+      await logout();
+    }
   };
 
   return (
@@ -249,6 +284,9 @@ export function AuthProvider(props: any) {
         login,
         signup,
         logout,
+        updateUser,
+        updateUserPassword,
+        deleteUser,
         getProductsByUserID,
         createNotification,
         getCategories,
