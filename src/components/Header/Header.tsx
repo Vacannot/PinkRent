@@ -93,7 +93,7 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
-        <Link to="/productPage">
+        <Link to="/catalog">
           <img src={LogoDesktop} alt="DesktopLogoAlt" />
         </Link>
 

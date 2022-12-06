@@ -4,10 +4,12 @@ import {
   Card,
   CardActions,
   CardContent,
+  IconButton,
   Typography,
 } from "@mui/material";
 import CarImage from "../../assets/Rectangle42.png";
-import PlaceIcon from "@mui/icons-material/Place";
+import Person2Icon from '@mui/icons-material/Person2';
+import { Link } from "react-router-dom";
 function ProductCard() {
   return (
     <>
@@ -34,9 +36,15 @@ function ProductCard() {
               La Ferrari Pasta racer 2022
             </Typography>
           </CardContent>
-          <Typography variant="body2" color="text.secondary">
-            <PlaceIcon sx={{ color: "primary.main" }} /> västra göteborg
-          </Typography>
+
+          <Box sx={{display:"flex", alignItems:"center"}} >
+          <Link to={"/userProductPage"}>
+          <IconButton>
+            <Person2Icon sx={{ color: "primary.main" }} /> 
+          </IconButton>
+          </Link>
+            <Typography>Simon</Typography>
+          </Box>
           <CardActions
             sx={{
               display: "flex",
