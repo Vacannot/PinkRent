@@ -1,15 +1,21 @@
-import {initializeApp} from "firebase/app";
-import {collection, getDocs, getFirestore} from "firebase/firestore";
-import {getAuth} from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+  apiKey: "AIzaSyBuYIaKbJ0QAceMYFqdRKcDn_jDig7PKKI",
+
+  authDomain: "pinkrent-a3337.firebaseapp.com",
+
+  projectId: "pinkrent-a3337",
+
+  storageBucket: "pinkrent-a3337.appspot.com",
+
+  messagingSenderId: "237688511860",
+
+  appId: "1:237688511860:web:69c3bb31f1a2f98bf36021",
+
+  measurementId: "G-VZ7HHRH0VM",
 };
 
 // Initialize FireBase app
@@ -28,7 +34,7 @@ getDocs(colProducts)
   .then((snapshot) => {
     let products: any = [];
     snapshot.docs.forEach((doc) => {
-      products.push({...doc.data(), id: doc.id});
+      products.push({ ...doc.data(), id: doc.id });
     });
     console.log(products);
   })
@@ -41,7 +47,7 @@ getDocs(colNotifs)
   .then((snapshot) => {
     let notifs: any = [];
     snapshot.docs.forEach((doc) => {
-      notifs.push({...doc.data(), id: doc.id});
+      notifs.push({ ...doc.data(), id: doc.id });
     });
     console.log(notifs);
   })

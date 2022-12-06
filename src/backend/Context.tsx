@@ -8,18 +8,9 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
-import {
-  addDoc,
-  collection,
-  doc,
-  documentId,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
-import {createContext, useContext, useState} from "react";
-import {auth, db} from "./firebase";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { createContext, useContext, useState } from "react";
+import { auth, db } from "./firebase";
 
 interface context {
   signup: (
@@ -124,7 +115,7 @@ export function AuthProvider(props: any) {
   ) => {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        updateProfile(userCredential.user, {displayName: displayName});
+        updateProfile(userCredential.user, { displayName: displayName });
         updatePhoneNumber(
           userCredential.user,
           PhoneAuthCredential.fromJSON(phoneNumber)!

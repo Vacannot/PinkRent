@@ -1,13 +1,29 @@
-import {Card, CardContent, IconButton, Typography} from "@mui/material";
-import {BorderColorOutlined, LanguageOutlined} from "@mui/icons-material";
+import {
+  Card,
+  CardContent,
+  IconButton,
+  Typography,
+  Button,
+} from "@mui/material";
+import { BorderColorOutlined, LanguageOutlined } from "@mui/icons-material";
 import styles from "./userProfile.module.scss";
-import {getAuth, onAuthStateChanged} from "firebase/auth";
-import {useEffect, useState} from "react";
-import {auth} from "../../backend/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { auth } from "../../backend/firebase";
+import { useAuth } from "../../backend/Context";
+import { useNavigate } from "react-router";
 
 export const UserInfoCard = () => {
   const user = getAuth().currentUser;
   const [BSUpdate, setBSUpdate] = useState<any>(null);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const getOut = () => {
+    logout();
+    navigate("/");
+    window.location.reload();
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -15,8 +31,8 @@ export const UserInfoCard = () => {
     });
   }, []);
   return (
-    <Card sx={{width: 335, height: 250}}>
-      <CardContent sx={{paddingBottom: "5px"}}>
+    <Card sx={{ width: 335, height: 250 }}>
+      <CardContent sx={{ paddingBottom: "5px" }}>
         <Typography
           sx={{
             display: "flex",
@@ -34,7 +50,7 @@ export const UserInfoCard = () => {
         </Typography>
         <Typography className={styles.spacing}>{user?.displayName}</Typography>
         <Typography className={styles.spacing}>{user?.email}</Typography>
-        <Typography sx={{mb: "9px"}}>{user?.phoneNumber}</Typography>
+        <Typography sx={{ mb: "9px" }}>{user?.phoneNumber}</Typography>
         <Typography
           sx={{
             display: "flex",
@@ -47,6 +63,15 @@ export const UserInfoCard = () => {
             <LanguageOutlined />
           </IconButton>
         </Typography>
+        <Button
+          variant="contained"
+          sx={{ color: "white" }}
+          onClick={() => {
+            getOut();
+          }}
+        >
+          Logout
+        </Button>
       </CardContent>
     </Card>
   );

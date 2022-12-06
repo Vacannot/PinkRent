@@ -6,14 +6,15 @@ import {
   MenuItem,
   Select,
   TextField,
+  Card,
 } from "@mui/material";
 import * as yup from "yup";
-import {useFormik} from "formik";
-import {addDoc, collection, getFirestore} from "firebase/firestore";
-import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
-import {onAuthStateChanged} from "firebase/auth";
-import {useCollection} from "react-firebase-hooks/firestore";
-import {auth} from "../backend/firebase";
+import { useFormik } from "formik";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { onAuthStateChanged } from "firebase/auth";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { auth } from "../backend/firebase";
 
 const initialValues = {
   title: "",
@@ -71,13 +72,26 @@ function AddProductPage() {
   });
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        maxWidth: "660px",
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: "auto",
+        marginLeft: "auto",
+      }}
+    >
+      <form
+        onSubmit={formik.handleSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: 3 }}
+      >
         <Input
           id="image"
           name="Image"
           type="file"
-          inputProps={{accept: "image/*"}}
+          inputProps={{ accept: "image/*" }}
           onChange={(event) => {
             const file = (event.currentTarget as HTMLInputElement).files![0];
             const storageRef = ref(storage, uuid() + " " + file.name);
@@ -121,7 +135,7 @@ function AddProductPage() {
           helperText={formik.touched.description && formik.errors.description}
           variant="standard"
         />
-        <FormControl sx={{minWidth: 120}} required>
+        <FormControl sx={{ minWidth: 120 }} required>
           <InputLabel id="category-label">Category</InputLabel>
           <Select
             labelId="category-label"
@@ -147,7 +161,7 @@ function AddProductPage() {
           Submit
         </Button>
       </form>
-    </div>
+    </Card>
   );
 }
 
