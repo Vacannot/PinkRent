@@ -38,6 +38,7 @@ interface context {
   }) => Promise<void>;
   deleteUser: (password: string) => Promise<void>;
   getProductsByUserID: (userid: string) => Promise<any[]>;
+  getNotificationsByUserID: (userid: string) => Promise<any[]>;
   getProductByID: (productID: string) => Promise<any>;
   getCategories: () => Promise<any[]>;
   getProducts: () => Promise<any[]>;
@@ -68,6 +69,9 @@ export const AuthContext = createContext<context>({
   createNotification: async () => {},
   createProduct: async () => {},
   getProductsByUserID: async (userid: string): Promise<any[]> => {
+    return [];
+  },
+  getNotificationsByUserID: async (userid: string): Promise<any[]> => {
     return [];
   },
   getProductByID: async (productID: string): Promise<any> => {
@@ -312,6 +316,7 @@ export function AuthProvider(props: any) {
         deleteProduct,
         getProductByID,
         createProduct,
+        getNotificationsByUserID,
       }}
     >
       {props.children}
