@@ -76,146 +76,156 @@ function NotificationCard() {
 
   return (
     <>
-      <>
-        <Card
-          sx={{
-            width: "100%",
-            "@media screen and (min-width: 800px)": { display: "none" },
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-around",
-              alignItems: "end",
-            }}
-          >
-            <Box>
-              <Typography variant="h6"> Max Andersson</Typography>
-              <Typography>Request to rent Ferradddri</Typography>
-            </Box>
-            <Box>
-              <IconButton
-                aria-label="grant"
-                color="success"
-                onClick={() => handleClick("accept")}
+      {notifications.map((notification) => {
+        return (
+          <>
+            <Card
+              sx={{
+                width: "100%",
+                "@media screen and (min-width: 800px)": { display: "none" },
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "end",
+                }}
               >
-                <CheckIcon />
-              </IconButton>
-              <IconButton
-                aria-label="delete"
-                color="error"
-                onClick={() => handleClick("decline")}
+                <Box>
+                  <Typography variant="h6">
+                    Max Andersson {notification.requester}
+                  </Typography>
+                  <Typography>Request to rent {notification.title}</Typography>
+                </Box>
+                <Box>
+                  <IconButton
+                    aria-label="grant"
+                    color="success"
+                    onClick={() => handleClick("accept")}
+                  >
+                    <CheckIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="delete"
+                    color="error"
+                    onClick={() => handleClick("decline")}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+              </Box>
+              <hr
+                style={{
+                  height: ".1rem",
+                  width: "80%",
+                  backgroundColor: "black",
+                  opacity: ".2",
+                }}
+              ></hr>
+            </Card>
+
+            <Card
+              sx={{
+                width: "80%",
+                mb: ".1rem",
+                mt: "1rem",
+                display: "flex",
+                mx: "auto",
+                "@media screen and (max-width: 800px)": { display: "none" },
+              }}
+            >
+              <Typography variant="h5" sx={{ ml: "3.3rem" }}>
+                NOTIFICATIONS
+              </Typography>
+            </Card>
+
+            <Card
+              sx={{
+                width: "80%",
+                mx: "auto",
+                "@media screen and (max-width: 800px)": { display: "none" },
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  mt: ".5rem",
+                }}
               >
-                <CloseIcon />
-              </IconButton>
-            </Box>
-          </Box>
-          <hr
-            style={{
-              height: ".1rem",
-              width: "80%",
-              backgroundColor: "black",
-              opacity: ".2",
-            }}
-          ></hr>
-        </Card>
-      </>
+                <Typography> Image</Typography>
+                <Typography> Title</Typography>
+                <Typography> Reguest from</Typography>
+                <Box sx={{ display: "flex" }}>
+                  <Typography> Approve</Typography>
+                  <Typography sx={{ ml: "1rem" }}> Decline</Typography>
+                </Box>
+              </Box>
+              <hr
+                style={{
+                  height: ".1rem",
+                  width: "90%",
+                  backgroundColor: "black",
+                  opacity: ".2",
+                }}
+              ></hr>
 
-      <Card
-        sx={{
-          width: "80%",
-          mb: ".1rem",
-          mt: "1rem",
-          display: "flex",
-          mx: "auto",
-          "@media screen and (max-width: 800px)": { display: "none" },
-        }}
-      >
-        <Typography variant="h5" sx={{ ml: "3.3rem" }}>
-          {" "}
-          NOTIFICATIONS{" "}
-        </Typography>
-      </Card>
-
-      <Card
-        sx={{
-          width: "80%",
-          mx: "auto",
-          "@media screen and (max-width: 800px)": { display: "none" },
-        }}
-      >
-        <Box
-          sx={{ display: "flex", justifyContent: "space-around", mt: ".5rem" }}
-        >
-          <Typography> Image</Typography>
-          <Typography> Title</Typography>
-          <Typography> Reguest from</Typography>
-          <Box sx={{ display: "flex" }}>
-            <Typography> Approve</Typography>
-            <Typography sx={{ ml: "1rem" }}> Decliene</Typography>
-          </Box>
-        </Box>
-        <hr
-          style={{
-            height: ".1rem",
-            width: "90%",
-            backgroundColor: "black",
-            opacity: ".2",
-          }}
-        ></hr>
-
-        <Box
-          sx={{
-            display: "flex",
-            mx: "auto",
-            "@media screen and (max-width: 800px)": { display: "none" },
-          }}
-        >
-          <CardContent
-            sx={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-around",
-            }}
-          >
-            <img src={CarImage} alt="CarImage" />
-            <Typography gutterBottom variant="h5" component="div">
-              Car
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Max Andersson
-            </Typography>
-            <CardActions>
-              <IconButton
-                aria-label="delete"
-                color="success"
-                sx={{ mr: "2.5rem" }}
-                onClick={() => handleClick("accept")}
+              <Box
+                sx={{
+                  display: "flex",
+                  mx: "auto",
+                  "@media screen and (max-width: 800px)": { display: "none" },
+                }}
               >
-                <CheckIcon />
-              </IconButton>
-              <IconButton
-                aria-label="delete"
-                color="error"
-                onClick={() => handleClick("decline")}
-              >
-                <CloseIcon />
-              </IconButton>
-            </CardActions>
-          </CardContent>
-        </Box>
+                <CardContent
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <img src={notification.image} alt="productImage" />
+                  <Typography gutterBottom variant="h5" component="div">
+                    {notification.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {notification.requester}
+                  </Typography>
+                  <CardActions>
+                    <IconButton
+                      aria-label="delete"
+                      color="success"
+                      sx={{ mr: "2.5rem" }}
+                      onClick={() => handleClick("accept")}
+                    >
+                      <CheckIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      color="error"
+                      onClick={() => handleClick("decline")}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </CardActions>
+                </CardContent>
+              </Box>
 
-        <hr
-          style={{
-            height: ".1rem",
-            width: "90%",
-            backgroundColor: "black",
-            opacity: ".2",
-          }}
-        ></hr>
-      </Card>
+              <hr
+                style={{
+                  height: ".1rem",
+                  width: "90%",
+                  backgroundColor: "black",
+                  opacity: ".2",
+                }}
+              ></hr>
+            </Card>
+          </>
+        );
+      })}
+
       <Snackbar open={accept} autoHideDuration={1000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Request Confirmed! Renter will be notified!
