@@ -15,8 +15,7 @@ const firebaseConfig = {
 
   appId: "1:237688511860:web:69c3bb31f1a2f98bf36021",
 
-  measurementId: "G-VZ7HHRH0VM"
-
+  measurementId: "G-VZ7HHRH0VM",
 };
 
 // Initialize FireBase app
@@ -27,21 +26,7 @@ export const db = getFirestore();
 export const auth = getAuth(app);
 
 // collection ref
-const colProducts = collection(db, "products");
 const colNotifs = collection(db, "notifications");
-
-//get products data
-getDocs(colProducts)
-  .then((snapshot) => {
-    let products: any = [];
-    snapshot.docs.forEach((doc) => {
-      products.push({...doc.data(), id: doc.id});
-    });
-    console.log(products);
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
 
 //get notifs data
 getDocs(colNotifs)
