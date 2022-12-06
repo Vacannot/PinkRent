@@ -266,6 +266,16 @@ export const UserProfileListings = () => {
   const [editing, setEditing] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
 
+  const getCategoryById = (id: string) => {
+    for (let category of categories) {
+      if (category.id === id) {
+        return category;
+      }
+    }
+
+    return "ERROR";
+  };
+
   const check = () => {
     console.log("before", openConfirm);
     setOpenConfirm(true);
@@ -312,7 +322,7 @@ export const UserProfileListings = () => {
           </TableHead>
           <TableBody>
             {products.map((item) => {
-              const category = getCategoryById(categories, item.category);
+              const category = getCategoryById(item.category);
               return (
                 <TableRow
                   key={item.id}
