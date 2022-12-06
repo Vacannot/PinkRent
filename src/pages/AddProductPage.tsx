@@ -6,6 +6,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  Card,
 } from "@mui/material";
 import * as yup from "yup";
 import {useFormik} from "formik";
@@ -61,8 +62,21 @@ function AddProductPage() {
   });
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        maxWidth: "660px",
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: "auto",
+        marginLeft: "auto",
+      }}
+    >
+      <form
+        onSubmit={formik.handleSubmit}
+        style={{display: "flex", flexDirection: "column", gap: 3}}
+      >
         <Input
           id="image"
           name="Image"
@@ -147,7 +161,7 @@ function AddProductPage() {
           Submit
         </Button>
       </form>
-    </div>
+    </Card>
   );
 }
 

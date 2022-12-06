@@ -38,6 +38,7 @@ interface context {
   }) => Promise<void>;
   deleteUser: (password: string) => Promise<void>;
   getProductsByUserID: (userid: string) => Promise<any[]>;
+  getNotificationsByUserID: (userid: string) => Promise<any[]>;
   getProductByID: (productID: string) => Promise<any>;
   getCategories: () => Promise<any[]>;
   getProducts: () => Promise<any[]>;
@@ -68,6 +69,9 @@ export const AuthContext = createContext<context>({
   createNotification: async () => {},
   createProduct: async () => {},
   getProductsByUserID: async (userid: string): Promise<any[]> => {
+    return [];
+  },
+  getNotificationsByUserID: async (userid: string): Promise<any[]> => {
     return [];
   },
   getProductByID: async (productID: string): Promise<any> => {
@@ -145,7 +149,7 @@ export function AuthProvider(props: any) {
       };
     });
   };
-  
+
   const getProducts = async (): Promise<any[]> => {
     const colProducts = collection(db, "products");
 
@@ -166,6 +170,22 @@ export function AuthProvider(props: any) {
       id: d.id,
       ...d.data(),
     };
+  };
+
+  const getNotificationsByUserID = async (userid: string): Promise<any[]> => {
+    const q = query(
+      collection(db, "notifications"),
+      where("userID", "==", userid)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
   };
 
   const getProductsByUserID = async (userid: string): Promise<any[]> => {
@@ -224,7 +244,6 @@ export function AuthProvider(props: any) {
     password: string,
     displayName: string
   ) => {
-
     let userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -297,6 +316,7 @@ export function AuthProvider(props: any) {
         deleteProduct,
         getProductByID,
         createProduct,
+        getNotificationsByUserID,
       }}
     >
       {props.children}

@@ -3,12 +3,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import * as yup from "yup";
-import {useFormik} from "formik";
-import {useAuth} from "../../backend/Context";
-import {TextField} from "@mui/material";
+import { useFormik } from "formik";
+import { useAuth } from "../../backend/Context";
+import { TextField } from "@mui/material";
 import {
   AccountCircleOutlined,
   AlternateEmailOutlined,
@@ -33,7 +33,7 @@ const initialValues = {
 };
 
 function RegisterForm() {
-  const {signup} = useAuth();
+  const { signup } = useAuth();
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -42,7 +42,7 @@ function RegisterForm() {
     onSubmit: async (values) => {
       await signup(values.email, values.password, values.displayName);
       formik.resetForm();
-      navigate("/productPage");
+      navigate("/catalog");
     },
   });
   const [values, setValues] = React.useState({
@@ -51,7 +51,7 @@ function RegisterForm() {
   });
 
   const handleClickShowPassword = () => {
-    setValues({...values, showPassword: !values.showPassword});
+    setValues({ ...values, showPassword: !values.showPassword });
   };
 
   return (

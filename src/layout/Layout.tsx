@@ -1,6 +1,7 @@
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 import Wave from "../components/Wave/Wave";
+import BottomWave from "../components/Wave/BottomWave/BottomWave";
 import Footer from "../components/Footer/Footer";
 
 function Layout() {
@@ -12,7 +13,9 @@ function Layout() {
       <>
         <Outlet />
       </>
+
       <Footer />
+      <BottomWave />
     </div>
   );
 }
