@@ -7,7 +7,6 @@ import NotificationPage from "./pages/NotificationPage";
 import ProfilePage from "./pages/ProfilePage";
 import AddProductPage from "./pages/AddProductPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import CatalogPage from "./pages/CatalogPage";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";

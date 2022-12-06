@@ -9,6 +9,10 @@ import CarImage from "../../assets/Rectangle42.png";
 import { IconButton, Box } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { useAuth } from "../../backend/Context";
+import { auth } from "../../backend/firebase";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -56,6 +60,20 @@ function NotificationCard() {
     setDecline(false);
   };
 
+  const { getNotificationsByUserID } = useAuth();
+
+  const [notifications, setNotifications] = useState<any[]>([]);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getNotificationsByUserID(user.uid).then((notifications) => {
+          setNotifications(notifications);
+        });
+      }
+    });
+  }, [getNotificationsByUserID]);
+
   return (
     <>
       <>
@@ -74,7 +92,7 @@ function NotificationCard() {
           >
             <Box>
               <Typography variant="h6"> Max Andersson</Typography>
-              <Typography>Request to rent Ferrari</Typography>
+              <Typography>Request to rent Ferradddri</Typography>
             </Box>
             <Box>
               <IconButton
@@ -164,7 +182,7 @@ function NotificationCard() {
           >
             <img src={CarImage} alt="CarImage" />
             <Typography gutterBottom variant="h5" component="div">
-              Car{" "}
+              Car
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Max Andersson

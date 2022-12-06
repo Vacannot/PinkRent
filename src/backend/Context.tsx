@@ -25,6 +25,7 @@ interface context {
   getCategories: () => Promise<any[]>;
   createNotification: (productID: string) => Promise<void>;
   currentUser?: User;
+  getNotificationsByUserID: (productID: string) => Promise<void[]>;
 }
 
 export const AuthContext = createContext<context>({
@@ -36,6 +37,9 @@ export const AuthContext = createContext<context>({
     return [];
   },
   getCategories: async (): Promise<any[]> => {
+    return [];
+  },
+  getNotificationsByUserID: async (userid: string): Promise<any[]> => {
     return [];
   },
 });
@@ -74,6 +78,22 @@ export function AuthProvider(props: any) {
     const docSnap = await getDocs(col);
 
     return docSnap.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+  };
+
+  const getNotificationsByUserID = async (userid: string): Promise<any[]> => {
+    const q = query(
+      collection(db, "notifications"),
+      where("userID", "==", userid)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map((doc) => {
       return {
         id: doc.id,
         ...doc.data(),
@@ -154,6 +174,7 @@ export function AuthProvider(props: any) {
         getProductsByUserID,
         createNotification,
         getCategories,
+        getNotificationsByUserID,
       }}
     >
       {props.children}
