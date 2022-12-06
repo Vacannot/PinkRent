@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import {initializeApp} from "firebase/app";
+import {collection, getDocs, getFirestore} from "firebase/firestore";
+import {getAuth} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBuYIaKbJ0QAceMYFqdRKcDn_jDig7PKKI",
@@ -26,28 +26,14 @@ export const db = getFirestore();
 export const auth = getAuth(app);
 
 // collection ref
-const colProducts = collection(db, "products");
 const colNotifs = collection(db, "notifications");
-
-//get products data
-getDocs(colProducts)
-  .then((snapshot) => {
-    let products: any = [];
-    snapshot.docs.forEach((doc) => {
-      products.push({ ...doc.data(), id: doc.id });
-    });
-    console.log(products);
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
 
 //get notifs data
 getDocs(colNotifs)
   .then((snapshot) => {
     let notifs: any = [];
     snapshot.docs.forEach((doc) => {
-      notifs.push({ ...doc.data(), id: doc.id });
+      notifs.push({...doc.data(), id: doc.id});
     });
     console.log(notifs);
   })

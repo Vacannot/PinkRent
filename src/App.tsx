@@ -1,4 +1,4 @@
-import { Routes, BrowserRouter, Route } from "react-router-dom";
+import {Routes, BrowserRouter, Route} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -25,7 +25,7 @@ function App() {
             <Route path="register" element={<RegisterPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="add" element={<AddProductPage />} />
-            <Route path="details" element={<ProductDetailPage />} />
+            <Route path="details/:productID" element={<ProductDetailPage />} />
             <Route path="contact" element={<ContactPage />} />
             <Route path="about" element={<AboutPage />} />
           </Route>
