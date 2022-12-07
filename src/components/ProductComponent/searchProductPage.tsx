@@ -4,7 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button, Card } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../backend/firebase";
 import { useAuth } from "../../backend/Context";
@@ -33,7 +33,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchIconComponent(props: any) {
+export default function SearchIconComponent() {
   const { getProducts, getCategories, setFilter } = useAuth();
   const [categories, setCategories] = useState<any[]>([]);
   const [searchText, setSearchText] = useState("");
@@ -52,13 +52,14 @@ export default function SearchIconComponent(props: any) {
     });
   }, [getCategories]);
 
-  useEffect(() => {
+  const filterProducts = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
     setFilteredProducts(
       products.filter((product) =>
-        product.title.toLowerCase().includes(searchText.toLowerCase())
+        product.title.toLowerCase().includes(target.value.toLowerCase())
       )
     );
-  }, [searchText, products]);
+  };
 
   return (
     <Box
@@ -100,9 +101,10 @@ export default function SearchIconComponent(props: any) {
             <SearchIcon sx={{ color: "pink" }} />
           </SearchIconWrapper>
           <StyledInputBase
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={filterProducts}
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
+            filteredProducts={filteredProducts}
           />
         </Card>
       </Toolbar>
