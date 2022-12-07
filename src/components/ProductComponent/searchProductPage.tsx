@@ -4,11 +4,8 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button, Card } from "@mui/material";
-import { ChangeEvent, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../backend/firebase";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { useAuth } from "../../backend/Context";
-import { color } from "@mui/system";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -33,18 +30,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchIconComponent() {
-  const { getProducts, getCategories, setFilter } = useAuth();
-  const [categories, setCategories] = useState<any[]>([]);
-  const [searchText, setSearchText] = useState("");
-  const [products, setProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<string[]>([]);
+interface Props {
+  setSearchString: SetStateAction<any>;
+}
 
-  useEffect(() => {
-    getProducts().then((products) => {
-      setProducts(products);
-    });
-  }, [getProducts]);
+export default function SearchIconComponent({ setSearchString }: Props) {
+  const { getCategories, setFilter } = useAuth();
+  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     getCategories().then((categories) => {
@@ -54,11 +46,7 @@ export default function SearchIconComponent() {
 
   const filterProducts = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    setFilteredProducts(
-      products.filter((product) =>
-        product.title.toLowerCase().includes(target.value.toLowerCase())
-      )
-    );
+    setSearchString(target.value);
   };
 
   return (
@@ -104,7 +92,6 @@ export default function SearchIconComponent() {
             onChange={filterProducts}
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
-            filteredProducts={filteredProducts}
           />
         </Card>
       </Toolbar>

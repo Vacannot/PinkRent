@@ -6,15 +6,19 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import {useState, useEffect} from "react";
+import { useState, useEffect, FC } from "react";
 
-import {useNavigate} from "react-router-dom";
-import {useAuth} from "../../backend/Context";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../backend/Context";
 
-function ProductCard() {
-  const {getProducts, createNotification, filter} = useAuth();
+interface Props {
+  searchString: string;
+}
+
+export const ProductCard: FC<Props> = ({ searchString }: Props) => {
+  const { getProducts, createNotification, filter } = useAuth();
   const navigate = useNavigate();
-
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
@@ -22,9 +26,18 @@ function ProductCard() {
       setProducts(products);
     });
   }, [getProducts]);
+
+  useEffect(() => {
+    setFilteredProducts(
+      products.filter((product) =>
+        product.title.toLowerCase().includes(searchString.toLowerCase())
+      )
+    );
+  }, [products, searchString]);
+
   return (
     <>
-      {products
+      {filteredProducts
         .filter((item) => {
           if (filter === null) return true;
 
@@ -35,22 +48,22 @@ function ProductCard() {
             <Box
               sx={{
                 display: "flex",
-                "@media screen and (max-width: 600px)": {display: "none"},
+                "@media screen and (max-width: 600px)": { display: "none" },
               }}
               key={item.id}
               onClick={() => {
                 navigate(`/details/${item.id}`);
               }}
             >
-              <Card sx={{width: "227px", height: "330px", m: "0.3rem"}}>
+              <Card sx={{ width: "227px", height: "330px", m: "0.3rem" }}>
                 <img
-                  style={{width: "100%", height: "173px"}}
+                  style={{ width: "100%", height: "173px" }}
                   src={item.image}
                   alt={item.title}
                 />
                 <CardContent>
                   <Typography
-                    sx={{fontFamily: "sans-serif"}}
+                    sx={{ fontFamily: "sans-serif" }}
                     aria-label="Medium sizes"
                     gutterBottom
                     component="div"
@@ -59,9 +72,9 @@ function ProductCard() {
                   </Typography>
                 </CardContent>
                 <CardActions
-                  sx={{display: "flex", justifyContent: "space-between"}}
+                  sx={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <Typography sx={{ml: ".7rem"}}>{item.price} kr</Typography>
+                  <Typography sx={{ ml: ".7rem" }}>{item.price} kr</Typography>
                   <Button
                     size="small"
                     sx={{
@@ -89,6 +102,6 @@ function ProductCard() {
         })}
     </>
   );
-}
+};
 
 export default ProductCard;
