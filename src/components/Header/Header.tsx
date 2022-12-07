@@ -21,7 +21,7 @@ export default function Header() {
     breakpoint = true;
   }
 
-  const [BSUpdate, setBSUpdate] = useState<any>(null);
+  const [, setBSUpdate] = useState<any>(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -58,7 +58,7 @@ export default function Header() {
           alignItems: "center",
         }}
       >
-        <Link to={"/productPage"}>
+        <Link to={"/catalog"}>
           <img src={LogoMobile} alt="yo" />
         </Link>
         <Box
@@ -77,7 +77,7 @@ export default function Header() {
         backgroundColor: "white",
         boxShadow: 3,
         height: 100,
-        width: "100vw",
+        width: "100%",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -166,7 +166,7 @@ export default function Header() {
                   variant="contained"
                 >
                   <Typography variant="body1" sx={{ color: "grey" }}>
-                    {getAuth().currentUser!.uid}
+                    {getAuth().currentUser!.displayName}
                   </Typography>
                 </CustomizedButton>
               </Link>
