@@ -11,7 +11,7 @@ import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";
 import UserProductPage from "./pages/UserProductPage";
-
+import CatalogPage from "./pages/CatalogPage";
 function App() {
   return (
     <div>
@@ -28,6 +28,7 @@ function App() {
             <Route path="contact" element={<ContactPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="userProductPage" element={<UserProductPage />} />
+            <Route path="catalog" element={<CatalogPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
