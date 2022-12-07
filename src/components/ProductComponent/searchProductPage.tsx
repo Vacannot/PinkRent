@@ -1,15 +1,13 @@
-import {styled} from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import {Button, Card} from "@mui/material";
-import {useEffect, useState} from "react";
-import {onAuthStateChanged} from "firebase/auth";
-import {auth} from "../../backend/firebase";
-import {useAuth} from "../../backend/Context";
+import { Button, Card } from "@mui/material";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
+import { useAuth } from "../../backend/Context";
 
-const SearchIconWrapper = styled("div")(({theme}) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
   position: "absolute",
@@ -19,7 +17,7 @@ const SearchIconWrapper = styled("div")(({theme}) => ({
   justifyContent: "center",
 }));
 
-const StyledInputBase = styled(InputBase)(({theme}) => ({
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -32,8 +30,12 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
   },
 }));
 
-export default function SearchIconComponent(props: any) {
-  const {getCategories, setFilter} = useAuth();
+interface Props {
+  setSearchString: SetStateAction<any>;
+}
+
+export default function SearchIconComponent({ setSearchString }: Props) {
+  const { getCategories, setFilter } = useAuth();
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
@@ -42,14 +44,19 @@ export default function SearchIconComponent(props: any) {
     });
   }, [getCategories]);
 
+  const filterProducts = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setSearchString(target.value);
+  };
+
   return (
     <Box
       sx={{
         flexGrow: 1,
-        "@media screen and (max-width: 970px)": {display: "none"},
+        "@media screen and (max-width: 970px)": { display: "none" },
       }}
     >
-      <Toolbar sx={{diplay: "flex", justifyContent: "space-around"}}>
+      <Toolbar sx={{ diplay: "flex", justifyContent: "space-around" }}>
         <Button
           onClick={() => {
             setFilter(null);
@@ -61,7 +68,11 @@ export default function SearchIconComponent(props: any) {
           return (
             <>
               <hr
-                style={{height: "1.7rem", margin: "0", backgroundColor: "pink"}}
+                style={{
+                  height: "1.7rem",
+                  margin: "0",
+                  backgroundColor: "pink",
+                }}
               />
               <Button
                 onClick={() => {
@@ -73,13 +84,14 @@ export default function SearchIconComponent(props: any) {
             </>
           );
         })}
-        <Card sx={{display: "flex", alignItems: "center"}}>
+        <Card sx={{ display: "flex", alignItems: "center" }}>
           <SearchIconWrapper>
-            <SearchIcon sx={{color: "pink"}} />
+            <SearchIcon sx={{ color: "pink" }} />
           </SearchIconWrapper>
           <StyledInputBase
+            onChange={filterProducts}
             placeholder="Search…"
-            inputProps={{"aria-label": "search"}}
+            inputProps={{ "aria-label": "search" }}
           />
         </Card>
       </Toolbar>
