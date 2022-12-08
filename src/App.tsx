@@ -1,5 +1,4 @@
-import {Routes, BrowserRouter, Route} from "react-router-dom";
-
+import { Routes, BrowserRouter, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Layout from "./layout/Layout";
@@ -12,6 +11,8 @@ import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";
 import UserProductPage from "./pages/UserProductPage";
 import CatalogPage from "./pages/CatalogPage";
+import NotFoundPage from "./pages/NotFoundPage";
+
 function App() {
   return (
     <div>
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route index element={<StartPage />} />
           <Route path="/" element={<Layout />}>
+            <Route path="*" element={<NotFoundPage />} />
             <Route path="notifications" element={<NotificationPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
