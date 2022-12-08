@@ -48,14 +48,27 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
             <Box
               sx={{
                 display: "flex",
-                "@media screen and (max-width: 600px)": { display: "none" },
               }}
               key={item.id}
               onClick={() => {
                 navigate(`/details/${item.id}`);
               }}
             >
-              <Card sx={{ width: "227px", height: "330px", m: "0.3rem" }}>
+              <Card
+                sx={{
+                  width: "227px",
+                  height: "330px",
+                  m: "0.3rem",
+                  "@media screen and (max-width: 600px)": {
+                    width: "150px",
+                    height: "auto",
+                  },
+                  "@media screen and (max-width: 400px)": {
+                    width: "120px",
+                    height: "300px",
+                  },
+                }}
+              >
                 <img
                   style={{ width: "100%", height: "173px" }}
                   src={item.image}
