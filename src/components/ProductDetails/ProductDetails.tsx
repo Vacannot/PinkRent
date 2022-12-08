@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import {Button, Box} from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import {useAuth} from "../../backend/Context";
+import {LocationOnOutlined, LocalPhoneOutlined} from "@mui/icons-material";
 
 const ProductDetails = ({product}: {product: any}) => {
   const {createNotification} = useAuth();
@@ -141,7 +142,7 @@ const ProductDetails = ({product}: {product: any}) => {
               {product.description}
             </Typography>
           </Box>
-          <div>
+          <Box>
             <Typography
               sx={{
                 display: "flex",
@@ -152,21 +153,12 @@ const ProductDetails = ({product}: {product: any}) => {
               variant="body2"
               color="text.secondary"
             >
-              <span>
-                <svg
-                  width="15"
-                  height="21"
-                  viewBox="0 0 15 21"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7.49967 0.083252C3.46842 0.083252 0.208008 3.34367 0.208008 7.37492C0.208008 12.8437 7.49967 20.9166 7.49967 20.9166C7.49967 20.9166 14.7913 12.8437 14.7913 7.37492C14.7913 3.34367 11.5309 0.083252 7.49967 0.083252ZM7.49967 9.97909C6.06217 9.97909 4.89551 8.81242 4.89551 7.37492C4.89551 5.93742 6.06217 4.77075 7.49967 4.77075C8.93717 4.77075 10.1038 5.93742 10.1038 7.37492C10.1038 8.81242 8.93717 9.97909 7.49967 9.97909Z"
-                    fill="#ED80BE"
-                  />
-                </svg>
-              </span>{" "}
+              <LocationOnOutlined />
               {product.location}
+            </Typography>
+            <Typography>
+              <LocalPhoneOutlined />
+              {product.phoneNumber}
             </Typography>
             <Box
               sx={{
@@ -175,9 +167,9 @@ const ProductDetails = ({product}: {product: any}) => {
                 paddingTop: "10px",
               }}
             >
-              <span>Price:</span> {product.price} kr/ day
+              <Typography>Price: {product.price} kr/day</Typography>
             </Box>
-          </div>
+          </Box>
           <Box sx={{gap: "60px", display: "flex", marginTop: "2rem"}}>
             <Button
               sx={{

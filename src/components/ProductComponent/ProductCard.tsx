@@ -74,7 +74,9 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                 <CardActions
                   sx={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <Typography sx={{ ml: ".7rem" }}>{item.price} kr</Typography>
+                  <Typography sx={{ml: ".7rem"}}>{item.price} kr</Typography>
+                  {item.rented ? <Typography>Rented</Typography> : <></>}
+
                   <Button
                     size="small"
                     sx={{
@@ -88,7 +90,7 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                     onClick={(e) => {
                       e.stopPropagation();
 
-                      createNotification(item.id).then(() => {
+                      createNotification(item).then(() => {
                         console.log("Create Notification done");
                       });
                     }}

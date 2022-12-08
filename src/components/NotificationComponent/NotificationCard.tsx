@@ -5,13 +5,13 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { IconButton, Box } from "@mui/material";
+import {IconButton, Box} from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { useAuth } from "../../backend/Context";
-import { auth } from "../../backend/firebase";
+import MuiAlert, {AlertProps} from "@mui/material/Alert";
+import {useState, useEffect} from "react";
+import {onAuthStateChanged} from "firebase/auth";
+import {useAuth} from "../../backend/Context";
+import {auth} from "../../backend/firebase";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -30,17 +30,21 @@ export interface SnackbarType {
 }
 
 function NotificationCard() {
+  const {deleteNotification, setProductRented} = useAuth();
   const [accept, setAccept] = React.useState(false);
   const [decline, setDecline] = React.useState(false);
 
-  const handleClick = (variant: string) => {
+  const handleClick = (variant: string, product: any, notification: any) => {
     if (variant === "accept") {
+      deleteNotification(notification.id);
+      setProductRented(product.id, true);
       setAccept(true);
       console.log("accept");
       return;
     }
 
     if (variant === "decline") {
+      deleteNotification(notification.id);
       setDecline(true);
       console.log("decline");
       return;
@@ -59,29 +63,39 @@ function NotificationCard() {
     setDecline(false);
   };
 
-  const { getNotificationsByUserID } = useAuth();
+  const {getNotificationsByUserID, getProductByID} = useAuth();
 
   const [notifications, setNotifications] = useState<any[]>([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        getNotificationsByUserID(user.uid).then((notifications) => {
-          setNotifications(notifications);
+        getNotificationsByUserID(user.uid).then(async (notifications) => {
+          let arr = [];
+          for (let notification of notifications) {
+            const product = await getProductByID(notification.productID);
+            arr.push({
+              notification,
+              product,
+            });
+          }
+          setNotifications(arr);
         });
       }
     });
-  }, [getNotificationsByUserID]);
+  }, [getNotificationsByUserID, getProductByID]);
 
   return (
     <>
-      {notifications.map((notification) => {
+      {notifications.map((item) => {
+        const notification = item.notification;
+        const product = item.product;
         return (
           <>
             <Card
               sx={{
                 width: "100%",
-                "@media screen and (min-width: 800px)": { display: "none" },
+                "@media screen and (min-width: 800px)": {display: "none"},
               }}
             >
               <Box
@@ -101,14 +115,16 @@ function NotificationCard() {
                   <IconButton
                     aria-label="grant"
                     color="success"
-                    onClick={() => handleClick("accept")}
+                    onClick={() => handleClick("accept", product, notification)}
                   >
                     <CheckIcon />
                   </IconButton>
                   <IconButton
                     aria-label="delete"
                     color="error"
-                    onClick={() => handleClick("decline")}
+                    onClick={() =>
+                      handleClick("decline", product, notification)
+                    }
                   >
                     <CloseIcon />
                   </IconButton>
@@ -131,10 +147,10 @@ function NotificationCard() {
                 mt: "1rem",
                 display: "flex",
                 mx: "auto",
-                "@media screen and (max-width: 800px)": { display: "none" },
+                "@media screen and (max-width: 800px)": {display: "none"},
               }}
             >
-              <Typography variant="h5" sx={{ ml: "3.3rem" }}>
+              <Typography variant="h5" sx={{ml: "3.3rem"}}>
                 NOTIFICATIONS
               </Typography>
             </Card>
@@ -143,7 +159,7 @@ function NotificationCard() {
               sx={{
                 width: "80%",
                 mx: "auto",
-                "@media screen and (max-width: 800px)": { display: "none" },
+                "@media screen and (max-width: 800px)": {display: "none"},
               }}
             >
               <Box
@@ -156,9 +172,9 @@ function NotificationCard() {
                 <Typography> Image</Typography>
                 <Typography> Title</Typography>
                 <Typography> Reguest from</Typography>
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{display: "flex"}}>
                   <Typography> Approve</Typography>
-                  <Typography sx={{ ml: "1rem" }}> Decline</Typography>
+                  <Typography sx={{ml: "1rem"}}> Decline</Typography>
                 </Box>
               </Box>
               <hr
@@ -174,7 +190,7 @@ function NotificationCard() {
                 sx={{
                   display: "flex",
                   mx: "auto",
-                  "@media screen and (max-width: 800px)": { display: "none" },
+                  "@media screen and (max-width: 800px)": {display: "none"},
                 }}
               >
                 <CardContent
@@ -185,9 +201,9 @@ function NotificationCard() {
                     justifyContent: "space-around",
                   }}
                 >
-                  <img src={notification.image} alt="productImage" />
+                  <img src={product.image} alt="productImage" />
                   <Typography gutterBottom variant="h5" component="div">
-                    {notification.title}
+                    {product.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {notification.requester}
@@ -196,15 +212,15 @@ function NotificationCard() {
                     <IconButton
                       aria-label="delete"
                       color="success"
-                      sx={{ mr: "2.5rem" }}
-                      onClick={() => handleClick("accept")}
+                      sx={{mr: "2.5rem"}}
+                      onClick={() => handleClick("accept", product, notification)}
                     >
                       <CheckIcon />
                     </IconButton>
                     <IconButton
                       aria-label="delete"
                       color="error"
-                      onClick={() => handleClick("decline")}
+                      onClick={() => handleClick("decline", product, notification)}
                     >
                       <CloseIcon />
                     </IconButton>
@@ -226,12 +242,12 @@ function NotificationCard() {
       })}
 
       <Snackbar open={accept} autoHideDuration={1000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="success" sx={{width: "100%"}}>
           Request Confirmed! Renter will be notified!
         </Alert>
       </Snackbar>
       <Snackbar open={decline} autoHideDuration={1000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="error" sx={{width: "100%"}}>
           Request Declined! Renter will be notified!
         </Alert>
       </Snackbar>
