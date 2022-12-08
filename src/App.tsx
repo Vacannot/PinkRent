@@ -1,5 +1,4 @@
-import {Routes, BrowserRouter, Route} from "react-router-dom";
-
+import { Routes, BrowserRouter, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Layout from "./layout/Layout";
@@ -11,6 +10,7 @@ import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";
 import ProductPage from "./pages/productPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         <Routes>
           <Route index element={<StartPage />} />
           <Route path="/" element={<Layout />}>
+            <Route path="*" element={<NotFoundPage />} />
             <Route path="notifications" element={<NotificationPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="catalog" element={<ProductPage />} />

@@ -78,7 +78,7 @@ export default function Header() {
         backgroundColor: "white",
         boxShadow: 3,
         height: 100,
-        width: "100vw",
+        width: "100%",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
