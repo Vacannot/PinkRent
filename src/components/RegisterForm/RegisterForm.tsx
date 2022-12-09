@@ -137,7 +137,9 @@ function RegisterForm() {
           helperText={formik.touched.password && formik.errors.password}
           variant="standard"
           InputProps={{
-            startAdornment: <LockOutlined />,
+            startAdornment: (
+              <LockOutlined sx={{ color: "rgba(0, 0, 0, 0.54)" }} />
+            ),
             endAdornment: (
               <IconButton onClick={handleClickShowPassword}>
                 {values.showPassword ? (

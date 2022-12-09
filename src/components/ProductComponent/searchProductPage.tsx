@@ -52,11 +52,20 @@ export default function SearchIconComponent({ setSearchString }: Props) {
   return (
     <Box
       sx={{
-        flexGrow: 1,
-        "@media screen and (max-width: 970px)": { display: "none" },
+        flexGrow: 1
       }}
     >
-      <Toolbar sx={{ diplay: "flex", justifyContent: "space-around" }}>
+      <Toolbar
+        sx={{
+          diplay: "flex",
+          justifyContent: "space-around",
+          "@media screen and (max-width: 850px)": {
+            display: "flex",
+            justifyContent: "space-evenly",
+            flexWrap: "wrap",
+          },
+        }}
+      >
         <Button
           onClick={() => {
             setFilter(null);
@@ -84,7 +93,13 @@ export default function SearchIconComponent({ setSearchString }: Props) {
             </>
           );
         })}
-        <Card sx={{ display: "flex", alignItems: "center" }}>
+        <Card
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            "@media screen and (max-width: 1110px)": { display: "none" },
+          }}
+        >
           <SearchIconWrapper>
             <SearchIcon sx={{ color: "pink" }} />
           </SearchIconWrapper>
