@@ -7,12 +7,14 @@ import {
   Typography,
   Dialog,
   DialogTitle,
+  ButtonGroup,
 } from "@mui/material";
 import {
   BorderColorOutlined,
   LanguageOutlined,
   DeleteOutlined,
   VpnKeyOutlined,
+  LogoutOutlined,
 } from "@mui/icons-material";
 import styles from "./userProfile.module.scss";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
@@ -119,7 +121,7 @@ function SimpleDialog(props: SimpleDialogProps) {
 }
 
 const View = ({user}: {user: any}) => {
-  const {deleteUser} = useAuth();
+  const {deleteUser, logout} = useAuth();
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -158,20 +160,32 @@ const View = ({user}: {user: any}) => {
         Change Password
       </Button>
       <SimpleDialog open={open} onClose={handleClose} />
-      <Button
-        variant="text"
-        color="error"
-        endIcon={<DeleteOutlined />}
-        onClick={() => {
-          const password = prompt("Password");
-          if (password)
-            deleteUser(password).then(() => {
-              navigate("/");
-            });
-        }}
-      >
-        Delete
-      </Button>
+      <ButtonGroup>
+        <Button
+          variant="outlined"
+          color="error"
+          endIcon={<DeleteOutlined />}
+          onClick={() => {
+            const password = prompt("Password");
+            if (password)
+              deleteUser(password).then(() => {
+                navigate("/");
+              });
+          }}
+        >
+          Delete
+        </Button>
+        <Button
+          variant="outlined"
+          endIcon={<LogoutOutlined />}
+          onClick={() => {
+            logout();
+            navigate("/");
+          }}
+        >
+          Logout
+        </Button>
+      </ButtonGroup>
     </>
   );
 };

@@ -15,17 +15,24 @@ import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import {useCollection} from "react-firebase-hooks/firestore";
 import {db} from "../backend/firebase";
 import {useAuth} from "../backend/Context";
+import {useNavigate} from "react-router";
 
 const initialValues = {
   location: "",
   title: "",
   price: 0,
   description: "",
+  phoneNumber: "",
   category: "",
   image: "",
 };
-
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const validationSchema = yup.object({
+  phoneNumber: yup
+    .string()
+    .matches(phoneRegExp, "number is not valid")
+    .required("please add phone number"),
   location: yup.string().required("Product needs a location"),
   title: yup.string().required("Product needs a title"),
   price: yup.number().required("Product needs a price"),
@@ -47,6 +54,8 @@ export const uuid = () => {
 function AddProductPage() {
   const {createProduct} = useAuth();
 
+  const navigate = useNavigate();
+
   const storage = getStorage();
 
   const categoriesCol = collection(db, "categories");
@@ -58,6 +67,7 @@ function AddProductPage() {
     onSubmit: (values) => {
       createProduct(values);
       formik.resetForm();
+      navigate("/catalog");
     },
   });
 
@@ -133,6 +143,18 @@ function AddProductPage() {
           onChange={formik.handleChange}
           error={formik.touched.location && Boolean(formik.errors.location)}
           helperText={formik.touched.location && formik.errors.location}
+          variant="standard"
+        />
+        <TextField
+          id="phoneNumber"
+          name="phoneNumber"
+          label="Phone Number"
+          value={formik.values.phoneNumber}
+          onChange={formik.handleChange}
+          error={
+            formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
+          }
+          helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
           variant="standard"
         />
         <FormControl sx={{minWidth: 120}} required>
