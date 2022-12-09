@@ -4,8 +4,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, Box } from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import {useAuth} from "../../backend/Context";
-import {LocationOnOutlined, LocalPhoneOutlined} from "@mui/icons-material";
+import { useAuth } from "../../backend/Context";
+import { LocationOnOutlined, LocalPhoneOutlined } from "@mui/icons-material";
 const ProductDetails = ({ product }: { product: any }) => {
   const { createNotification } = useAuth();
 
@@ -186,9 +186,8 @@ const ProductDetails = ({ product }: { product: any }) => {
             >
               <Typography>Price: {product.price} kr/day</Typography>
             </Box>
-          </div>
+          </Box>
           <Box sx={{ gap: "60px", display: "flex", marginTop: "2rem" }}>
-
             <Button
               sx={{
                 color: "white",
