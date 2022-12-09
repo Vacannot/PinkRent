@@ -1,4 +1,4 @@
-import { Routes, BrowserRouter, Route } from "react-router-dom";
+import {Routes, BrowserRouter, Route} from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Layout from "./layout/Layout";
@@ -10,7 +10,7 @@ import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";
 import UserProductPage from "./pages/UserProductPage";
-import CatalogPage from "./pages/CatalogPage";
+import ProductPage from "./pages/productPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
             <Route path="contact" element={<ContactPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="userProductPage" element={<UserProductPage />} />
-            <Route path="catalog" element={<CatalogPage />} />
+            <Route path="catalog" element={<ProductPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
