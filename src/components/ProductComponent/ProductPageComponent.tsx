@@ -10,7 +10,14 @@ interface Props {
 const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
   return (
     <>
-      <Box sx={{ ml: "2rem" }}>
+      <Box
+        sx={{
+          ml: "2rem",
+          "@media screen and (max-width: 850px)": {
+            mt: "2rem",
+          },
+        }}
+      >
         <Typography> Popular on PinkRent</Typography>
         <IconButton aria-label="delete">
           <Typography>Rent now</Typography>
