@@ -3,12 +3,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React from "react";
 import * as yup from "yup";
-import { useFormik } from "formik";
-import { useAuth } from "../../backend/Context";
-import { TextField } from "@mui/material";
+import {useFormik} from "formik";
+import {useAuth} from "../../backend/Context";
+import {TextField} from "@mui/material";
 import {
   AccountCircleOutlined,
   AlternateEmailOutlined,
@@ -23,7 +23,10 @@ const validationSchema = yup.object({
     .string()
     .email("Enter a valid email")
     .required("Email is required"),
-  password: yup.string().required("Password is required"),
+  password: yup
+    .string()
+    .min(6, "Password needs to be 6 characters or more")
+    .required("Password is required"),
 });
 
 const initialValues = {
@@ -33,7 +36,7 @@ const initialValues = {
 };
 
 function RegisterForm() {
-  const { signup } = useAuth();
+  const {signup} = useAuth();
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -51,7 +54,7 @@ function RegisterForm() {
   });
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setValues({...values, showPassword: !values.showPassword});
   };
 
   return (
