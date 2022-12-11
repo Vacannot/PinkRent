@@ -286,7 +286,7 @@ export const UserProfileListings = () => {
       }}
     >
       <Typography sx={{pb: "2.5rem"}} variant="h6" fontWeight={400}>
-        YOUR PRODUCTS
+       Max products
       </Typography>
       <TableContainer>
         <Table aria-label="collapsible table">
