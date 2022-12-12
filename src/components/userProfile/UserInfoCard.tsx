@@ -15,13 +15,18 @@ import {
   VpnKeyOutlined,
 } from "@mui/icons-material";
 import styles from "./userProfile.module.scss";
-import {getAuth, onAuthStateChanged} from "firebase/auth";
-import {useEffect, useState} from "react";
-import {auth} from "../../backend/firebase";
-import {useFormik} from "formik";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { auth } from "../../backend/firebase";
+import { useFormik } from "formik";
 import * as yup from "yup";
-import {useAuth} from "../../backend/Context";
-import {useNavigate} from "react-router-dom";
+import { useAuth } from "../../backend/Context";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { languageKey } from "../../i18n";
+
+let lng = "";
+let language = "English";
 
 const validationSchemaChangePass = yup.object({
   oldPassword: yup.string().required("Password is required"),
@@ -37,8 +42,9 @@ export interface SimpleDialogProps {
 }
 
 function SimpleDialog(props: SimpleDialogProps) {
-  const {updateUserPassword} = useAuth();
-  const {onClose, open} = props;
+  const { updateUserPassword } = useAuth();
+  const { onClose, open } = props;
+  const { t } = useTranslation();
 
   const [error, setError] = useState<string>("");
 
@@ -69,7 +75,7 @@ function SimpleDialog(props: SimpleDialogProps) {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Change Password</DialogTitle>
+      <DialogTitle> {t("change_password")} </DialogTitle>
       {error.length !== 0 ? <Typography>{error}</Typography> : <></>}
       <form onSubmit={formik.handleSubmit}>
         <TextField
@@ -112,30 +118,50 @@ function SimpleDialog(props: SimpleDialogProps) {
           }
           variant="standard"
         />
-        <Button type="submit">Confirm Change Password</Button>
+        <Button type="submit">{t("confirm_change_password")}</Button>
       </form>
     </Dialog>
   );
 }
 
-const View = ({user}: {user: any}) => {
-  const {deleteUser} = useAuth();
+const View = ({ user }: { user: any }) => {
+  const { t, i18n } = useTranslation();
+
+  const translate = (lng: string) => {
+    i18n.changeLanguage(lng);
+    document.documentElement.setAttribute("lang", lng);
+    localStorage.setItem(languageKey, lng);
+  };
+
+  const { deleteUser } = useAuth();
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+  const handleTranslate = () => {
+    if (lng === "sv") {
+      translate("en");
+      lng = "en";
+      language = "English";
+      return language;
+    }
+    if (lng === "en") {
+      translate("sv");
+      lng = "sv";
+      language = "Svenska";
+      return language;
+    } else {
+      translate("sv");
+      lng = "sv";
+      language = "Swedish";
+      return language;
+    }
   };
 
   return (
     <>
       <Typography className={styles.spacing}>
-        Name: {user?.displayName}
+        {t("name")}: {user?.displayName}
       </Typography>
       <Typography className={styles.spacing}>Email: {user?.email}</Typography>
       <Typography
@@ -144,24 +170,27 @@ const View = ({user}: {user: any}) => {
           alignItems: "center",
           justifyContent: "space-between",
         }}
+        onClick={() => handleTranslate()}
       >
-        Language: English
+        {t("language")}: {language}
         <IconButton>
           <LanguageOutlined />
         </IconButton>
       </Typography>
       <Button
-        onClick={handleClickOpen}
+        onClick={() => setOpen(true)}
         endIcon={<VpnKeyOutlined />}
         color="info"
+        sx={{ marginLeft: "-7px", width: "100%", justifyContent: "flex-start" }}
       >
-        Change Password
+        {t("change_password")}
       </Button>
-      <SimpleDialog open={open} onClose={handleClose} />
+      <SimpleDialog open={open} onClose={() => setOpen(false)} />
       <Button
         variant="text"
         color="error"
         endIcon={<DeleteOutlined />}
+        sx={{ marginLeft: "-7px", width: "100%", justifyContent: "flex-start" }}
         onClick={() => {
           const password = prompt("Password");
           if (password)
@@ -170,7 +199,7 @@ const View = ({user}: {user: any}) => {
             });
         }}
       >
-        Delete
+        {t("delete")}
       </Button>
     </>
   );
@@ -180,8 +209,10 @@ const validationSchema = yup.object({
   displayName: yup.string().required(),
 });
 
-const Edit = ({user, close}: {user: any; close: () => void}) => {
-  const {updateUser} = useAuth();
+const Edit = ({ user, close }: { user: any; close: () => void }) => {
+  const { updateUser } = useAuth();
+
+  const { t } = useTranslation();
 
   const initialValues = {
     displayName: "",
@@ -212,7 +243,7 @@ const Edit = ({user, close}: {user: any; close: () => void}) => {
         helperText={formik.touched.displayName && formik.errors.displayName}
         variant="standard"
       />
-      <Button type="submit">Save</Button>
+      <Button type="submit">{t("save")}</Button>
     </form>
   );
 };
@@ -220,6 +251,7 @@ const Edit = ({user, close}: {user: any; close: () => void}) => {
 export const UserInfoCard = () => {
   const user = getAuth().currentUser;
   const [, setBSUpdate] = useState<any>(null);
+  const { t } = useTranslation();
 
   const [edit, setEdit] = useState<boolean>(false);
 
@@ -229,8 +261,8 @@ export const UserInfoCard = () => {
     });
   }, []);
   return (
-    <Card sx={{width: 335, height: "fit-content"}}>
-      <CardContent sx={{paddingBottom: "5px"}}>
+    <Card sx={{ width: 335, height: "fit-content" }}>
+      <CardContent sx={{ paddingBottom: "5px" }}>
         <div id="recaptcha-container"></div>
         <Typography
           sx={{
@@ -242,7 +274,7 @@ export const UserInfoCard = () => {
           variant="h6"
           fontWeight={400}
         >
-          PERSONAL DETAILS
+          {t("personal_details")}
           <IconButton
             onClick={() => {
               setEdit(!edit);

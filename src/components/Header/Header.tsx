@@ -13,8 +13,10 @@ import { styled } from "@mui/material/styles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "../../backend/firebase";
+import { useTranslation } from "react-i18next";
 
 export default function Header() {
+  const { t } = useTranslation();
   const { width } = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
@@ -106,7 +108,7 @@ export default function Header() {
         <Link to="/about" style={{ textDecoration: "none" }}>
           <Button variant="text">
             <Typography variant="body1" sx={{ color: "grey" }}>
-              ABOUT
+              {t("about")}
             </Typography>
           </Button>
         </Link>
@@ -114,7 +116,7 @@ export default function Header() {
         <Link to="/contact" style={{ textDecoration: "none" }}>
           <Button variant="text">
             <Typography variant="body1" sx={{ color: "grey" }}>
-              CONTACT US
+              {t("contact_us")}
             </Typography>
           </Button>
         </Link>
@@ -136,7 +138,7 @@ export default function Header() {
                   variant="contained"
                 >
                   <Typography variant="body1" sx={{ color: "grey" }}>
-                    ADD PRODUCT
+                    {t("add_product")}
                   </Typography>
                 </CustomizedButton>
               </Link>
@@ -196,7 +198,7 @@ export default function Header() {
                 variant="contained"
               >
                 <Typography variant="body1" sx={{ color: "grey" }}>
-                  login
+                  {t("login")}
                 </Typography>
               </CustomizedButton>
             </Link>

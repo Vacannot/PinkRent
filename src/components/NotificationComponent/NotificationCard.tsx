@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "../../backend/Context";
 import { auth } from "../../backend/firebase";
+import { useTranslation } from "react-i18next";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -30,6 +31,7 @@ export interface SnackbarType {
 }
 
 function NotificationCard() {
+  const { t } = useTranslation();
   const [accept, setAccept] = React.useState(false);
   const [decline, setDecline] = React.useState(false);
 
@@ -95,7 +97,10 @@ function NotificationCard() {
                   <Typography variant="h6">
                     Max Andersson {notification.requester}
                   </Typography>
-                  <Typography>Request to rent {notification.title}</Typography>
+                  <Typography>
+                    {t("requests_to_rent")}
+                    {notification.title}
+                  </Typography>
                 </Box>
                 <Box>
                   <IconButton
@@ -135,7 +140,7 @@ function NotificationCard() {
               }}
             >
               <Typography variant="h5" sx={{ ml: "3.3rem" }}>
-                NOTIFICATIONS
+                {t("notifications")}
               </Typography>
             </Card>
 
@@ -153,12 +158,12 @@ function NotificationCard() {
                   mt: ".5rem",
                 }}
               >
-                <Typography> Image</Typography>
-                <Typography> Title</Typography>
-                <Typography> Reguest from</Typography>
+                <Typography> {t("image")}</Typography>
+                <Typography> {t("title")}</Typography>
+                <Typography> {t("request_from")}</Typography>
                 <Box sx={{ display: "flex" }}>
-                  <Typography> Approve</Typography>
-                  <Typography sx={{ ml: "1rem" }}> Decline</Typography>
+                  <Typography> {t("approve")}</Typography>
+                  <Typography sx={{ ml: "1rem" }}> {t("decline")}</Typography>
                 </Box>
               </Box>
               <hr
@@ -227,12 +232,12 @@ function NotificationCard() {
 
       <Snackbar open={accept} autoHideDuration={1000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Request Confirmed! Renter will be notified!
+          {t("request_confirmed")}
         </Alert>
       </Snackbar>
       <Snackbar open={decline} autoHideDuration={1000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          Request Declined! Renter will be notified!
+          {t("requst_declined")}
         </Alert>
       </Snackbar>
     </>

@@ -16,6 +16,7 @@ import {
   VisibilityOffOutlined,
   VisibilityOutlined,
 } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 const validationSchema = yup.object({
   displayName: yup.string().required("Please enter your name"),
@@ -33,6 +34,7 @@ const initialValues = {
 };
 
 function RegisterForm() {
+  const { t } = useTranslation();
   const { signup } = useAuth();
   const navigate = useNavigate();
 
@@ -68,7 +70,7 @@ function RegisterForm() {
           marginBottom: "55px",
         }}
       >
-        CREATE ACCOUNT
+        {t("create_account")}
       </h2>
       <form onSubmit={formik.handleSubmit} className={styles.centerForm}>
         <TextField
@@ -156,7 +158,7 @@ function RegisterForm() {
           variant="contained"
           type="submit"
         >
-          Register
+          {t("register")}
         </Button>
       </form>
       <Link
@@ -167,7 +169,7 @@ function RegisterForm() {
         }}
         className={styles.orLogin}
       >
-        Or login
+        {t("or_login")}
       </Link>
     </Box>
   );

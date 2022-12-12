@@ -1,7 +1,9 @@
 import Box from "@mui/material/Box";
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 function ContactPageComponent() {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -11,8 +13,8 @@ function ContactPageComponent() {
         alignItems: "center",
       }}
     >
-      <Typography style={{maxWidth: "600px"}} sx={{marginTop: 3}}>
-        Feel free to Contact us at: PinkRent@DontMail.com
+      <Typography style={{ maxWidth: "600px" }} sx={{ marginTop: 3 }}>
+        {t("contact_1")}
       </Typography>
     </Box>
   );

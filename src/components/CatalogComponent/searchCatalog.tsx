@@ -4,6 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button, Card } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -29,6 +30,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchIconComponent() {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -37,31 +39,27 @@ export default function SearchIconComponent() {
       }}
     >
       <Toolbar sx={{ diplay: "flex", justifyContent: "space-around" }}>
-        <Button>VEHICLES</Button>
+        <Button>{t("vehciles")}</Button>
         <hr
           style={{ height: "1.7rem", margin: "0", backgroundColor: "primary" }}
         />
-        <Button>HOME</Button>
+        <Button>{t("home")}</Button>
         <hr
           style={{ height: "1.7rem", margin: "0", backgroundColor: "primary" }}
         />
-        <Button>CLOTHING</Button>
+        <Button>{t("clothing")}</Button>
         <hr
           style={{ height: "1.7rem", margin: "0", backgroundColor: "primary" }}
         />
-        <Button>ELECTIONICS</Button>
+        <Button>{t("eletronics")}</Button>
         <hr
           style={{ height: "1.7rem", margin: "0", backgroundColor: "primary" }}
         />
-        <Button>RESIDENCE</Button>
+        <Button>{t("residence")}</Button>
         <hr
           style={{ height: "1.7rem", margin: "0", backgroundColor: "primary" }}
         />
-        <Button>HOBBY</Button>
-        {/* <hr
-          style={{ height: "1.7rem", margin: "0", backgroundColor: "primary" }}
-        />
-        <Button>OTHER</Button> */}
+        <Button>{t("hobby")}</Button>
         <Card sx={{ display: "flex", alignItems: "center" }}>
           <SearchIconWrapper>
             <SearchIcon sx={{ color: "pink" }} />

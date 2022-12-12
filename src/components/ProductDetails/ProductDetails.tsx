@@ -2,14 +2,16 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import {Button, Box} from "@mui/material";
+import { Button, Box } from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import {useAuth} from "../../backend/Context";
+import { useAuth } from "../../backend/Context";
+import { useTranslation } from "react-i18next";
 
-const ProductDetails = ({product}: {product: any}) => {
-  const {createNotification} = useAuth();
+const ProductDetails = ({ product }: { product: any }) => {
+  const { t } = useTranslation();
+  const { createNotification } = useAuth();
 
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   let breakpoint = false;
   if (width < 971) {
@@ -28,7 +30,7 @@ const ProductDetails = ({product}: {product: any}) => {
           paddingTop: "8rem",
         }}
       >
-        <Card sx={{maxWidth: 345}}>
+        <Card sx={{ maxWidth: 345 }}>
           <CardMedia
             component="img"
             height="240"
@@ -37,7 +39,7 @@ const ProductDetails = ({product}: {product: any}) => {
           />
           <CardContent>
             <Typography
-              sx={{fontSize: "1rem"}}
+              sx={{ fontSize: "1rem" }}
               gutterBottom
               variant="h6"
               component="div"
@@ -62,25 +64,25 @@ const ProductDetails = ({product}: {product: any}) => {
           <Box>
             <Typography
               variant="subtitle1"
-              sx={{marginBottom: 3, marginTop: 3}}
+              sx={{ marginBottom: 3, marginTop: 3 }}
             >
-              DESCRIPTION
+              {t("description")}
             </Typography>
             <Typography
               variant="body2"
-              sx={{maxWidth: "21rem", marginBottom: 3}}
+              sx={{ maxWidth: "21rem", marginBottom: 3 }}
             >
               {product.description}
             </Typography>
           </Box>
 
-          <Box sx={{gap: "10px", display: "flex"}}>
+          <Box sx={{ gap: "10px", display: "flex" }}>
             <Button
               size="medium"
-              sx={{color: "white", background: "#F06A6A"}}
+              sx={{ color: "white", background: "#F06A6A" }}
               variant="contained"
             >
-              REPORT
+              {t("report")}
             </Button>
             <Button
               sx={{
@@ -94,7 +96,7 @@ const ProductDetails = ({product}: {product: any}) => {
                 });
               }}
             >
-              REQUEST RENTAL
+              {t("request_rental")}
             </Button>
           </Box>
         </Box>
@@ -112,16 +114,16 @@ const ProductDetails = ({product}: {product: any}) => {
         paddingTop: "8rem",
       }}
     >
-      <Card sx={{display: "flex"}}>
+      <Card sx={{ display: "flex" }}>
         <CardMedia
           component="img"
           image={product.image}
           alt="green iguana"
-          sx={{width: "20rem"}}
+          sx={{ width: "20rem" }}
         />
         <CardContent>
           <Typography
-            sx={{fontSize: "1.8rem", fontWeight: "400"}}
+            sx={{ fontSize: "1.8rem", fontWeight: "400" }}
             gutterBottom
             variant="h6"
             component="div"
@@ -175,10 +177,10 @@ const ProductDetails = ({product}: {product: any}) => {
                 paddingTop: "10px",
               }}
             >
-              <span>Price:</span> {product.price} kr/ day
+              <span>{t("price")}:</span> {product.price} kr/ {t("day")}
             </Box>
           </div>
-          <Box sx={{gap: "60px", display: "flex", marginTop: "2rem"}}>
+          <Box sx={{ gap: "60px", display: "flex", marginTop: "2rem" }}>
             <Button
               sx={{
                 color: "white",
@@ -186,11 +188,11 @@ const ProductDetails = ({product}: {product: any}) => {
               }}
               variant="contained"
             >
-              REQUEST RENTAL
+              {t("request_rental")}
             </Button>
             <Button
               size="medium"
-              sx={{color: "white", background: "#F06A6A"}}
+              sx={{ color: "white", background: "#F06A6A" }}
               variant="contained"
               onClick={() => {
                 createNotification(product.id).then(() => {
@@ -198,7 +200,7 @@ const ProductDetails = ({product}: {product: any}) => {
                 });
               }}
             >
-              REPORT
+              {t("report")}
             </Button>
           </Box>
         </CardContent>

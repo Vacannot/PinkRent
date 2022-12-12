@@ -12,6 +12,7 @@ import React from "react";
 import { useFormik } from "formik";
 import { useAuth } from "../../backend/Context";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
 const validationSchema = yup.object({
   email: yup
@@ -27,6 +28,7 @@ const initialValues = {
 };
 
 function LoginForm() {
+  const { t } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -61,7 +63,7 @@ function LoginForm() {
           marginBottom: "55px",
         }}
       >
-        LOGIN
+        {t("login_caps")}
       </h2>
       <form onSubmit={formik.handleSubmit} className={styles.centerForm}>
         <TextField
@@ -124,7 +126,7 @@ function LoginForm() {
           }}
           className={styles.forgotPassword}
         >
-          Forgot your password?
+          {t("forgot_password")}
         </p>
         <Button
           sx={{
@@ -136,7 +138,7 @@ function LoginForm() {
           variant="contained"
           type="submit"
         >
-          LOGIN
+          {t("login_caps")}
         </Button>
       </form>
 
@@ -148,7 +150,7 @@ function LoginForm() {
         }}
         className={styles.orRegister}
       >
-        Or sign up
+        {t("or_sign_up")}
       </Link>
     </Box>
   );
