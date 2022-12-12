@@ -2,15 +2,29 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import {Button, Box} from "@mui/material";
+import {Button, Box, IconButton} from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import {useAuth} from "../../backend/Context";
 import {LocationOnOutlined, LocalPhoneOutlined} from "@mui/icons-material";
+import { Link, useParams } from "react-router-dom";
+import Person2Icon from '@mui/icons-material/Person2';
+import { useEffect, useState } from "react";
 
-const ProductDetails = ({product}: {product: any}) => {
-  const {createNotification} = useAuth();
 
+  const ProductDetails = ({product}: {product: any}) => {
+  const {createNotification, getProductsByUserID} = useAuth();
   const {width} = useWindowDimensions();
+  const [user, setUser] = useState<any[]>();
+  let params = useParams();
+  const userID = params.userId;
+  
+  useEffect(() => {
+    let user = getProductsByUserID(userID!);
+    user.then((data) => {
+      setUser(data);
+      console.log('test', user);
+    });
+  });
 
   let breakpoint = false;
   if (width < 971) {
@@ -19,17 +33,16 @@ const ProductDetails = ({product}: {product: any}) => {
 
   if (breakpoint)
     return (
+     <Box sx={{ display:"flex", justifyContent:"center"}} >
+      <Card sx={{maxWidth: 345,}}>
       <Box
         key={product.id}
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center",
-          paddingTop: "8rem",
         }}
       >
-        <Card sx={{maxWidth: 345}}>
           <CardMedia
             component="img"
             height="240"
@@ -58,29 +71,33 @@ const ProductDetails = ({product}: {product: any}) => {
               {product.price} kr
             </Box>
           </CardContent>
-        </Card>
         <Box>
           <Box>
             <Typography
               variant="subtitle1"
-              sx={{marginBottom: 3, marginTop: 3}}
-            >
+              sx={{marginBottom: 3, marginTop: 3, marginLeft: 2}}
+              >
               DESCRIPTION
             </Typography>
             <Typography
               variant="body2"
-              sx={{maxWidth: "21rem", marginBottom: 3}}
-            >
+              sx={{maxWidth: "21rem", marginBottom: 3, marginLeft: 2}}
+              >
               {product.description}
             </Typography>
           </Box>
-
+          <Link to="/productUserPage"  >
+          <IconButton>
+            <Person2Icon />
+            <Typography>{}</Typography> 
+          </IconButton>
+          </Link>
           <Box sx={{gap: "10px", display: "flex"}}>
             <Button
               size="medium"
               sx={{color: "white", background: "#F06A6A"}}
               variant="contained"
-            >
+              >
               REPORT
             </Button>
             <Button
@@ -94,12 +111,14 @@ const ProductDetails = ({product}: {product: any}) => {
                   console.log("Create Notification done");
                 });
               }}
-            >
+              >
               REQUEST RENTAL
             </Button>
           </Box>
         </Box>
       </Box>
+    </Card>
+    </Box> 
     );
   // desktop
   return (
@@ -129,7 +148,6 @@ const ProductDetails = ({product}: {product: any}) => {
           >
             {product.title}
           </Typography>
-
           <Box>
             <Typography
               variant="body2"
@@ -160,6 +178,12 @@ const ProductDetails = ({product}: {product: any}) => {
               <LocalPhoneOutlined />
               {product.phoneNumber}
             </Typography>
+            <Link to="/productUserPage"  >
+          <IconButton>
+            <Person2Icon />
+            <Typography>{}</Typography>
+          </IconButton>
+          </Link>
             <Box
               sx={{
                 fontWeight: "bold",
@@ -197,5 +221,6 @@ const ProductDetails = ({product}: {product: any}) => {
       </Card>
     </Box>
   );
+           
 };
 export default ProductDetails;

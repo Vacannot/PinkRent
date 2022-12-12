@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { UserInfoCard } from "./UserInfoCard";
 import { UserProfileListings } from "./UserProfileListing";
 
 function UserProfilePage(){

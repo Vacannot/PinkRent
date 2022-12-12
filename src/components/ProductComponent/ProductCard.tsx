@@ -4,12 +4,10 @@ import {
   Card,
   CardActions,
   CardContent,
-  IconButton,
   Typography,
 } from "@mui/material";
 import { useState, useEffect, FC } from "react";
-import Person2Icon from '@mui/icons-material/Person2';
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useAuth } from "../../backend/Context";
 
 interface Props {
@@ -72,12 +70,6 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                     {item.title}
                   </Typography>
                 </CardContent>
-                <Link to="productUserPage" >
-                <IconButton>
-                 <Person2Icon />
-                 <Typography>Simon</Typography>
-                </IconButton>
-                </Link>
                 <CardActions
                   sx={{ display: "flex", justifyContent: "space-between" }}
                 >

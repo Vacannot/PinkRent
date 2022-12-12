@@ -30,7 +30,7 @@ function App() {
             <Route path="details/:productID" element={<ProductDetailPage />} />
             <Route path="contact" element={<ContactPage />} />
             <Route path="about" element={<AboutPage />} />
-            <Route path="productUserPage" element={<ProductUserPage />} />
+            <Route path="productUserPage/:userID" element={<ProductUserPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
