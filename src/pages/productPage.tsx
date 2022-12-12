@@ -1,10 +1,14 @@
+import { useState } from "react";
 import ProductPageComponent from "../components/ProductComponent/ProductPageComponent";
 import SearchIconComponent from "../components/ProductComponent/searchProductPage";
+
 function ProductPage() {
+  const [searchString, setSearchString] = useState("");
+
   return (
     <>
-      <SearchIconComponent />
-      <ProductPageComponent />
+      <SearchIconComponent setSearchString={setSearchString} />
+      <ProductPageComponent searchString={searchString} />
     </>
   );
 }

@@ -1,31 +1,59 @@
 import styles from "./loginform.module.scss";
 import InputAdornment from "@mui/material/InputAdornment";
-import Input from "@mui/material/Input";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import {Link} from "react-router-dom";
-import {IconButton} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { IconButton, TextField } from "@mui/material";
 import React from "react";
+import { useFormik } from "formik";
+import { useAuth } from "../../backend/Context";
+import * as yup from "yup";
+import { useTranslation } from "react-i18next";
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
+
+const initialValues = {
+  email: "",
+  password: "",
+};
 
 function LoginForm() {
+  const { t } = useTranslation();
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      login(values.email, values.password).then(() => {
+        navigate("/catalog");
+      });
+
+      formik.resetForm();
+    },
+  });
   const [values, setValues] = React.useState({
     password: "",
     showPassword: false,
   });
 
   const handleClickShowPassword = () => {
-    setValues({...values, showPassword: !values.showPassword});
+    setValues({ ...values, showPassword: !values.showPassword });
   };
 
   return (
     <Box
-      className={styles.loginForm}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -37,105 +65,87 @@ function LoginForm() {
           marginBottom: "55px",
         }}
       >
-        LOGIN
+        {t("login_caps")}
       </h2>
-      <FormControl
-        sx={{
-          width: "267px",
-          marginBottom: "50px",
-          paddingTop: "8px",
-        }}
-        className={styles.loginFormControl}
-        variant="standard"
-      >
-        <InputLabel
+      <form onSubmit={formik.handleSubmit} className={styles.centerForm}>
+        <TextField
           sx={{
-            color: "black",
-            letterSpacing: "-3%",
+            paddingBottom: "4rem",
+            width: "17rem",
+            paddingTop: ".5rem",
           }}
-          htmlFor="login-form-username"
-        >
-          Username
-        </InputLabel>
-        <Input
-          id="login-form-username"
-          placeholder="Type your username"
-          sx={{
-            paddingBottom: "16px",
+          id="email"
+          name="email"
+          label="Email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+          variant="standard"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircleOutlinedIcon />
+              </InputAdornment>
+            ),
           }}
-          startAdornment={
-            <InputAdornment position="start">
-              <AccountCircleOutlinedIcon />
-            </InputAdornment>
-          }
         />
-      </FormControl>
-      <FormControl
-        sx={{
-          width: "267px",
-          paddingTop: "8px",
-        }}
-        className={styles.loginFormControl}
-        variant="standard"
-      >
-        <InputLabel
+
+        <TextField
           sx={{
-            marginBottom: "22px",
-            color: "black",
-            letterSpacing: "-3%",
+            paddingBottom: "4rem",
+            width: "17rem",
+            paddingTop: ".5rem",
           }}
-          htmlFor="login-form-password"
-        >
-          Password
-        </InputLabel>
-        <Input
-          id="login-form-password"
-          placeholder="Type your password"
+          id="password"
+          name="password"
+          label="Password"
           type={values.showPassword ? "text" : "password"}
-          sx={{
-            paddingBottom: "16px",
-          }}
-          startAdornment={
-            <InputAdornment position="start">
-              <LockOutlinedIcon />
-              <IconButton
-                sx={{
-                  position: "absolute",
-                  right: "0",
-                }}
-                onClick={handleClickShowPassword}
-              >
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+          variant="standard"
+          InputProps={{
+            startAdornment: (
+              <LockOutlinedIcon sx={{ color: "rgba(0, 0, 0, 0.54)" }} />
+            ),
+            endAdornment: (
+              <IconButton onClick={handleClickShowPassword}>
                 {values.showPassword ? (
                   <VisibilityOutlinedIcon />
                 ) : (
                   <VisibilityOffOutlinedIcon />
                 )}
               </IconButton>
-            </InputAdornment>
-          }
+            ),
+          }}
         />
-      </FormControl>
-      <p
-        style={{
-          color: "#7E7E7E",
-          fontSize: "13px",
-          marginLeft: "8.5rem",
-        }}
-        className={styles.forgotPassword}
-      >
-        Forgot your password?
-      </p>
-      <Button
-        sx={{
-          width: "266px",
-          color: "white",
-          marginTop: "42px",
-          marginBottom: "94px",
-        }}
-        variant="contained"
-      >
-        LOGIN
-      </Button>
+
+        <p
+          style={{
+            color: "#7E7E7E",
+            fontSize: "13px",
+            marginLeft: "8.5rem",
+          }}
+          className={styles.forgotPassword}
+        >
+          {t("forgot_password")}
+        </p>
+        <Button
+          sx={{
+            width: "266px",
+            color: "white",
+            marginTop: "3rem",
+            marginBottom: "1rem",
+          }}
+          variant="contained"
+          type="submit"
+        >
+          {t("login_caps")}
+        </Button>
+      </form>
+
       <Link
         to="/register"
         style={{
@@ -144,7 +154,7 @@ function LoginForm() {
         }}
         className={styles.orRegister}
       >
-        Or sign up
+        {t("or_sign_up")}
       </Link>
     </Box>
   );

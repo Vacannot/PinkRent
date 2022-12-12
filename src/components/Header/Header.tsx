@@ -10,24 +10,28 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "../../backend/firebase";
+import { useTranslation } from "react-i18next";
+import { useCallback } from "react";
 
 export default function Header() {
+  const { t } = useTranslation();
   const { width } = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
   }
 
-  const [BSUpdate, setBSUpdate] = useState<any>(null);
+  const [, updateState] = useState<any>();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) setBSUpdate("Hehehe");
+    onAuthStateChanged(auth, () => {
+      forceUpdate();
     });
-  }, []);
+  }, [forceUpdate]);
 
   let onHover = false;
 
@@ -58,7 +62,7 @@ export default function Header() {
           alignItems: "center",
         }}
       >
-        <Link to={"/productPage"}>
+        <Link to={"/catalog"}>
           <img src={LogoMobile} alt="yo" />
         </Link>
         <Box
@@ -77,7 +81,7 @@ export default function Header() {
         backgroundColor: "white",
         boxShadow: 3,
         height: 100,
-        width: "100vw",
+        width: "100%",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -93,14 +97,20 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
-        <Link to="/productPage">
-          <img src={LogoDesktop} alt="DesktopLogoAlt" />
-        </Link>
+        {auth.currentUser ? (
+          <Link to="/catalog">
+            <img src={LogoDesktop} alt="DesktopLogoAlt" />
+          </Link>
+        ) : (
+          <Link to="/">
+            <img src={LogoDesktop} alt="DesktopLogoAlt" />
+          </Link>
+        )}
 
         <Link to="/about" style={{ textDecoration: "none" }}>
           <Button variant="text">
             <Typography variant="body1" sx={{ color: "grey" }}>
-              ABOUT
+              {t("about")}
             </Typography>
           </Button>
         </Link>
@@ -108,7 +118,7 @@ export default function Header() {
         <Link to="/contact" style={{ textDecoration: "none" }}>
           <Button variant="text">
             <Typography variant="body1" sx={{ color: "grey" }}>
-              CONTACT US
+              {t("contact_us")}
             </Typography>
           </Button>
         </Link>
@@ -122,7 +132,7 @@ export default function Header() {
         }}
       >
         <Stack spacing={4} direction="row">
-          {getAuth().currentUser ? (
+          {auth.currentUser ? (
             <>
               <Link to="/add" style={{ textDecoration: "none" }}>
                 <CustomizedButton
@@ -130,7 +140,7 @@ export default function Header() {
                   variant="contained"
                 >
                   <Typography variant="body1" sx={{ color: "grey" }}>
-                    ADD PRODUCT
+                    {t("add_product")}
                   </Typography>
                 </CustomizedButton>
               </Link>
@@ -166,7 +176,7 @@ export default function Header() {
                   variant="contained"
                 >
                   <Typography variant="body1" sx={{ color: "grey" }}>
-                    {getAuth().currentUser!.uid}
+                    {auth.currentUser!.displayName}
                   </Typography>
                 </CustomizedButton>
               </Link>
@@ -190,7 +200,7 @@ export default function Header() {
                 variant="contained"
               >
                 <Typography variant="body1" sx={{ color: "grey" }}>
-                  login
+                  {t("login")}
                 </Typography>
               </CustomizedButton>
             </Link>

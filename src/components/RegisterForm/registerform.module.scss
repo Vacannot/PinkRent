@@ -1,4 +1,10 @@
-.registerForm {
+.centerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.test {
   max-width: 466px;
 
   & .orLogin {
