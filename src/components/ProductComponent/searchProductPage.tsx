@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Button, Card } from "@mui/material";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { useAuth } from "../../backend/Context";
+import { useTranslation } from "react-i18next";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -35,6 +36,8 @@ interface Props {
 }
 
 export default function SearchIconComponent({ setSearchString }: Props) {
+  const { t } = useTranslation();
+
   const { getCategories, setFilter } = useAuth();
   const [categories, setCategories] = useState<any[]>([]);
 
@@ -71,7 +74,7 @@ export default function SearchIconComponent({ setSearchString }: Props) {
             setFilter(null);
           }}
         >
-          Remove Filter
+          {t("remove_filter")}
         </Button>
         {categories.map((item) => {
           return (

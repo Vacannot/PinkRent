@@ -5,8 +5,12 @@ import Typography from "@mui/material/Typography";
 import { Button, Box } from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { useAuth } from "../../backend/Context";
-import { LocationOnOutlined, LocalPhoneOutlined } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
+import { LocationOnOutlined } from "@mui/icons-material";
+import { LocalPhoneOutlined } from "@mui/icons-material";
+
 const ProductDetails = ({ product }: { product: any }) => {
+  const { t } = useTranslation();
   const { createNotification } = useAuth();
 
   const { width } = useWindowDimensions();
@@ -70,7 +74,7 @@ const ProductDetails = ({ product }: { product: any }) => {
               variant="subtitle1"
               sx={{ marginBottom: 3, marginTop: 3 }}
             >
-              DESCRIPTION
+              {t("description")}
             </Typography>
             <Typography
               variant="body2"
@@ -93,7 +97,7 @@ const ProductDetails = ({ product }: { product: any }) => {
               }}
               variant="contained"
             >
-              REPORT
+              {t("report")}
             </Button>
             <Button
               sx={{
@@ -112,7 +116,7 @@ const ProductDetails = ({ product }: { product: any }) => {
                 });
               }}
             >
-              REQUEST RENTAL
+              {t("request_rental")}
             </Button>
           </Box>
         </Box>
@@ -184,7 +188,8 @@ const ProductDetails = ({ product }: { product: any }) => {
                 paddingTop: "10px",
               }}
             >
-              <Typography>Price: {product.price} kr/day</Typography>
+              <Typography>{t("price")}:</Typography> {product.price} kr/{" "}
+              {t("day")}
             </Box>
           </Box>
           <Box sx={{ gap: "60px", display: "flex", marginTop: "2rem" }}>
@@ -195,7 +200,7 @@ const ProductDetails = ({ product }: { product: any }) => {
               }}
               variant="contained"
             >
-              REQUEST RENTAL
+              {t("request_rental")}
             </Button>
             <Button
               size="medium"
@@ -207,7 +212,7 @@ const ProductDetails = ({ product }: { product: any }) => {
                 });
               }}
             >
-              REPORT
+              {t("report")}
             </Button>
           </Box>
         </CardContent>

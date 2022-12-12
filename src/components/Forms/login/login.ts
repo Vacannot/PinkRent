@@ -4,6 +4,7 @@
 // import {createUserWithEmailAndPassword} from "firebase/auth";
 // import {auth} from "../../../backend/firebase";
 // import {useAuth} from "../../../backend/Context";
+//import { useTranslation } from "react-i18next";
 
 // const validationSchema = yup.object({
 //   email: yup
@@ -20,6 +21,7 @@
 
 // export const LoginTest = () => {
 //   const {login} = useAuth();
+// const { t } = useTranslation();
 
 //   const formik = useFormik({
 //     initialValues: initialValues,
@@ -55,7 +57,7 @@
 //           variant="standard"
 //         />
 //         <Button color="primary" variant="text" type="submit">
-//           Submit
+//           {t("submit")}
 //         </Button>
 //       </form>
 //     </div>
@@ -64,6 +66,7 @@
 
 // export const SignupTest = () => {
 //   const {signup} = useAuth();
+// const { t } = useTranslation();
 
 //   const formik = useFormik({
 //     initialValues: initialValues,
@@ -99,7 +102,7 @@
 //           variant="standard"
 //         />
 //         <Button color="primary" variant="text" type="submit">
-//           Submit
+//           {t("submit")}
 //         </Button>
 //       </form>
 //     </div>
@@ -107,6 +110,7 @@
 // };
 
 // export const AddProductTest = () => {
+//    const { t } = useTranslation();
 //   const signup = async (email: any, password: any) => {
 //     const user = await createUserWithEmailAndPassword(auth, email, password);
 //     console.log(user);
@@ -146,7 +150,7 @@
 //           variant="standard"
 //         />
 //         <Button color="primary" variant="text" type="submit">
-//           Submit
+//           {t("submit")}
 //         </Button>
 //       </form>
 //     </div>

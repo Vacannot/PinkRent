@@ -2,12 +2,15 @@ import { Box, IconButton, Typography, ImageList } from "@mui/material";
 import ProductCard from "./ProductCard";
 import CheckIcon from "@mui/icons-material/Check";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   searchString: string;
 }
 
 const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Box
@@ -18,9 +21,9 @@ const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
           },
         }}
       >
-        <Typography> Popular on PinkRent</Typography>
+        <Typography> {t("popular_on_pr")}</Typography>
         <IconButton aria-label="delete">
-          <Typography>Rent now</Typography>
+          <Typography>{t("rent_now")}</Typography>
           <CheckIcon />
         </IconButton>
       </Box>
@@ -38,9 +41,9 @@ const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
       </ImageList>
 
       <Box sx={{ mt: "4rem", ml: "2rem" }}>
-        <Typography> Frequently visited in residence</Typography>
+        <Typography> {t("frequently_visited")}</Typography>
         <Typography color="text.secondary">
-          Currently trending items on PinkRent
+          {t("currently_trending")}
         </Typography>
       </Box>
       <ImageList

@@ -10,12 +10,13 @@ import { useState, useEffect, FC } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../backend/Context";
-
+import { useTranslation } from "react-i18next";
 interface Props {
   searchString: string;
 }
 
 export const ProductCard: FC<Props> = ({ searchString }: Props) => {
+  const { t } = useTranslation();
   const { getProducts, createNotification, filter } = useAuth();
   const navigate = useNavigate();
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
@@ -108,7 +109,7 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                       });
                     }}
                   >
-                    Request
+                    {t("request")}
                   </Button>
                 </CardActions>
               </Card>
