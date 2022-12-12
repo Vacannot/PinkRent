@@ -188,7 +188,7 @@ const View = ({ user }: { user: any }) => {
         {t("change_password")}
       </Button>
       <SimpleDialog open={open} onClose={() => setOpen(false)} />
-      <ButtonGroup>
+      <ButtonGroup sx={{ display: "flex", flexDirection: "column" }}>
         <Button
           variant="text"
           color="error"
