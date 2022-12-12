@@ -32,6 +32,7 @@ export interface SnackbarType {
 
 function NotificationCard() {
   const { t } = useTranslation();
+  const { deleteNotification, setProductRented } = useAuth();
   const [accept, setAccept] = React.useState(false);
   const [decline, setDecline] = React.useState(false);
 
