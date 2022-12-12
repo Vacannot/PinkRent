@@ -7,12 +7,14 @@ import {
   Typography,
   Dialog,
   DialogTitle,
+  ButtonGroup,
 } from "@mui/material";
 import {
   BorderColorOutlined,
   LanguageOutlined,
   DeleteOutlined,
   VpnKeyOutlined,
+  LogoutOutlined,
 } from "@mui/icons-material";
 import styles from "./userProfile.module.scss";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -133,7 +135,7 @@ const View = ({ user }: { user: any }) => {
     localStorage.setItem(languageKey, lng);
   };
 
-  const { deleteUser } = useAuth();
+  const { deleteUser, logout } = useAuth();
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -186,21 +188,37 @@ const View = ({ user }: { user: any }) => {
         {t("change_password")}
       </Button>
       <SimpleDialog open={open} onClose={() => setOpen(false)} />
-      <Button
-        variant="text"
-        color="error"
-        endIcon={<DeleteOutlined />}
-        sx={{ marginLeft: "-7px", width: "100%", justifyContent: "flex-start" }}
-        onClick={() => {
-          const password = prompt("Password");
-          if (password)
-            deleteUser(password).then(() => {
-              navigate("/");
-            });
-        }}
-      >
-        {t("delete")}
-      </Button>
+      <ButtonGroup>
+        <Button
+          variant="text"
+          color="error"
+          endIcon={<DeleteOutlined />}
+          sx={{
+            marginLeft: "-7px",
+            width: "100%",
+            justifyContent: "flex-start",
+          }}
+          onClick={() => {
+            const password = prompt("Password");
+            if (password)
+              deleteUser(password).then(() => {
+                navigate("/");
+              });
+          }}
+        >
+          {t("delete")}
+        </Button>
+        <Button
+          variant="outlined"
+          endIcon={<LogoutOutlined />}
+          onClick={() => {
+            logout();
+            navigate("/");
+          }}
+        >
+          Logout
+        </Button>
+      </ButtonGroup>
     </>
   );
 };

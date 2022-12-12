@@ -17,7 +17,7 @@ import {
   getDoc,
   getDocs,
   query,
-  setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import {createContext, useContext, useState} from "react";
@@ -38,7 +38,7 @@ interface context {
   }) => Promise<void>;
   deleteUser: (password: string) => Promise<void>;
   getProductsByUserID: (userid: string) => Promise<any[]>;
-  getNotificationsByUserID: (userid: string) => Promise<any[]>;
+  getNotificationsByUserID: (productOwnerID: string) => Promise<any[]>;
   getProductByID: (productID: string) => Promise<any>;
   getCategories: () => Promise<any[]>;
   getProducts: () => Promise<any[]>;
@@ -56,7 +56,9 @@ interface context {
       title: string;
     }
   ) => Promise<void>;
+  setProductRented: (productID: any, rented: boolean) => Promise<void>;
   deleteProduct: (productID: string) => Promise<void>;
+  deleteNotification: (id: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<context>({
@@ -68,13 +70,13 @@ export const AuthContext = createContext<context>({
   deleteUser: async () => {},
   createNotification: async () => {},
   createProduct: async () => {},
-  getProductsByUserID: async (userid: string): Promise<any[]> => {
+  getProductsByUserID: async (): Promise<any[]> => {
     return [];
   },
-  getNotificationsByUserID: async (userid: string): Promise<any[]> => {
+  getNotificationsByUserID: async (): Promise<any[]> => {
     return [];
   },
-  getProductByID: async (productID: string): Promise<any> => {
+  getProductByID: async (): Promise<any> => {
     return;
   },
   getCategories: async (): Promise<any[]> => {
@@ -86,7 +88,9 @@ export const AuthContext = createContext<context>({
   filter: null,
   setFilter: () => Promise,
   setProduct: async () => {},
+  setProductRented: async () => {},
   deleteProduct: async () => {},
+  deleteNotification: async () => {},
 });
 
 export function useAuth() {
@@ -116,6 +120,8 @@ export function AuthProvider(props: any) {
           userID: user.uid,
           image: productValues.image,
           location: productValues.location,
+          phoneNumber: productValues.phoneNumber,
+          rented: false,
         });
       } else {
         alert("To add a product you need to be signed in");
@@ -123,19 +129,28 @@ export function AuthProvider(props: any) {
     });
   };
 
-  const createNotification = async (productID: string) => {
+  const createNotification = async (product: any) => {
     const notificationCol = collection(db, "notifications");
     onAuthStateChanged(auth, (user) => {
       if (user) {
         addDoc(notificationCol, {
-          userID: user.uid,
-          productID: productID,
+          requester: user.displayName,
+          productID: product.id,
+          productOwnerID: product.userID,
           accepted: false,
         });
       } else {
         alert("To request a product you need to be signed in");
       }
     });
+  };
+
+  const deleteNotification = async (id: string) => {
+    await deleteDoc(doc(db, "notifications", id));
+  };
+
+  const setProductRented = async (productID: string, rented: boolean) => {
+    await updateDoc(doc(db, "products", productID), {rented});
   };
 
   const getCategories = async (): Promise<any[]> => {
@@ -175,7 +190,7 @@ export function AuthProvider(props: any) {
   const getNotificationsByUserID = async (userid: string): Promise<any[]> => {
     const q = query(
       collection(db, "notifications"),
-      where("userID", "==", userid)
+      where("productOwnerID", "==", userid)
     );
 
     const querySnapshot = await getDocs(q);
@@ -211,13 +226,11 @@ export function AuthProvider(props: any) {
     }
   ) => {
     const col = doc(db, "products", product.id);
-    await setDoc(col, {
+    await updateDoc(col, {
       category: values.category,
       description: values.description,
       price: values.price,
       title: values.title,
-      image: product.image,
-      userID: product.userID,
     });
   };
 
@@ -227,16 +240,7 @@ export function AuthProvider(props: any) {
   };
 
   const login = async (email: any, password: any) => {
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user.uid);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
+    await signInWithEmailAndPassword(auth, email, password);
   };
 
   const signup = async (
@@ -317,6 +321,8 @@ export function AuthProvider(props: any) {
         getProductByID,
         createProduct,
         getNotificationsByUserID,
+        setProductRented,
+        deleteNotification,
       }}
     >
       {props.children}

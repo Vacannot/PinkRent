@@ -35,14 +35,17 @@ function NotificationCard() {
   const [accept, setAccept] = React.useState(false);
   const [decline, setDecline] = React.useState(false);
 
-  const handleClick = (variant: string) => {
+  const handleClick = (variant: string, product: any, notification: any) => {
     if (variant === "accept") {
+      deleteNotification(notification.id);
+      setProductRented(product.id, true);
       setAccept(true);
       console.log("accept");
       return;
     }
 
     if (variant === "decline") {
+      deleteNotification(notification.id);
       setDecline(true);
       console.log("decline");
       return;
@@ -61,23 +64,33 @@ function NotificationCard() {
     setDecline(false);
   };
 
-  const { getNotificationsByUserID } = useAuth();
+  const { getNotificationsByUserID, getProductByID } = useAuth();
 
   const [notifications, setNotifications] = useState<any[]>([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        getNotificationsByUserID(user.uid).then((notifications) => {
-          setNotifications(notifications);
+        getNotificationsByUserID(user.uid).then(async (notifications) => {
+          let arr = [];
+          for (let notification of notifications) {
+            const product = await getProductByID(notification.productID);
+            arr.push({
+              notification,
+              product,
+            });
+          }
+          setNotifications(arr);
         });
       }
     });
-  }, [getNotificationsByUserID]);
+  }, [getNotificationsByUserID, getProductByID]);
 
   return (
     <>
-      {notifications.map((notification) => {
+      {notifications.map((item) => {
+        const notification = item.notification;
+        const product = item.product;
         return (
           <>
             <Card
@@ -106,14 +119,16 @@ function NotificationCard() {
                   <IconButton
                     aria-label="grant"
                     color="success"
-                    onClick={() => handleClick("accept")}
+                    onClick={() => handleClick("accept", product, notification)}
                   >
                     <CheckIcon />
                   </IconButton>
                   <IconButton
                     aria-label="delete"
                     color="error"
-                    onClick={() => handleClick("decline")}
+                    onClick={() =>
+                      handleClick("decline", product, notification)
+                    }
                   >
                     <CloseIcon />
                   </IconButton>
@@ -190,9 +205,9 @@ function NotificationCard() {
                     justifyContent: "space-around",
                   }}
                 >
-                  <img src={notification.image} alt="productImage" />
+                  <img src={product.image} alt="productImage" />
                   <Typography gutterBottom variant="h5" component="div">
-                    {notification.title}
+                    {product.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {notification.requester}
@@ -202,14 +217,18 @@ function NotificationCard() {
                       aria-label="delete"
                       color="success"
                       sx={{ mr: "2.5rem" }}
-                      onClick={() => handleClick("accept")}
+                      onClick={() =>
+                        handleClick("accept", product, notification)
+                      }
                     >
                       <CheckIcon />
                     </IconButton>
                     <IconButton
                       aria-label="delete"
                       color="error"
-                      onClick={() => handleClick("decline")}
+                      onClick={() =>
+                        handleClick("decline", product, notification)
+                      }
                     >
                       <CloseIcon />
                     </IconButton>

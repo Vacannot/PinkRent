@@ -24,7 +24,10 @@ const validationSchema = yup.object({
     .string()
     .email("Enter a valid email")
     .required("Email is required"),
-  password: yup.string().required("Password is required"),
+  password: yup
+    .string()
+    .min(6, "Password needs to be 6 characters or more")
+    .required("Password is required"),
 });
 
 const initialValues = {
@@ -136,7 +139,9 @@ function RegisterForm() {
           helperText={formik.touched.password && formik.errors.password}
           variant="standard"
           InputProps={{
-            startAdornment: <LockOutlined />,
+            startAdornment: (
+              <LockOutlined sx={{ color: "rgba(0, 0, 0, 0.54)" }} />
+            ),
             endAdornment: (
               <IconButton onClick={handleClickShowPassword}>
                 {values.showPassword ? (

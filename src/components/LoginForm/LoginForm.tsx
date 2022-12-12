@@ -35,10 +35,12 @@ function LoginForm() {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      await login(values.email, values.password);
+    onSubmit: (values) => {
+      login(values.email, values.password).then(() => {
+        navigate("/catalog");
+      });
+
       formik.resetForm();
-      navigate("/catalog");
     },
   });
   const [values, setValues] = React.useState({
@@ -105,7 +107,9 @@ function LoginForm() {
           helperText={formik.touched.password && formik.errors.password}
           variant="standard"
           InputProps={{
-            startAdornment: <LockOutlinedIcon />,
+            startAdornment: (
+              <LockOutlinedIcon sx={{ color: "rgba(0, 0, 0, 0.54)" }} />
+            ),
             endAdornment: (
               <IconButton onClick={handleClickShowPassword}>
                 {values.showPassword ? (

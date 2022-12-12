@@ -13,7 +13,14 @@ const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
 
   return (
     <>
-      <Box sx={{ ml: "2rem" }}>
+      <Box
+        sx={{
+          ml: "2rem",
+          "@media screen and (max-width: 850px)": {
+            mt: "2rem",
+          },
+        }}
+      >
         <Typography> {t("popular_on_pr")}</Typography>
         <IconButton aria-label="delete">
           <Typography>{t("rent_now")}</Typography>
@@ -23,10 +30,8 @@ const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
       <ImageList
         sx={{
           width: "auto",
-          height: 340,
           ml: "2rem",
           mr: "2rem",
-          "@media screen and (max-width: 600px)": { height: "200px" },
         }}
         rowHeight={164}
       >
@@ -44,10 +49,8 @@ const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
       <ImageList
         sx={{
           width: "auto",
-          height: 340,
           ml: "2rem",
           mr: "2rem",
-          "@media screen and (max-width: 600px)": { height: "200px" },
         }}
         rowHeight={164}
       >

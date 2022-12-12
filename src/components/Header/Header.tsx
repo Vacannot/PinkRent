@@ -14,6 +14,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "../../backend/firebase";
 import { useTranslation } from "react-i18next";
+import { useCallback } from "react";
 
 export default function Header() {
   const { t } = useTranslation();
@@ -23,13 +24,14 @@ export default function Header() {
     breakpoint = true;
   }
 
-  const [, setBSUpdate] = useState<any>(null);
+  const [, updateState] = useState<any>();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) setBSUpdate("Hehehe");
+    onAuthStateChanged(auth, () => {
+      forceUpdate();
     });
-  }, []);
+  }, [forceUpdate]);
 
   let onHover = false;
 
@@ -95,7 +97,7 @@ export default function Header() {
           marginLeft: 8,
         }}
       >
-        {getAuth().currentUser ? (
+        {auth.currentUser ? (
           <Link to="/catalog">
             <img src={LogoDesktop} alt="DesktopLogoAlt" />
           </Link>
@@ -130,7 +132,7 @@ export default function Header() {
         }}
       >
         <Stack spacing={4} direction="row">
-          {getAuth().currentUser ? (
+          {auth.currentUser ? (
             <>
               <Link to="/add" style={{ textDecoration: "none" }}>
                 <CustomizedButton
@@ -174,7 +176,7 @@ export default function Header() {
                   variant="contained"
                 >
                   <Typography variant="body1" sx={{ color: "grey" }}>
-                    {getAuth().currentUser!.displayName}
+                    {auth.currentUser!.displayName}
                   </Typography>
                 </CustomizedButton>
               </Link>

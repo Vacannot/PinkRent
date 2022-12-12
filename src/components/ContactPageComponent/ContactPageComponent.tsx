@@ -7,10 +7,15 @@ function ContactPageComponent() {
   return (
     <Box
       sx={{
-        marginTop: 2,
+        marginTop: 3,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
+        "@media screen and (max-width: 460px)": {
+          padding: "3rem",
+          textAlign: "center",
+        },
       }}
     >
       <Typography style={{ maxWidth: "600px" }} sx={{ marginTop: 3 }}>

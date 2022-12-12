@@ -11,6 +11,9 @@ function AboutPageComponent() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        "@media screen and (max-width: 700px)": {
+          padding: "3rem",
+        },
       }}
     >
       <Typography style={{ maxWidth: "600px" }} sx={{ marginTop: 3 }}>
