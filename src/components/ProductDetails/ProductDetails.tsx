@@ -58,7 +58,12 @@ const ProductDetails = ({ product }: { product: any }) => {
                 paddingTop: "10px",
               }}
             >
-              {product.price} kr
+              {product.price === 0 ? (
+                <Typography> Free </Typography>
+              ) : (
+                product.price
+              )}
+              {product.price === 0 ? <></> : <>kr/{t("day")}</>}
             </Box>
           </CardContent>
         </Card>
@@ -188,8 +193,13 @@ const ProductDetails = ({ product }: { product: any }) => {
                 paddingTop: "10px",
               }}
             >
-              <Typography>{t("price")}:</Typography> {product.price} kr/{" "}
-              {t("day")}
+              <Typography>{t("price")}:</Typography>{" "}
+              {product.price === 0 ? (
+                <Typography variant="h6"> Free </Typography>
+              ) : (
+                product.price
+              )}
+              {product.price === 0 ? <></> : <>kr/{t("day")}</>}
             </Box>
           </Box>
           <Box sx={{ gap: "60px", display: "flex", marginTop: "2rem" }}>
@@ -199,6 +209,11 @@ const ProductDetails = ({ product }: { product: any }) => {
                 padding: "6px 40px",
               }}
               variant="contained"
+              onClick={() => {
+                createNotification(product).then(() => {
+                  console.log("Create Notification done");
+                });
+              }}
             >
               {t("request_rental")}
             </Button>
@@ -206,11 +221,6 @@ const ProductDetails = ({ product }: { product: any }) => {
               size="medium"
               sx={{ color: "white", background: "#F06A6A" }}
               variant="contained"
-              onClick={() => {
-                createNotification(product.id).then(() => {
-                  console.log("Create Notification done");
-                });
-              }}
             >
               {t("report")}
             </Button>
