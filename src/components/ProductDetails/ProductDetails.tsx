@@ -11,20 +11,14 @@ import Person2Icon from '@mui/icons-material/Person2';
 import { useEffect, useState } from "react";
 
 
-  const ProductDetails = ({product}: {product: any}) => {
+  const ProductDetails = ({product}: {product: any}, {user}: {user:any}) => {
   const {createNotification, getProductsByUserID} = useAuth();
   const {width} = useWindowDimensions();
-  const [user, setUser] = useState<any[]>();
   let params = useParams();
   const userID = params.userId;
   
-  useEffect(() => {
-    let user = getProductsByUserID(userID!);
-    user.then((data) => {
-      setUser(data);
-      console.log('test', user);
-    });
-  });
+ 
+  
 
   let breakpoint = false;
   if (width < 971) {
@@ -86,10 +80,10 @@ import { useEffect, useState } from "react";
               {product.description}
             </Typography>
           </Box>
-          <Link to="/productUserPage"  >
+          <Link to="productUserPage/:userID"  >
           <IconButton>
             <Person2Icon />
-            <Typography>{}</Typography> 
+            <Typography>{user}</Typography> 
           </IconButton>
           </Link>
           <Box sx={{gap: "10px", display: "flex"}}>
