@@ -118,7 +118,6 @@ import { useEffect, useState } from "react";
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        paddingTop: "8rem",
       }}
     >
       <Card sx={{display: "flex"}}>
