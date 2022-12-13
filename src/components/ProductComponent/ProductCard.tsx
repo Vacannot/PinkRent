@@ -6,7 +6,7 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import { useState, useEffect, FC } from "react";
+import { useState, useMemo, FC } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../backend/Context";
@@ -22,19 +22,26 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
 
-  useEffect(() => {
+  useMemo(() => {
     getProducts().then((products) => {
       setProducts(products);
     });
   }, [getProducts]);
 
-  useEffect(() => {
+  useMemo(() => {
     setFilteredProducts(
       products.filter((product) =>
         product.title.toLowerCase().includes(searchString.toLowerCase())
       )
     );
   }, [products, searchString]);
+
+  const handleDetailedClick = (item: any) => {
+    if (item.rented) {
+      return;
+    }
+    navigate(`/details/${item.id}`);
+  };
 
   return (
     <>
@@ -51,9 +58,7 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                 display: "flex",
               }}
               key={item.id}
-              onClick={() => {
-                navigate(`/details/${item.id}`);
-              }}
+              onClick={() => handleDetailedClick(item)}
             >
               <Card
                 sx={{
@@ -86,31 +91,37 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                   </Typography>
                 </CardContent>
                 <CardActions
-                  sx={{ display: "flex", justifyContent: "space-between" }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mr: "5px",
+                  }}
                 >
-                  <Typography sx={{ml: ".7rem"}}>{item.price} kr</Typography>
-                  {item.rented ? <Typography>Rented</Typography> : <></>}
+                  <Typography sx={{ ml: ".7rem" }}>{item.price} kr</Typography>
+                  {item.rented ? (
+                    <Typography color="primary">Rented</Typography>
+                  ) : (
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      sx={{
+                        height: "1.5rem",
+                        color: "white",
+                        mr: ".7rem",
+                        boxShadow: 3,
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
 
-                  <Button
-                    size="small"
-                    sx={{
-                      height: "1.5rem",
-                      backgroundColor: "pink",
-                      border: "1px solid white",
-                      color: "white",
-                      mr: ".7rem",
-                      boxShadow: 3,
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-
-                      createNotification(item).then(() => {
-                        console.log("Create Notification done");
-                      });
-                    }}
-                  >
-                    {t("request")}
-                  </Button>
+                        createNotification(item).then(() => {
+                          console.log("Create Notification done");
+                        });
+                      }}
+                    >
+                      {t("request")}
+                    </Button>
+                  )}
                 </CardActions>
               </Card>
             </Box>
