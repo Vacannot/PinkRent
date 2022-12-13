@@ -120,7 +120,6 @@ export function AuthProvider(props: any) {
           image: productValues.image,
           location: productValues.location,
           phoneNumber: productValues.phoneNumber,
-          email: user.email,
           rented: false,
         });
       } else {

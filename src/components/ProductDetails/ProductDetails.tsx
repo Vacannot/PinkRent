@@ -6,19 +6,15 @@ import {Button, Box, IconButton} from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import {useAuth} from "../../backend/Context";
 import {LocationOnOutlined, LocalPhoneOutlined} from "@mui/icons-material";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Person2Icon from '@mui/icons-material/Person2';
 import { useEffect, useState } from "react";
 
 
-  const ProductDetails = ({product}: {product: any}, {user}: {user:any}) => {
+  const ProductDetails = ({product}: {product: any}) => {
   const {createNotification, getProductsByUserID} = useAuth();
   const {width} = useWindowDimensions();
-  let params = useParams();
-  const userID = params.userId;
-  
- 
-  
+  const navigate = useNavigate();
 
   let breakpoint = false;
   if (width < 971) {
@@ -80,12 +76,11 @@ import { useEffect, useState } from "react";
               {product.description}
             </Typography>
           </Box>
-          <Link to="productUserPage/:userID"  >
-          <IconButton>
+          <IconButton onClick={() => {
+                navigate(`/productUserPage/${product.userID}`);
+              }}>
             <Person2Icon />
-            <Typography>{user}</Typography> 
           </IconButton>
-          </Link>
           <Box sx={{gap: "10px", display: "flex"}}>
             <Button
               size="medium"
@@ -172,12 +167,11 @@ import { useEffect, useState } from "react";
               <LocalPhoneOutlined />
               {product.phoneNumber}
             </Typography>
-            <Link to="/productUserPage"  >
-          <IconButton>
+            <IconButton onClick={() => {
+                navigate(`/productUserPage/${product.userID}`);
+              }}>
             <Person2Icon />
-            <Typography>{}</Typography>
           </IconButton>
-          </Link>
             <Box
               sx={{
                 fontWeight: "bold",

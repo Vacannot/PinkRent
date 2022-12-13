@@ -9,9 +9,7 @@ function ProductDetailPage() {
   let params = useParams();
   const productID = params.productID;
   
-  const { getProductsByUserID } = useAuth();
-  const [user, setUser] = useState<any[]>();
-  const userID = params.userId;
+  
 
   useEffect(() => {
     let product = getProductByID(productID!);
@@ -19,17 +17,10 @@ function ProductDetailPage() {
       console.log(data);
       setProduct(data);
     });
+
   }, [productID, getProductByID]);
 
-  useEffect(() => {
-    let user = getProductsByUserID(userID!);
-    user.then((data) => {
-      setUser(data);
-      console.log( data)
-    });
-    
-  }, [userID, getProductsByUserID]);
- 
+
 
   return <>{product ? <ProductDetails product={product}  /> : <p>321</p>}</>;
 }
