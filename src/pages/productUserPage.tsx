@@ -1,6 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Card, CardMedia, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../backend/Context";
 
 function ProductUserPage() {
@@ -8,6 +8,8 @@ function ProductUserPage() {
   const [products, setProducts] = useState<any[]>([]);
   let params = useParams();
   const userID = params.userID;
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     let product = getProductsByUserID(userID!);
@@ -20,47 +22,29 @@ function ProductUserPage() {
     <>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          mt: "6rem",
-          transform: "translate(15%,-15%)",
-          maxWidth: "65rem",
+          display: "grid",
+          placeContent:"center",
         }}
       >
         <Typography
-          sx={{ mb: "5rem", fontSize: "1.5rem", textAlign: "center" }}
-        >
-          Products
+          sx={{mb: "5rem", fontSize: "1.5rem", textAlign: "center"}}
+          >
+           Products
         </Typography>
         {products.map((item) => {
           return (
-            <Box
-              sx={{
-                width: "100%",
-                justifyContent: "center",
-                marginBottom: "2rem",
-                maxWidth: "65rem",
-              }}
-            >
-              <Box sx={{ width: "70%", display: "flex", alignItems: "end" }}>
-                <img
-                  style={{ width: "7rem", height: "7rem" }}
-                  src={item.image}
-                  alt=""
+              <Card raised sx={{marginBottom:"2rem", width: "fit-content", display: "flex", flexDirection: "column" , "@media screen and (max-width: 900px)": { display: "flex", flexDirection:"column", alignItems:"center", width:"auto" }}}>
+                <CardMedia
+                  sx={{ width: "15rem", height: "15rem" }}
+                  image={item.image}
+                  onClick={() => {
+                    navigate(`/details/${item.id}`);
+                  }}
                 />
                 <Typography>{item.title}</Typography>
                 <Typography>{item.price} kr</Typography>
-              </Box>
-              <Box
-                sx={{
-                  backgroundColor: "gray",
-                  width: "70%",
-                  height: ".1rem",
-                  justifyContent: "center",
-                }}
-              ></Box>
-            </Box>
+              </Card>
+
           );
         })}
       </Box>

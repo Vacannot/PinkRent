@@ -22,38 +22,37 @@ export default function Footer() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
           justifyContent: "space-evenly",
           width: "100vw",
-          height: "120px",
           alignItems: "center",
-          bottom: 0,
-          position: "absolute",
+          position: "fixed",
+          bottom: "3rem",
+          zIndex: "10000"
         }}
       >
         <Link to="/">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <HomeIcon sx={{color: "white"}} />
+          <IconButton sx={{border: 1, borderColor: "black"}}>
+            <HomeIcon sx={{color: "black"}} />
           </IconButton>
         </Link>
         <Link to="/notifications">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <NotificationsIcon sx={{color: "white"}} />
+          <IconButton sx={{border: 1, borderColor: "black"}}>
+            <NotificationsIcon sx={{color: "black"}} />
           </IconButton>
         </Link>
         <Link to="/add">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <AddCircleOutlineIcon sx={{color: "white"}} />
+          <IconButton sx={{border: 1, borderColor: "black"}}>
+            <AddCircleOutlineIcon sx={{color: "black"}} />
           </IconButton>
         </Link>
         <Link to="/catalog">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <SearchIcon sx={{color: "white"}} />
+          <IconButton sx={{border: 1, borderColor: "black"}}>
+            <SearchIcon sx={{color: "black"}} />
           </IconButton>
         </Link>
         <Link to="/profile">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <AccountCircleIcon sx={{color: "white"}} />
+          <IconButton sx={{border: 1, borderColor: "black"}}>
+            <AccountCircleIcon sx={{color: "black"}} />
           </IconButton>
         </Link>
       </Box>

@@ -10,10 +10,7 @@ function Layout() {
     <div>
       <Header />
       <Wave />
-      <>
         <Outlet />
-      </>
-
       <Footer />
       <BottomWave />
     </div>
