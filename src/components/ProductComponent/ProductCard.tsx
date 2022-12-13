@@ -95,9 +95,17 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                     display: "flex",
                     justifyContent: "space-between",
                     mr: "5px",
+                    ml: ".7rem",
                   }}
                 >
-                  <Typography sx={{ ml: ".7rem" }}>{item.price} kr</Typography>
+                  <Typography>
+                    {item.price === 0 ? (
+                      <Typography> Free </Typography>
+                    ) : (
+                      item.price
+                    )}
+                    {item.price === 0 ? <></> : <>kr/{t("day")}</>}
+                  </Typography>
                   {item.rented ? (
                     <Typography color="primary">Rented</Typography>
                   ) : (
@@ -108,7 +116,6 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                       sx={{
                         height: "1.5rem",
                         color: "white",
-                        mr: ".7rem",
                         boxShadow: 3,
                       }}
                       onClick={(e) => {

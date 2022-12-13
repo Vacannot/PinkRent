@@ -19,7 +19,11 @@ function ProductDetailPage() {
     });
   }, [productID, getProductByID]);
 
-  return <>{product ? <ProductDetails product={product} /> : <p>321</p>}</>;
+  return (
+    <>
+      {product ? <ProductDetails product={product} /> : <p>No Details found</p>}
+    </>
+  );
 }
 
 export default ProductDetailPage;
