@@ -6,18 +6,19 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import { useState, useEffect, FC } from "react";
+import {useState, useEffect, FC} from "react";
 
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../backend/Context";
-import { useTranslation } from "react-i18next";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../backend/Context";
+import {useTranslation} from "react-i18next";
+import React from "react";
 interface Props {
   searchString: string;
 }
 
-export const ProductCard: FC<Props> = ({ searchString }: Props) => {
-  const { t } = useTranslation();
-  const { getProducts, createNotification, filter } = useAuth();
+export const ProductCard: FC<Props> = ({searchString}: Props) => {
+  const {t} = useTranslation();
+  const {getProducts, createNotification, filter} = useAuth();
   const navigate = useNavigate();
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
@@ -71,13 +72,13 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                 }}
               >
                 <img
-                  style={{ width: "100%", height: "173px" }}
+                  style={{width: "100%", height: "173px"}}
                   src={item.image}
                   alt={item.title}
                 />
                 <CardContent>
                   <Typography
-                    sx={{ fontFamily: "sans-serif" }}
+                    sx={{fontFamily: "sans-serif"}}
                     aria-label="Medium sizes"
                     gutterBottom
                     component="div"
@@ -86,7 +87,7 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                   </Typography>
                 </CardContent>
                 <CardActions
-                  sx={{ display: "flex", justifyContent: "space-between" }}
+                  sx={{display: "flex", justifyContent: "space-between"}}
                 >
                   <Typography sx={{ml: ".7rem"}}>{item.price} kr</Typography>
                   {item.rented ? <Typography>Rented</Typography> : <></>}

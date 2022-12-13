@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React from "react";
+import {useState} from "react";
 import ProductPageComponent from "../components/ProductComponent/ProductPageComponent";
 import SearchIconComponent from "../components/ProductComponent/searchProductPage";
 

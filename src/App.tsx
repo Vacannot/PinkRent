@@ -1,4 +1,4 @@
-import { Routes, BrowserRouter, Route } from "react-router-dom";
+import {Routes, BrowserRouter, Route} from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Layout from "./layout/Layout";
@@ -11,6 +11,7 @@ import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";
 import ProductPage from "./pages/productPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import React from "react";
 
 function App() {
   return (
