@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, Typography } from "@mui/material";
+import { Box, Card, CardMedia, Typography, ImageList } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../backend/Context";
@@ -24,20 +24,24 @@ function ProductUserPage() {
         sx={{
           display: "grid",
           placeContent:"center",
+          gridColumn:"auto",
+          "@media screen and (max-width: 971px)": { marginBottom:"10rem"} 
+          
         }}
       >
         <Typography
-          sx={{mb: "5rem", fontSize: "1.5rem", textAlign: "center"}}
+          sx={{mb: "3rem", fontSize: "1.5rem", textAlign: "center"}}
           >
            Products
         </Typography>
         <Box  sx={{display:"flex", justifyContent:"space-between"}} >
           
-        <Typography sx={{marginLeft:"7.5rem" }} >Image</Typography>
-        <Typography>Title</Typography>
-        <Typography  sx={{ marginRight:"1rem"  }} >Price</Typography>
+        <Typography sx={{marginLeft:"7.5rem", "@media screen and (max-width: 970px)": { display:"none"} }} >Image</Typography>
+        <Typography sx={{"@media screen and (max-width: 970px)": { display:"none"} }} >Title</Typography>
+        <Typography  sx={{ marginRight:"1rem","@media screen and (max-width: 970px)": { display:"none"}  }} >Price</Typography>
         </Box>
-       
+       <ImageList sx={{ display:"flex", flexDirection:"column", width:"auto",   }}  >
+
         {products.map((item) => {
           return (
             
@@ -54,9 +58,10 @@ function ProductUserPage() {
                 <Typography sx={{ fontSize:"1rem" ,marginRight:"1rem","@media screen and (max-width: 970px)": { marginLeft:"1rem"} }} >{item.price} kr</Typography>
               </Card>
          
-
-          );
+         
+         );
         })}
+        </ImageList>
       </Box>
     </>
   );

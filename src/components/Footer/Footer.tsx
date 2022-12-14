@@ -23,14 +23,14 @@ export default function Footer() {
         sx={{
           display: "flex",
           justifyContent: "space-evenly",
-          width: "100vw",
+          width: "100%",
           alignItems: "center",
           position: "fixed",
           bottom: "3rem",
           zIndex: "10000"
         }}
       >
-        <Link to="/">
+        <Link to="/catalog">
           <IconButton sx={{border: 1, borderColor: "black"}}>
             <HomeIcon sx={{color: "black"}} />
           </IconButton>

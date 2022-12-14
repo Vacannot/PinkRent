@@ -22,8 +22,8 @@ import Person2Icon from '@mui/icons-material/Person2';
 
   if (breakpoint)
     return (
-     <Box sx={{ display:"flex", justifyContent:"center"}} >
-      <Card sx={{maxWidth: 345,}}>
+     <Box sx={{ "@media screen and (max-width: 971px)": { marginBottom:"8rem"}, display:"flex", justifyContent:"center"}} >
+      <Card sx={{maxWidth: 345, marginTop:"1rem"}}>
       <Box
         key={product.id}
         sx={{
@@ -34,7 +34,7 @@ import Person2Icon from '@mui/icons-material/Person2';
       >
           <CardMedia
             component="img"
-            height="240"
+            height="200"
             image={product.image}
             alt="green iguana"
           />
@@ -64,13 +64,13 @@ import Person2Icon from '@mui/icons-material/Person2';
           <Box>
             <Typography
               variant="subtitle1"
-              sx={{marginBottom: 3, marginTop: 3, marginLeft: 2}}
+              sx={{marginBottom: 1, marginTop: 1, marginLeft: 1}}
               >
               DESCRIPTION
             </Typography>
             <Typography
               variant="body2"
-              sx={{maxWidth: "21rem", marginBottom: 3, marginLeft: 2}}
+              sx={{maxWidth: "21rem", marginBottom: 1, marginLeft: 2}}
               >
               {product.description}
             </Typography>

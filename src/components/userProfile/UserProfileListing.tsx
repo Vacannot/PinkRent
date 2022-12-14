@@ -299,6 +299,7 @@ export const UserProfileListings = () => {
         minWidth: "335px",
         width: "80%",
         mt: "1rem",
+        marginBottom:"15rem"
       }}
     >
       <Typography sx={{ pb: "2.5rem" }} variant="h6" fontWeight={400}>
