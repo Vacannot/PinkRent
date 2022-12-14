@@ -1,5 +1,8 @@
 # PinkRent
 
+A site for renting out everyday things between people in the gothenburg area. 
+Credit for developers as seen to the right.
+
 Tech Stack:
 React, Typescript, MUI, i18n, Firebase, SASS
 
