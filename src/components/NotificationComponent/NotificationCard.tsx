@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { IconButton, Box } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "../../backend/Context";
 import { auth } from "../../backend/firebase";
@@ -67,7 +67,7 @@ function NotificationCard() {
   const { getNotificationsByUserID, getProductByID } = useAuth();
 
   const [notifications, setNotifications] = useState<any[]>([]);
-  useMemo(() => {
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         getNotificationsByUserID(user.uid).then(async (notifications) => {
