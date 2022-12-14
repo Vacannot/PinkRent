@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, Typography } from "@mui/material";
+import { Box, Card, CardMedia, ImageList, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../backend/Context";
@@ -31,19 +31,29 @@ function ProductUserPage() {
           >
            Products
         </Typography>
+        <Box  sx={{display:"flex", justifyContent:"space-between"}} >
+          
+        <Typography sx={{marginLeft:"7.5rem" }} >Image</Typography>
+        <Typography>Title</Typography>
+        <Typography  sx={{ marginRight:"1rem"  }} >Price</Typography>
+        </Box>
+       
         {products.map((item) => {
           return (
-              <Card raised sx={{marginBottom:"2rem", width: "fit-content", display: "flex", flexDirection: "column" , "@media screen and (max-width: 900px)": { display: "flex", flexDirection:"column", alignItems:"center", width:"auto" }}}>
+            
+            
+            <Card raised sx={{marginBottom:"2rem", width:"40rem",alignItems:"center", justifyContent:"space-between" ,display: "flex", "@media screen and (max-width: 970px)": { display: "flex", flexDirection:"column", alignItems:"start", width: "fit-content",}}}>
                 <CardMedia
                   sx={{ width: "15rem", height: "15rem" }}
                   image={item.image}
                   onClick={() => {
                     navigate(`/details/${item.id}`);
                   }}
-                />
-                <Typography>{item.title}</Typography>
-                <Typography>{item.price} kr</Typography>
+                  />
+                <Typography sx={{fontSize:"1rem" ,"@media screen and (max-width: 970px)": { marginLeft:"1rem"} }} >{item.title}</Typography>
+                <Typography sx={{ fontSize:"1rem" ,marginRight:"1rem","@media screen and (max-width: 970px)": { marginLeft:"1rem"} }} >{item.price} kr</Typography>
               </Card>
+         
 
           );
         })}
