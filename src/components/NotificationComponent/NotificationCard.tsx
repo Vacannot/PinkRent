@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { IconButton, Box } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "../../backend/Context";
 import { auth } from "../../backend/firebase";
@@ -41,12 +41,14 @@ function NotificationCard() {
       deleteNotification(notification.id);
       setProductRented(product.id, true);
       setAccept(true);
+      window.location.reload();
       return;
     }
 
     if (variant === "decline") {
       deleteNotification(notification.id);
       setDecline(true);
+      window.location.reload();
       return;
     }
   };
@@ -58,7 +60,6 @@ function NotificationCard() {
     if (reason === "clickaway") {
       return;
     }
-
     setAccept(false);
     setDecline(false);
   };
@@ -66,8 +67,7 @@ function NotificationCard() {
   const { getNotificationsByUserID, getProductByID } = useAuth();
 
   const [notifications, setNotifications] = useState<any[]>([]);
-
-  useEffect(() => {
+  useMemo(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         getNotificationsByUserID(user.uid).then(async (notifications) => {

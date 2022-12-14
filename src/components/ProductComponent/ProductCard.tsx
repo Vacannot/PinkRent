@@ -5,12 +5,15 @@ import {
   CardActions,
   CardContent,
   Typography,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { useState, useMemo, FC } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../backend/Context";
 import { useTranslation } from "react-i18next";
+import { LocationOnOutlined } from "@mui/icons-material";
 interface Props {
   searchString: string;
 }
@@ -41,6 +44,18 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
       return;
     }
     navigate(`/details/${item.id}`);
+  };
+
+  const [request, setRequest] = useState(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setRequest(false);
   };
 
   return (
@@ -89,6 +104,12 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                   >
                     {item.title}
                   </Typography>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "row", ml: "-3px" }}
+                  >
+                    <LocationOnOutlined sx={{ maxWidth: "20px" }} />
+                    <Typography>{item.location}</Typography>
+                  </Box>
                 </CardContent>
                 <CardActions
                   sx={{
@@ -124,6 +145,7 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                         createNotification(item).then(() => {
                           console.log("Create Notification done");
                         });
+                        setRequest(true);
                       }}
                     >
                       {t("request")}
@@ -134,6 +156,11 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
             </Box>
           );
         })}
+      <Snackbar open={request} autoHideDuration={1500} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          {t("request_confirmed")}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

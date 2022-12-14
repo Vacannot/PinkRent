@@ -22,10 +22,6 @@ const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
         }}
       >
         <Typography> {t("popular_on_pr")}</Typography>
-        <IconButton aria-label="delete">
-          <Typography>{t("rent_now")}</Typography>
-          <CheckIcon />
-        </IconButton>
       </Box>
       <ImageList
         sx={{
