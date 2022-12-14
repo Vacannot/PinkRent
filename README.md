@@ -1,7 +1,7 @@
 # PinkRent
 
 Tech Stack:
-React, Typescript, MUI, i18n, NodeJS, Firebase, SASS
+React, Typescript, MUI, i18n, Firebase, SASS
 
 # Rules:
 
