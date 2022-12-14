@@ -5,14 +5,14 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { IconButton, Box } from "@mui/material";
+import {IconButton, Box} from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { useAuth } from "../../backend/Context";
-import { auth } from "../../backend/firebase";
-import { useTranslation } from "react-i18next";
+import MuiAlert, {AlertProps} from "@mui/material/Alert";
+import {useState, useEffect, useCallback} from "react";
+import {onAuthStateChanged} from "firebase/auth";
+import {useAuth} from "../../backend/Context";
+import {auth} from "../../backend/firebase";
+import {useTranslation} from "react-i18next";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -31,23 +31,27 @@ export interface SnackbarType {
 }
 
 function NotificationCard() {
-  const { t } = useTranslation();
-  const { deleteNotification, setProductRented } = useAuth();
-  const [accept, setAccept] = React.useState(false);
-  const [decline, setDecline] = React.useState(false);
+  const {t} = useTranslation();
+  const {deleteNotification, setProductRented} = useAuth();
+  const [accept, setAccept] = useState(false);
+  const [decline, setDecline] = useState(false);
 
   const handleClick = (variant: string, product: any, notification: any) => {
     if (variant === "accept") {
-      deleteNotification(notification.id);
-      setProductRented(product.id, true);
-      setAccept(true);
-      console.log("accept");
+      deleteNotification(notification.id).then(() => {
+        setProductRented(product.id, true).then(() => {
+          setAccept(true);
+          updateNotifications();
+        });
+      });
       return;
     }
 
     if (variant === "decline") {
-      deleteNotification(notification.id);
-      setDecline(true);
+      deleteNotification(notification.id).then(() => {
+        setDecline(true);
+        updateNotifications();
+      });
       console.log("decline");
       return;
     }
@@ -65,11 +69,11 @@ function NotificationCard() {
     setDecline(false);
   };
 
-  const { getNotificationsByUserID, getProductByID } = useAuth();
+  const {getNotificationsByUserID, getProductByID} = useAuth();
 
   const [notifications, setNotifications] = useState<any[]>([]);
 
-  useEffect(() => {
+  const updateNotifications = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         getNotificationsByUserID(user.uid).then(async (notifications) => {
@@ -85,7 +89,11 @@ function NotificationCard() {
         });
       }
     });
-  }, [getNotificationsByUserID, getProductByID]);
+  };
+
+  useEffect(() => {
+    updateNotifications();
+  }, []);
 
   return (
     <>
@@ -97,7 +105,7 @@ function NotificationCard() {
             <Card
               sx={{
                 width: "100%",
-                "@media screen and (min-width: 800px)": { display: "none" },
+                "@media screen and (min-width: 800px)": {display: "none"},
               }}
             >
               <Box
@@ -152,10 +160,10 @@ function NotificationCard() {
                 mt: "1rem",
                 display: "flex",
                 mx: "auto",
-                "@media screen and (max-width: 800px)": { display: "none" },
+                "@media screen and (max-width: 800px)": {display: "none"},
               }}
             >
-              <Typography variant="h5" sx={{ ml: "3.3rem" }}>
+              <Typography variant="h5" sx={{ml: "3.3rem"}}>
                 {t("notifications")}
               </Typography>
             </Card>
@@ -164,7 +172,7 @@ function NotificationCard() {
               sx={{
                 width: "80%",
                 mx: "auto",
-                "@media screen and (max-width: 800px)": { display: "none" },
+                "@media screen and (max-width: 800px)": {display: "none"},
               }}
             >
               <Box
@@ -177,9 +185,9 @@ function NotificationCard() {
                 <Typography> {t("image")}</Typography>
                 <Typography> {t("title")}</Typography>
                 <Typography> {t("request_from")}</Typography>
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{display: "flex"}}>
                   <Typography> {t("approve")}</Typography>
-                  <Typography sx={{ ml: "1rem" }}> {t("decline")}</Typography>
+                  <Typography sx={{ml: "1rem"}}> {t("deny")}</Typography>
                 </Box>
               </Box>
               <hr
@@ -195,7 +203,7 @@ function NotificationCard() {
                 sx={{
                   display: "flex",
                   mx: "auto",
-                  "@media screen and (max-width: 800px)": { display: "none" },
+                  "@media screen and (max-width: 800px)": {display: "none"},
                 }}
               >
                 <CardContent
@@ -217,7 +225,7 @@ function NotificationCard() {
                     <IconButton
                       aria-label="delete"
                       color="success"
-                      sx={{ mr: "2.5rem" }}
+                      sx={{mr: "2.5rem"}}
                       onClick={() =>
                         handleClick("accept", product, notification)
                       }
@@ -251,13 +259,13 @@ function NotificationCard() {
       })}
 
       <Snackbar open={accept} autoHideDuration={1000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          {t("request_confirmed")}
+        <Alert onClose={handleClose} severity="success" sx={{width: "100%"}}>
+          {t("request_approved")}
         </Alert>
       </Snackbar>
       <Snackbar open={decline} autoHideDuration={1000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          {t("requst_declined")}
+        <Alert onClose={handleClose} severity="error" sx={{width: "100%"}}>
+          {t("request_denied")}
         </Alert>
       </Snackbar>
     </>
