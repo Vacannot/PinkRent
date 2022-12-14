@@ -54,6 +54,7 @@ interface context {
       description: string;
       price: string;
       title: string;
+      rented: boolean;
     }
   ) => Promise<void>;
   setProductRented: (productID: any, rented: boolean) => Promise<void>;
@@ -223,6 +224,7 @@ export function AuthProvider(props: any) {
       description: string;
       price: string;
       title: string;
+      rented: boolean;
     }
   ) => {
     const col = doc(db, "products", product.id);
@@ -231,6 +233,7 @@ export function AuthProvider(props: any) {
       description: values.description,
       price: values.price,
       title: values.title,
+      rented: values.rented,
     });
   };
 

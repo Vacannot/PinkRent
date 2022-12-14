@@ -9,10 +9,12 @@ import {
   DialogContentText,
   DialogTitle,
   FormControl,
+  FormControlLabel,
   IconButton,
   InputLabel,
   MenuItem,
   Select,
+  Switch,
   TableCell,
   TableRow,
   TextField,
@@ -108,10 +110,12 @@ const ProductInfo = ({
       <Typography sx={{mb: ".7rem", mt: ".5rem"}}>
         {product.description}
       </Typography>
-      <Typography sx={{mb: ".7rem"}}>
+      <Typography sx={{mb: ".7rem", mt: ".5rem"}}>
         {t("category")}: {category.name}
       </Typography>
-      {/* <Typography>Rented: True</Typography> */}
+      <Typography sx={{mb: ".7rem", mt: ".5rem"}}>
+        Rented: {product.rented ? "true" : "false"}
+      </Typography>
       <ButtonGroup sx={{position: "absolute", right: 0, bottom: 0}}>
         <Button
           startIcon={<EditOutlined />}
@@ -171,6 +175,7 @@ const EditProduct = ({
     description: product.description,
     price: product.price,
     category: getCategoryById(categories, product.category).id,
+    rented: product.rented,
   };
 
   const formik = useFormik({
@@ -249,6 +254,18 @@ const EditProduct = ({
           })}
         </Select>
       </FormControl>
+      <FormControlLabel
+        control={
+          <Switch
+            id="rented"
+            checked={formik.values.rented}
+            onChange={(event) => {
+              formik.setFieldValue("rented", event.target.checked);
+            }}
+          />
+        }
+        label="Rented"
+      />
       <ButtonGroup sx={{position: "absolute", right: 0, bottom: 0}}>
         <Button
           startIcon={<CheckOutlined />}
