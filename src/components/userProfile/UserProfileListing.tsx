@@ -57,17 +57,26 @@ const ProductInfo = ({
   check: () => void;
 }) => {
   const { t } = useTranslation();
+  const { setProductRented } = useAuth();
 
   return (
     <>
-      <Typography sx={{ mb: ".7rem", mt: ".5rem" }}>
+      <Typography sx={{ mb: ".7rem", mt: ".5rem", ml: "20px" }}>
         {product.description}
       </Typography>
-      <Typography sx={{ mb: ".7rem" }}>
+      <Typography sx={{ mb: ".7rem", ml: "20px" }}>
         {t("category")}: {category.name}
       </Typography>
-      {/* <Typography>Rented: True</Typography> */}
       <ButtonGroup sx={{ position: "absolute", right: 0, bottom: 0 }}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => {
+            setProductRented(product.id, false);
+          }}
+        >
+          {product.rented ? "Rented" : "Not Rented"}
+        </Button>
         <Button
           startIcon={<EditOutlined />}
           color="info"

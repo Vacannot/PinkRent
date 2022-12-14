@@ -41,12 +41,14 @@ function NotificationCard() {
       deleteNotification(notification.id);
       setProductRented(product.id, true);
       setAccept(true);
+      window.location.reload();
       return;
     }
 
     if (variant === "decline") {
       deleteNotification(notification.id);
       setDecline(true);
+      window.location.reload();
       return;
     }
   };
@@ -58,7 +60,6 @@ function NotificationCard() {
     if (reason === "clickaway") {
       return;
     }
-
     setAccept(false);
     setDecline(false);
   };
@@ -66,7 +67,6 @@ function NotificationCard() {
   const { getNotificationsByUserID, getProductByID } = useAuth();
 
   const [notifications, setNotifications] = useState<any[]>([]);
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -283,7 +283,7 @@ function NotificationCard() {
       </Snackbar>
       <Snackbar open={decline} autoHideDuration={1000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          {t("requst_declined")}
+          {t("request_declined")}
         </Alert>
       </Snackbar>
     </>
