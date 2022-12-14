@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, ImageList, Typography } from "@mui/material";
+import { Box, Card, CardMedia, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../backend/Context";
