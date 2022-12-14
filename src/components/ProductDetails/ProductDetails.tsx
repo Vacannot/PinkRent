@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import { LocationOnOutlined } from "@mui/icons-material";
 import { LocalPhoneOutlined } from "@mui/icons-material";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 
 const ProductDetails = ({ product }: { product: any }) => {
   const { t } = useTranslation();

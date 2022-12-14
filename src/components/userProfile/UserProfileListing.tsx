@@ -73,7 +73,6 @@ const ProductInfo = ({
           variant="contained"
           onClick={() => {
             setProductRented(product.id, false);
-            window.location.reload();
           }}
         >
           {product.rented ? "Rented" : "Not Rented"}

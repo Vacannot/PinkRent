@@ -283,7 +283,7 @@ function NotificationCard() {
       </Snackbar>
       <Snackbar open={decline} autoHideDuration={1000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          {t("requst_declined")}
+          {t("request_declined")}
         </Alert>
       </Snackbar>
     </>

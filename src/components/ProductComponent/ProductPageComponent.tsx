@@ -1,6 +1,5 @@
-import { Box, IconButton, Typography, ImageList } from "@mui/material";
+import { Box, Typography, ImageList } from "@mui/material";
 import ProductCard from "./ProductCard";
-import CheckIcon from "@mui/icons-material/Check";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
