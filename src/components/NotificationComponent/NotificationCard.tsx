@@ -183,6 +183,7 @@ function NotificationCard() {
           sx={{
             width: "80%",
             mx: "auto",
+            marginBottom:"15rem",
             "@media screen and (max-width: 800px)": { display: "none" },
           }}
         >

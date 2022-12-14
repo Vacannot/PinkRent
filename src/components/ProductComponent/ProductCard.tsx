@@ -81,13 +81,10 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                   height: "330px",
                   m: "0.3rem",
                   "@media screen and (max-width: 600px)": {
-                    width: "150px",
+                    width: "190px",
                     height: "auto",
                   },
-                  "@media screen and (max-width: 400px)": {
-                    width: "120px",
-                    height: "300px",
-                  },
+                 
                 }}
               >
                 <img

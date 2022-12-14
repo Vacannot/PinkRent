@@ -11,6 +11,7 @@ import AboutPage from "./pages/AboutPage";
 import StartPage from "./pages/StartPage";
 import ProductPage from "./pages/productPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import ProductUserPage from "./pages/productUserPage"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="details/:productID" element={<ProductDetailPage />} />
             <Route path="contact" element={<ContactPage />} />
             <Route path="about" element={<AboutPage />} />
+            <Route path="/productUserPage/:userID" element={<ProductUserPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

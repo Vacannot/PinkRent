@@ -46,6 +46,7 @@ const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
           width: "auto",
           ml: "2rem",
           mr: "2rem",
+          marginBottom:"15rem"
         }}
         rowHeight={164}
       >

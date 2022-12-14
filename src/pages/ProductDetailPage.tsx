@@ -6,9 +6,7 @@ import { Box, Typography } from "@mui/material";
 
 function ProductDetailPage() {
   const { getProductByID } = useAuth();
-
   const [product, setProduct] = useState<any>();
-
   let params = useParams();
   const productID = params.productID;
 
