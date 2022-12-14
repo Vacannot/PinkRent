@@ -6,12 +6,13 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import {Link, useNavigate} from "react-router-dom";
-import {IconButton, TextField} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { IconButton, TextField } from "@mui/material";
 import React from "react";
-import {useFormik} from "formik";
-import {useAuth} from "../../backend/Context";
+import { useFormik } from "formik";
+import { useAuth } from "../../backend/Context";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
 const validationSchema = yup.object({
   email: yup
@@ -27,7 +28,8 @@ const initialValues = {
 };
 
 function LoginForm() {
-  const {login} = useAuth();
+  const { t } = useTranslation();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -47,7 +49,7 @@ function LoginForm() {
   });
 
   const handleClickShowPassword = () => {
-    setValues({...values, showPassword: !values.showPassword});
+    setValues({ ...values, showPassword: !values.showPassword });
   };
 
   return (
@@ -63,7 +65,7 @@ function LoginForm() {
           marginBottom: "55px",
         }}
       >
-        LOGIN
+        {t("login_caps")}
       </h2>
       <form onSubmit={formik.handleSubmit} className={styles.centerForm}>
         <TextField
@@ -105,7 +107,9 @@ function LoginForm() {
           helperText={formik.touched.password && formik.errors.password}
           variant="standard"
           InputProps={{
-            startAdornment: <LockOutlinedIcon />,
+            startAdornment: (
+              <LockOutlinedIcon sx={{ color: "rgba(0, 0, 0, 0.54)" }} />
+            ),
             endAdornment: (
               <IconButton onClick={handleClickShowPassword}>
                 {values.showPassword ? (
@@ -126,7 +130,7 @@ function LoginForm() {
           }}
           className={styles.forgotPassword}
         >
-          Forgot your password?
+          {t("forgot_password")}
         </p>
         <Button
           sx={{
@@ -138,7 +142,7 @@ function LoginForm() {
           variant="contained"
           type="submit"
         >
-          LOGIN
+          {t("login_caps")}
         </Button>
       </form>
 
@@ -150,7 +154,7 @@ function LoginForm() {
         }}
         className={styles.orRegister}
       >
-        Or sign up
+        {t("or_sign_up")}
       </Link>
     </Box>
   );

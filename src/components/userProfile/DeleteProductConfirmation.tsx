@@ -6,12 +6,14 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import {useState} from "react";
-import {useAuth} from "../../backend/Context";
+import { useState } from "react";
+import { useAuth } from "../../backend/Context";
+import { useTranslation } from "react-i18next";
 
-export const RemoveProductConfirmation = ({product}: {product: any}) => {
-  const {deleteProduct} = useAuth();
+export const RemoveProductConfirmation = ({ product }: { product: any }) => {
+  const { deleteProduct } = useAuth();
   const [openConfirmation, setOpenConfirmation] = useState(true);
+  const { t } = useTranslation();
 
   const handleClose = () => {
     setOpenConfirmation(false);
@@ -32,17 +34,17 @@ export const RemoveProductConfirmation = ({product}: {product: any}) => {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="responsive-dialog-title">
-        Are you sure you want to remove this item?
+        {t("are_you_sure_remove")}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>This action cannot be reverted.</DialogContentText>
+        <DialogContentText>{t("this_action_cannot_revert")}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose}>
-          NO
+          {t("no_caps")}
         </Button>
         <Button onClick={handleDeleteItem} autoFocus>
-          YES
+          {t("yes_caps")}
         </Button>
       </DialogActions>
     </Dialog>

@@ -24,13 +24,14 @@ import {
   ExpandLess,
   ExpandMore,
 } from "@mui/icons-material";
-import {useEffect, useState} from "react";
-import {RemoveProductConfirmation} from "./DeleteProductConfirmation";
-import {onAuthStateChanged} from "firebase/auth";
-import {useAuth} from "../../backend/Context";
-import {auth} from "../../backend/firebase";
-import {useFormik} from "formik";
+import { useEffect, useState } from "react";
+import { RemoveProductConfirmation } from "./DeleteProductConfirmation";
+import { onAuthStateChanged } from "firebase/auth";
+import { useAuth } from "../../backend/Context";
+import { auth } from "../../backend/firebase";
+import { useFormik } from "formik";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
 const getCategoryById = (categories: any[], id: string) => {
   for (let category of categories) {
@@ -55,22 +56,35 @@ const ProductInfo = ({
   setEditing: (edit: boolean) => void;
   check: () => void;
 }) => {
+  const { t } = useTranslation();
+  const { setProductRented } = useAuth();
+
   return (
     <>
-      <Typography sx={{mb: ".7rem", mt: ".5rem"}}>
+      <Typography sx={{ mb: ".7rem", mt: ".5rem", ml: "20px" }}>
         {product.description}
       </Typography>
-      <Typography sx={{mb: ".7rem"}}>Category: {category.name}</Typography>
-      {/* <Typography>Rented: True</Typography> */}
-      <ButtonGroup sx={{position: "absolute", right: 0, bottom: 0}}>
+      <Typography sx={{ mb: ".7rem", ml: "20px" }}>
+        {t("category")}: {category.name}
+      </Typography>
+      <ButtonGroup sx={{ position: "absolute", right: 0, bottom: 0 }}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => {
+            setProductRented(product.id, false);
+          }}
+        >
+          {product.rented ? "Rented" : "Not Rented"}
+        </Button>
         <Button
           startIcon={<EditOutlined />}
           color="info"
           variant="contained"
-          sx={{color: "white"}}
+          sx={{ color: "white" }}
           onClick={() => setEditing(true)}
         >
-          Edit
+          {t("edit")}
         </Button>
         <Button
           endIcon={<DeleteOutlineOutlined />}
@@ -81,7 +95,7 @@ const ProductInfo = ({
           {openConfirm ? (
             <RemoveProductConfirmation product={product} />
           ) : undefined}
-          Delete
+          {t("delete")}
         </Button>
       </ButtonGroup>
     </>
@@ -111,7 +125,9 @@ const EditProduct = ({
   check: () => void;
   update: () => void;
 }) => {
-  const {setProduct} = useAuth();
+  const { t } = useTranslation();
+
+  const { setProduct } = useAuth();
 
   const initialValues = {
     title: product.title,
@@ -140,9 +156,9 @@ const EditProduct = ({
         error={formik.touched.title && Boolean(formik.errors.title)}
         // helperText={formik.touched.description && formik.errors.description}
         variant="standard"
-        sx={{width: "25rem"}}
-        inputProps={{style: {fontSize: ".9rem"}}}
-        InputLabelProps={{style: {fontSize: ".9rem"}}}
+        sx={{ width: "25rem" }}
+        inputProps={{ style: { fontSize: ".9rem" } }}
+        InputLabelProps={{ style: { fontSize: ".9rem" } }}
       />
       <TextField
         required
@@ -154,9 +170,9 @@ const EditProduct = ({
         error={formik.touched.description && Boolean(formik.errors.description)}
         // helperText={formik.touched.description && formik.errors.description}
         variant="standard"
-        sx={{width: "25rem"}}
-        inputProps={{style: {fontSize: ".9rem"}}}
-        InputLabelProps={{style: {fontSize: ".9rem"}}}
+        sx={{ width: "25rem" }}
+        inputProps={{ style: { fontSize: ".9rem" } }}
+        InputLabelProps={{ style: { fontSize: ".9rem" } }}
       />
       <TextField
         required
@@ -168,14 +184,14 @@ const EditProduct = ({
         error={formik.touched.price && Boolean(formik.errors.price)}
         // helperText={formik.touched.description && formik.errors.description}
         variant="standard"
-        sx={{width: "25rem"}}
-        inputProps={{style: {fontSize: ".9rem"}}}
-        InputLabelProps={{style: {fontSize: ".9rem"}}}
+        sx={{ width: "25rem" }}
+        inputProps={{ style: { fontSize: ".9rem" } }}
+        InputLabelProps={{ style: { fontSize: ".9rem" } }}
       />
 
-      <FormControl sx={{mt: ".5rem", width: "13rem"}} variant="standard">
-        <InputLabel sx={{fontSize: ".9rem"}} id="category-label">
-          Category*
+      <FormControl sx={{ mt: ".5rem", width: "13rem" }} variant="standard">
+        <InputLabel sx={{ fontSize: ".9rem" }} id="category-label">
+          {t("category")}*
         </InputLabel>
         <Select
           labelId="category-label"
@@ -197,18 +213,18 @@ const EditProduct = ({
           })}
         </Select>
       </FormControl>
-      <ButtonGroup sx={{position: "absolute", right: 0, bottom: 0}}>
+      <ButtonGroup sx={{ position: "absolute", right: 0, bottom: 0 }}>
         <Button
           startIcon={<CheckOutlined />}
           color="success"
           variant="contained"
-          sx={{color: "white"}}
+          sx={{ color: "white" }}
           onClick={() => {
             setEditing(false);
             formik.handleSubmit();
           }}
         >
-          Save
+          {t("save")}
         </Button>
         <Button
           endIcon={<DeleteOutlineOutlined />}
@@ -219,17 +235,17 @@ const EditProduct = ({
           {openConfirm ? (
             <RemoveProductConfirmation product={product} />
           ) : undefined}
-          Delete
+          {t("delete")}
         </Button>
       </ButtonGroup>
-
     </form>
   );
 };
 
-
 export const UserProfileListings = () => {
-  const {getProductsByUserID, getCategories} = useAuth();
+  const { t } = useTranslation();
+
+  const { getProductsByUserID, getCategories } = useAuth();
 
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
@@ -285,23 +301,23 @@ export const UserProfileListings = () => {
         mt: "1rem",
       }}
     >
-      <Typography sx={{pb: "2.5rem"}} variant="h6" fontWeight={400}>
-       Max products
+      <Typography sx={{ pb: "2.5rem" }} variant="h6" fontWeight={400}>
+        {t("your_products")}
       </Typography>
       <TableContainer>
         <Table aria-label="collapsible table">
-          <TableHead sx={{borderBottom: "1px solid rgba(224, 224, 224, 1)"}}>
+          <TableHead sx={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}>
             <TableRow
-              sx={{display: "grid", gridTemplateColumns: "1fr 1fr 1fr .5fr"}}
+              sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr .5fr" }}
             >
-              <Typography sx={{padding: "16px"}} variant="subtitle1">
-                Image
+              <Typography sx={{ padding: "16px" }} variant="subtitle1">
+                {t("image")}
               </Typography>
-              <Typography sx={{padding: "16px"}} variant="subtitle1">
-                Title
+              <Typography sx={{ padding: "16px" }} variant="subtitle1">
+                {t("title")}
               </Typography>
-              <Typography sx={{padding: "16px"}} variant="subtitle1">
-                Price
+              <Typography sx={{ padding: "16px" }} variant="subtitle1">
+                {t("price")}
               </Typography>
             </TableRow>
           </TableHead>
@@ -319,20 +335,20 @@ export const UserProfileListings = () => {
                   <TableCell>
                     <img src={item.image} alt={item.title} height={60} />
                   </TableCell>
-                  <TableCell sx={{mt: "1.5rem"}}>{item.title}</TableCell>
-                  <TableCell sx={{mt: "1.5rem"}}>{item.price}kr</TableCell>
-                  <TableCell sx={{mt: "1rem"}}>
+                  <TableCell sx={{ mt: "1.5rem" }}>{item.title}</TableCell>
+                  <TableCell sx={{ mt: "1.5rem" }}>{item.price}kr</TableCell>
+                  <TableCell sx={{ mt: "1rem" }}>
                     {open ? (
                       <IconButton
                         onClick={() => setOpen(false)}
-                        sx={{width: "2rem", height: "2rem", margin: "auto"}}
+                        sx={{ width: "2rem", height: "2rem", margin: "auto" }}
                       >
                         <ExpandLess />
                       </IconButton>
                     ) : (
                       <IconButton
                         onClick={() => setOpen(true)}
-                        sx={{width: "2rem", height: "2rem", margin: "auto"}}
+                        sx={{ width: "2rem", height: "2rem", margin: "auto" }}
                       >
                         <ExpandMore />
                       </IconButton>

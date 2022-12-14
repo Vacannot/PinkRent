@@ -4,9 +4,12 @@ import StartWave from "../Wave/StartWave/StartWave";
 import styles from "./StartPageComponent.module.scss";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function StartPageComponent() {
   const { width } = useWindowDimensions();
+  const { t } = useTranslation();
+
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
@@ -25,9 +28,9 @@ function StartPageComponent() {
           }}
         >
           <Box>
-            <Typography variant="h4">SHARING MADE</Typography>
+            <Typography variant="h4">{t("sharing_made")}</Typography>
             <Typography variant="h4" color="primary" fontWeight={600}>
-              EASIER.
+              {t("easier")}.
             </Typography>
           </Box>
           <Box
@@ -47,7 +50,7 @@ function StartPageComponent() {
                   minWidth: "150px",
                 }}
               >
-                GET STARTED
+                {t("get_started")}
               </Button>
             </Link>
             <Link
@@ -65,7 +68,7 @@ function StartPageComponent() {
                   minWidth: "150px",
                 }}
               >
-                REGISTER
+                {t("register_caps")}
               </Button>
             </Link>
           </Box>
@@ -98,22 +101,20 @@ function StartPageComponent() {
         }}
       >
         <Box>
-          <Typography variant="h2">SHARING MADE</Typography>
+          <Typography variant="h2">{t("sharing_made")}</Typography>
           <Typography variant="h2" color="primary" fontWeight={600}>
-            EASIER.
+            {t("easier")}.
           </Typography>
         </Box>
         <Typography variant="body1" paragraph={true} sx={{ maxWidth: "624px" }}>
-          We connect people to create economic opportunites for all. PinkRent
-          creates inspiring experiences for our buyers and sellers, providing
-          opportunity to grow and thrive - no matter who they are.
+          {t("startpage_1")}
         </Typography>
         <Link to="/catalog" style={{ textDecoration: "none" }}>
           <Button
             variant="contained"
             sx={{ color: "white", maxWidth: "200px" }}
           >
-            GET STARTED
+            {t("get_started")}
           </Button>
         </Link>
       </Box>

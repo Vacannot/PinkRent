@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Button, Card } from "@mui/material";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { useAuth } from "../../backend/Context";
+import { useTranslation } from "react-i18next";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -35,6 +36,8 @@ interface Props {
 }
 
 export default function SearchIconComponent({ setSearchString }: Props) {
+  const { t } = useTranslation();
+
   const { getCategories, setFilter } = useAuth();
   const [categories, setCategories] = useState<any[]>([]);
 
@@ -52,17 +55,26 @@ export default function SearchIconComponent({ setSearchString }: Props) {
   return (
     <Box
       sx={{
-        flexGrow: 1,
-        "@media screen and (max-width: 970px)": { display: "none" },
+        flexGrow: 1
       }}
     >
-      <Toolbar sx={{ diplay: "flex", justifyContent: "space-around" }}>
+      <Toolbar
+        sx={{
+          diplay: "flex",
+          justifyContent: "space-around",
+          "@media screen and (max-width: 850px)": {
+            display: "flex",
+            justifyContent: "space-evenly",
+            flexWrap: "wrap",
+          },
+        }}
+      >
         <Button
           onClick={() => {
             setFilter(null);
           }}
         >
-          Remove Filter
+          {t("remove_filter")}
         </Button>
         {categories.map((item) => {
           return (
@@ -84,7 +96,13 @@ export default function SearchIconComponent({ setSearchString }: Props) {
             </>
           );
         })}
-        <Card sx={{ display: "flex", alignItems: "center" }}>
+        <Card
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            "@media screen and (max-width: 1110px)": { display: "none" },
+          }}
+        >
           <SearchIconWrapper>
             <SearchIcon sx={{ color: "pink" }} />
           </SearchIconWrapper>

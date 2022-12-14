@@ -6,13 +6,12 @@ import {Button, Box, IconButton} from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import {useAuth} from "../../backend/Context";
 import {LocationOnOutlined, LocalPhoneOutlined} from "@mui/icons-material";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Person2Icon from '@mui/icons-material/Person2';
-import { useEffect, useState } from "react";
 
 
   const ProductDetails = ({product}: {product: any}) => {
-  const {createNotification, getProductsByUserID} = useAuth();
+  const {createNotification} = useAuth();
   const {width} = useWindowDimensions();
   const navigate = useNavigate();
 
