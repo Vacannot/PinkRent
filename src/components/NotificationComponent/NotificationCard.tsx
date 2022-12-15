@@ -41,14 +41,12 @@ function NotificationCard() {
       deleteNotification(notification.id);
       setProductRented(product.id, true);
       setAccept(true);
-      window.location.reload();
       return;
     }
 
     if (variant === "decline") {
       deleteNotification(notification.id);
       setDecline(true);
-      window.location.reload();
       return;
     }
   };
@@ -183,7 +181,7 @@ function NotificationCard() {
           sx={{
             width: "80%",
             mx: "auto",
-            marginBottom:"15rem",
+            marginBottom: "15rem",
             "@media screen and (max-width: 800px)": { display: "none" },
           }}
         >
