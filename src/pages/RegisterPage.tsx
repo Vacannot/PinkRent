@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import {Box} from "@mui/material";
+import React from "react";
 import RegisterForm from "../components/RegisterForm/RegisterForm";
 
 function RegisterPage() {

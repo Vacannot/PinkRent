@@ -8,30 +8,31 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { useState, useMemo, FC } from "react";
+import {useState, useEffect, FC} from "react";
 
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../backend/Context";
-import { useTranslation } from "react-i18next";
-import { LocationOnOutlined } from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../backend/Context";
+import {useTranslation} from "react-i18next";
+import React from "react";
+import {LocationOnOutlined} from "@mui/icons-material";
 interface Props {
   searchString: string;
 }
 
-export const ProductCard: FC<Props> = ({ searchString }: Props) => {
-  const { t } = useTranslation();
-  const { getProducts, createNotification, filter } = useAuth();
+export const ProductCard: FC<Props> = ({searchString}: Props) => {
+  const {t} = useTranslation();
+  const {getProducts, createNotification, filter} = useAuth();
   const navigate = useNavigate();
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
 
-  useMemo(() => {
+  useEffect(() => {
     getProducts().then((products) => {
       setProducts(products);
     });
   }, [getProducts]);
 
-  useMemo(() => {
+  useEffect(() => {
     setFilteredProducts(
       products.filter((product) =>
         product.title.toLowerCase().includes(searchString.toLowerCase())
@@ -84,37 +85,29 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                     width: "190px",
                     height: "auto",
                   },
-                 
                 }}
               >
                 <img
-                  style={{ width: "100%", height: "173px" }}
+                  style={{width: "100%", height: "173px"}}
                   src={item.image}
                   alt={item.title}
                 />
                 <CardContent>
                   <Typography
-                    sx={{ fontFamily: "sans-serif" }}
+                    sx={{fontFamily: "sans-serif"}}
                     aria-label="Medium sizes"
                     gutterBottom
                     component="div"
                   >
                     {item.title}
                   </Typography>
-                  <Box
-                    sx={{ display: "flex", flexDirection: "row", ml: "-3px" }}
-                  >
-                    <LocationOnOutlined sx={{ maxWidth: "20px" }} />
+                  <Box sx={{display: "flex", flexDirection: "row", ml: "-3px"}}>
+                    <LocationOnOutlined sx={{maxWidth: "20px"}} />
                     <Typography>{item.location}</Typography>
                   </Box>
                 </CardContent>
                 <CardActions
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    mr: "5px",
-                    ml: ".7rem",
-                  }}
+                  sx={{display: "flex", justifyContent: "space-between"}}
                 >
                   <Typography>
                     {item.price === 0 ? (
@@ -154,7 +147,7 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
           );
         })}
       <Snackbar open={request} autoHideDuration={1500} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="success" sx={{width: "100%"}}>
           {t("request_confirmed")}
         </Alert>
       </Snackbar>
