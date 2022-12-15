@@ -17,3 +17,9 @@ jobs:
           build: npm run build
           start: npm start
           wait-on: "http://localhost:3000/"
+
+      - name: Format
+        run: npm run format
+
+      - name: Lint
+        run: npm run lint
