@@ -13,6 +13,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5.0.0
         with:
+          browser: firefox
           build: npm run build
           start: npm start
-          browser: firefox
+          wait-on: "http://localhost:3000/"
