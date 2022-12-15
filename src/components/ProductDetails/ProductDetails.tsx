@@ -2,18 +2,18 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, Box } from "@mui/material";
+import {Button, Box, IconButton} from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { useAuth } from "../../backend/Context";
-import { useTranslation } from "react-i18next";
-import { LocationOnOutlined } from "@mui/icons-material";
-import { LocalPhoneOutlined } from "@mui/icons-material";
+import {useAuth} from "../../backend/Context";
+import {LocationOnOutlined, LocalPhoneOutlined} from "@mui/icons-material";
+import {  useNavigate } from "react-router-dom";
+import Person2Icon from '@mui/icons-material/Person2';
 
-const ProductDetails = ({ product }: { product: any }) => {
-  const { t } = useTranslation();
-  const { createNotification } = useAuth();
 
-  const { width } = useWindowDimensions();
+  const ProductDetails = ({product}: {product: any}) => {
+  const {createNotification} = useAuth();
+  const {width} = useWindowDimensions();
+  const navigate = useNavigate();
 
   let breakpoint = false;
   if (width < 971) {
@@ -22,26 +22,25 @@ const ProductDetails = ({ product }: { product: any }) => {
 
   if (breakpoint)
     return (
+     <Box sx={{ "@media screen and (max-width: 971px)": { marginBottom:"8rem"}, display:"flex", justifyContent:"center"}} >
+      <Card sx={{maxWidth: 345, marginTop:"1rem"}}>
       <Box
         key={product.id}
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center",
-          paddingTop: "8rem",
         }}
       >
-        <Card sx={{ maxWidth: 345 }}>
           <CardMedia
             component="img"
-            height="240"
+            height="200"
             image={product.image}
             alt="green iguana"
           />
           <CardContent>
             <Typography
-              sx={{ fontSize: "1rem" }}
+              sx={{fontSize: "1rem"}}
               gutterBottom
               variant="h6"
               component="div"
@@ -61,53 +60,38 @@ const ProductDetails = ({ product }: { product: any }) => {
               {product.price} kr
             </Box>
           </CardContent>
-        </Card>
-        <Box
-          sx={{
-            "@media screen and (max-width: 430px)": {
-              width: "240px",
-            },
-          }}
-        >
+        <Box>
           <Box>
             <Typography
               variant="subtitle1"
-              sx={{ marginBottom: 3, marginTop: 3 }}
-            >
-              {t("description")}
+              sx={{marginBottom: 1, marginTop: 1, marginLeft: 1}}
+              >
+              DESCRIPTION
             </Typography>
             <Typography
               variant="body2"
-              sx={{ maxWidth: "21rem", marginBottom: 3 }}
-            >
+              sx={{maxWidth: "21rem", marginBottom: 1, marginLeft: 2}}
+              >
               {product.description}
             </Typography>
           </Box>
-
-          <Box sx={{ gap: "10px", display: "flex" }}>
+          <IconButton onClick={() => {
+                navigate(`/productUserPage/${product.userID}`);
+              }}>
+            <Person2Icon />
+          </IconButton>
+          <Box sx={{gap: "10px", display: "flex"}}>
             <Button
               size="medium"
-              sx={{
-                color: "white",
-                background: "#F06A6A",
-                "@media screen and (max-width: 430px)": {
-                  width: "80px",
-                  fontSize: "12px",
-                },
-              }}
+              sx={{color: "white", background: "#F06A6A"}}
               variant="contained"
-            >
-              {t("report")}
+              >
+              REPORT
             </Button>
             <Button
               sx={{
                 color: "white",
                 padding: "6px 40px",
-                "@media screen and (max-width: 430px)": {
-                  width: "80px",
-                  height: "3rem",
-                  fontSize: "12px",
-                },
               }}
               variant="contained"
               onClick={() => {
@@ -115,12 +99,14 @@ const ProductDetails = ({ product }: { product: any }) => {
                   console.log("Create Notification done");
                 });
               }}
-            >
-              {t("request_rental")}
+              >
+              REQUEST RENTAL
             </Button>
           </Box>
         </Box>
       </Box>
+    </Card>
+    </Box> 
     );
   // desktop
   return (
@@ -131,26 +117,24 @@ const ProductDetails = ({ product }: { product: any }) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        paddingTop: "8rem",
       }}
     >
-      <Card sx={{ display: "flex" }}>
+      <Card sx={{display: "flex"}}>
         <CardMedia
           component="img"
           image={product.image}
           alt="green iguana"
-          sx={{ width: "20rem" }}
+          sx={{width: "20rem"}}
         />
         <CardContent>
           <Typography
-            sx={{ fontSize: "1.8rem", fontWeight: "400" }}
+            sx={{fontSize: "1.8rem", fontWeight: "400"}}
             gutterBottom
             variant="h6"
             component="div"
           >
             {product.title}
           </Typography>
-
           <Box>
             <Typography
               variant="body2"
@@ -181,6 +165,11 @@ const ProductDetails = ({ product }: { product: any }) => {
               <LocalPhoneOutlined />
               {product.phoneNumber}
             </Typography>
+            <IconButton onClick={() => {
+                navigate(`/productUserPage/${product.userID}`);
+              }}>
+            <Person2Icon />
+          </IconButton>
             <Box
               sx={{
                 fontWeight: "bold",
@@ -188,11 +177,10 @@ const ProductDetails = ({ product }: { product: any }) => {
                 paddingTop: "10px",
               }}
             >
-              <Typography>{t("price")}:</Typography> {product.price} kr/{" "}
-              {t("day")}
+              <Typography>Price: {product.price} kr/day</Typography>
             </Box>
           </Box>
-          <Box sx={{ gap: "60px", display: "flex", marginTop: "2rem" }}>
+          <Box sx={{gap: "60px", display: "flex", marginTop: "2rem"}}>
             <Button
               sx={{
                 color: "white",
@@ -200,11 +188,11 @@ const ProductDetails = ({ product }: { product: any }) => {
               }}
               variant="contained"
             >
-              {t("request_rental")}
+              REQUEST RENTAL
             </Button>
             <Button
               size="medium"
-              sx={{ color: "white", background: "#F06A6A" }}
+              sx={{color: "white", background: "#F06A6A"}}
               variant="contained"
               onClick={() => {
                 createNotification(product.id).then(() => {
@@ -212,12 +200,13 @@ const ProductDetails = ({ product }: { product: any }) => {
                 });
               }}
             >
-              {t("report")}
+              REPORT
             </Button>
           </Box>
         </CardContent>
       </Card>
     </Box>
   );
+           
 };
 export default ProductDetails;

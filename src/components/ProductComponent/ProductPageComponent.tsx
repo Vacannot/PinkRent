@@ -1,6 +1,5 @@
-import { Box, IconButton, Typography, ImageList } from "@mui/material";
+import { Box, Typography, ImageList } from "@mui/material";
 import ProductCard from "./ProductCard";
-import CheckIcon from "@mui/icons-material/Check";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -22,10 +21,6 @@ const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
         }}
       >
         <Typography> {t("popular_on_pr")}</Typography>
-        <IconButton aria-label="delete">
-          <Typography>{t("rent_now")}</Typography>
-          <CheckIcon />
-        </IconButton>
       </Box>
       <ImageList
         sx={{
@@ -51,6 +46,7 @@ const ProductPageComponent: FC<Props> = ({ searchString }: Props) => {
           width: "auto",
           ml: "2rem",
           mr: "2rem",
+          marginBottom:"15rem"
         }}
         rowHeight={164}
       >

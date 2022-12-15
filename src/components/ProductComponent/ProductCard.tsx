@@ -5,12 +5,15 @@ import {
   CardActions,
   CardContent,
   Typography,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import { useState, useEffect, FC } from "react";
+import { useState, useMemo, FC } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../backend/Context";
 import { useTranslation } from "react-i18next";
+import { LocationOnOutlined } from "@mui/icons-material";
 interface Props {
   searchString: string;
 }
@@ -22,19 +25,38 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
 
-  useEffect(() => {
+  useMemo(() => {
     getProducts().then((products) => {
       setProducts(products);
     });
   }, [getProducts]);
 
-  useEffect(() => {
+  useMemo(() => {
     setFilteredProducts(
       products.filter((product) =>
         product.title.toLowerCase().includes(searchString.toLowerCase())
       )
     );
   }, [products, searchString]);
+
+  const handleDetailedClick = (item: any) => {
+    if (item.rented) {
+      return;
+    }
+    navigate(`/details/${item.id}`);
+  };
+
+  const [request, setRequest] = useState(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setRequest(false);
+  };
 
   return (
     <>
@@ -51,9 +73,7 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                 display: "flex",
               }}
               key={item.id}
-              onClick={() => {
-                navigate(`/details/${item.id}`);
-              }}
+              onClick={() => handleDetailedClick(item)}
             >
               <Card
                 sx={{
@@ -61,13 +81,10 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                   height: "330px",
                   m: "0.3rem",
                   "@media screen and (max-width: 600px)": {
-                    width: "150px",
+                    width: "190px",
                     height: "auto",
                   },
-                  "@media screen and (max-width: 400px)": {
-                    width: "120px",
-                    height: "300px",
-                  },
+                 
                 }}
               >
                 <img
@@ -84,38 +101,63 @@ export const ProductCard: FC<Props> = ({ searchString }: Props) => {
                   >
                     {item.title}
                   </Typography>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "row", ml: "-3px" }}
+                  >
+                    <LocationOnOutlined sx={{ maxWidth: "20px" }} />
+                    <Typography>{item.location}</Typography>
+                  </Box>
                 </CardContent>
                 <CardActions
-                  sx={{ display: "flex", justifyContent: "space-between" }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mr: "5px",
+                    ml: ".7rem",
+                  }}
                 >
-                  <Typography sx={{ml: ".7rem"}}>{item.price} kr</Typography>
-                  {item.rented ? <Typography>Rented</Typography> : <></>}
+                  <Typography>
+                    {item.price === 0 ? (
+                      <Typography> Free </Typography>
+                    ) : (
+                      item.price
+                    )}
+                    {item.price === 0 ? <></> : <>kr/{t("day")}</>}
+                  </Typography>
+                  {item.rented ? (
+                    <Typography color="primary">Rented</Typography>
+                  ) : (
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      sx={{
+                        height: "1.5rem",
+                        color: "white",
+                        boxShadow: 3,
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
 
-                  <Button
-                    size="small"
-                    sx={{
-                      height: "1.5rem",
-                      backgroundColor: "pink",
-                      border: "1px solid white",
-                      color: "white",
-                      mr: ".7rem",
-                      boxShadow: 3,
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-
-                      createNotification(item).then(() => {
-                        console.log("Create Notification done");
-                      });
-                    }}
-                  >
-                    {t("request")}
-                  </Button>
+                        createNotification(item).then(() => {
+                          console.log("Create Notification done");
+                        });
+                        setRequest(true);
+                      }}
+                    >
+                      {t("request")}
+                    </Button>
+                  )}
                 </CardActions>
               </Card>
             </Box>
           );
         })}
+      <Snackbar open={request} autoHideDuration={1500} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          {t("request_confirmed")}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

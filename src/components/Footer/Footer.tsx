@@ -1,61 +1,118 @@
-import {Box} from "@mui/system";
+import { Box } from "@mui/system";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import {IconButton} from "@mui/material";
-import {Link} from "react-router-dom";
+import { IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import HomeIcon from "@mui/icons-material/Home";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { auth } from "../../backend/firebase";
+import { useAuth } from "../../backend/Context";
 
 export default function Footer() {
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
   }
+
+  const { getNotificationsByUserID } = useAuth();
+
+  const notifbutton = document.getElementById(
+    "notifbubtton"
+  ) as HTMLButtonElement | null;
+
+  const [disabledNotif, setDisabledNotif] = useState<any>(true);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getNotificationsByUserID(user.uid).then(async (notifications) => {
+          let arr = [];
+          for (let notification of notifications) {
+            arr.push({
+              notification,
+            });
+            if (arr.length === 0 && notifbutton) {
+              notifbutton.disabled = true;
+              setDisabledNotif(true);
+              console.log(arr.length, "set notif disabled true");
+            }
+            console.log(arr.length, "set notif disabled false");
+            setDisabledNotif(false);
+          }
+        });
+      }
+    });
+  });
 
   if (breakpoint)
     return (
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
           justifyContent: "space-evenly",
-          width: "100vw",
-          height: "120px",
+          width: "100%",
           alignItems: "center",
-          bottom: 0,
-          position: "absolute",
+          position: "fixed",
+          bottom: "3rem",
+          zIndex: "10000",
         }}
       >
-        <Link to="/">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <HomeIcon sx={{color: "white"}} />
-          </IconButton>
-        </Link>
-        <Link to="/notifications">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <NotificationsIcon sx={{color: "white"}} />
-          </IconButton>
-        </Link>
-        <Link to="/add">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <AddCircleOutlineIcon sx={{color: "white"}} />
-          </IconButton>
-        </Link>
         <Link to="/catalog">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <SearchIcon sx={{color: "white"}} />
+          <IconButton sx={{ border: 1, borderColor: "white" }}>
+            <HomeIcon sx={{ color: "white" }} />
           </IconButton>
         </Link>
-        <Link to="/profile">
-          <IconButton sx={{border: 1, borderColor: "white"}}>
-            <AccountCircleIcon sx={{color: "white"}} />
-          </IconButton>
-        </Link>
+        {auth.currentUser ? (
+          <>
+            {disabledNotif ? (
+              <>
+                <IconButton sx={{ border: 1, borderColor: "white" }}>
+                  <NotificationsOffIcon sx={{ color: "white" }} />
+                </IconButton>
+              </>
+            ) : (
+              <>
+                <Link to="/notifications">
+                  <IconButton sx={{ border: 1, borderColor: "white" }}>
+                    <NotificationsIcon sx={{ color: "white" }} />
+                  </IconButton>
+                </Link>
+              </>
+            )}
+          </>
+        ) : (
+          <></>
+        )}
+
+        {auth.currentUser ? (
+          <>
+            <Link to="/add">
+              <IconButton sx={{ border: 1, borderColor: "white" }}>
+                <AddCircleOutlineIcon sx={{ color: "white" }} />
+              </IconButton>
+            </Link>
+            <Link to="/profile">
+              <IconButton sx={{ border: 1, borderColor: "white" }}>
+                <AccountCircleIcon sx={{ color: "white" }} />
+              </IconButton>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/register">
+              <IconButton sx={{ border: 1, borderColor: "white" }}>
+                <AccountCircleIcon sx={{ color: "white" }} />
+              </IconButton>
+            </Link>
+          </>
+        )}
       </Box>
     );
   return null;

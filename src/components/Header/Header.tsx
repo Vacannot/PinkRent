@@ -7,6 +7,7 @@ import LogoMobile from "../../assets/LogoMobile.png";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
@@ -15,6 +16,8 @@ import { useEffect, useState } from "react";
 import { auth } from "../../backend/firebase";
 import { useTranslation } from "react-i18next";
 import { useCallback } from "react";
+import { useAuth } from "../../backend/Context";
+import { IconButton } from "@mui/material";
 
 export default function Header() {
   const { t } = useTranslation();
@@ -34,6 +37,36 @@ export default function Header() {
   }, [forceUpdate]);
 
   let onHover = false;
+
+  const { getNotificationsByUserID } = useAuth();
+
+  const notifbutton = document.getElementById(
+    "notifbubtton"
+  ) as HTMLButtonElement | null;
+
+  const [disabledNotif, setDisabledNotif] = useState<any>(true);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getNotificationsByUserID(user.uid).then(async (notifications) => {
+          let arr = [];
+          for (let notification of notifications) {
+            arr.push({
+              notification,
+            });
+            if (arr.length === 0 && notifbutton) {
+              notifbutton.disabled = true;
+              setDisabledNotif(true);
+              console.log(arr.length, "set notif disabled true");
+            }
+            console.log(arr.length, "set notif disabled false");
+            setDisabledNotif(false);
+          }
+        });
+      }
+    });
+  });
 
   const CustomizedButton = styled(Button)`
     color: #626262;
@@ -57,7 +90,7 @@ export default function Header() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "100vw",
+          width: "100%",
           height: 64,
           alignItems: "center",
         }}
@@ -144,20 +177,26 @@ export default function Header() {
                   </Typography>
                 </CustomizedButton>
               </Link>
-              <Link to="/notifications">
-                <CustomizedButton
-                  variant="contained"
-                  onMouseEnter={() => {
-                    onHover = true;
-                  }}
-                  onMouseLeave={() => {
-                    onHover = false;
-                  }}
-                >
-                  {onHover && <NotificationsIcon sx={{ color: "white" }} />}
-                  {!onHover && <NotificationsIcon color="primary" />}
-                </CustomizedButton>
-              </Link>
+              {disabledNotif ? (
+                <>
+                  <IconButton disabled>
+                    <NotificationsOffIcon color="primary" />
+                  </IconButton>
+                </>
+              ) : (
+                <>
+                  <Link to="/notifications">
+                    <CustomizedButton
+                      type="button"
+                      id="notifbutton"
+                      variant="contained"
+                    >
+                      <NotificationsIcon color="primary" />
+                    </CustomizedButton>
+                  </Link>
+                </>
+              )}
+
               <Link to="/profile" style={{ textDecoration: "none" }}>
                 <CustomizedButton
                   onMouseEnter={() => {

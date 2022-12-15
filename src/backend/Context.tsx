@@ -99,7 +99,6 @@ export function useAuth() {
 
 export function AuthProvider(props: any) {
   const [filter, setFilter] = useState<string | null>(null);
-
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log("Logged in");
@@ -215,6 +214,8 @@ export function AuthProvider(props: any) {
       };
     });
   };
+
+
 
   const setProduct = async (
     product: any,

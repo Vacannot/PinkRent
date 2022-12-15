@@ -9,13 +9,13 @@ import {
   Card,
 } from "@mui/material";
 import * as yup from "yup";
-import {useFormik} from "formik";
-import {collection} from "firebase/firestore";
-import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
-import {useCollection} from "react-firebase-hooks/firestore";
-import {db} from "../backend/firebase";
-import {useAuth} from "../backend/Context";
-import {useNavigate} from "react-router";
+import { useFormik } from "formik";
+import { collection } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { db } from "../backend/firebase";
+import { useAuth } from "../backend/Context";
+import { useNavigate } from "react-router";
 
 const initialValues = {
   location: "",
@@ -32,10 +32,12 @@ const validationSchema = yup.object({
   phoneNumber: yup
     .string()
     .matches(phoneRegExp, "number is not valid")
+    .min(6)
+    .max(12)
     .required("please add phone number"),
   location: yup.string().required("Product needs a location"),
   title: yup.string().required("Product needs a title"),
-  price: yup.number().required("Product needs a price"),
+  price: yup.number().max(10000).required("Product needs a price"),
   description: yup.string().required("Product needs a description"),
   category: yup.string().required("Product needs a category"),
   image: yup.string().required("image is required"),
@@ -52,7 +54,7 @@ export const uuid = () => {
 };
 
 function AddProductPage() {
-  const {createProduct} = useAuth();
+  const { createProduct } = useAuth();
 
   const navigate = useNavigate();
 
@@ -81,17 +83,26 @@ function AddProductPage() {
         alignItems: "center",
         marginRight: "auto",
         marginLeft: "auto",
+        gap: 3,
       }}
     >
       <form
         onSubmit={formik.handleSubmit}
-        style={{display: "flex", flexDirection: "column", gap: 3}}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          marginTop: "30px",
+          marginBottom: "30px",
+        }}
       >
         <Input
           id="image"
           name="Image"
           type="file"
-          inputProps={{accept: "image/*"}}
+          placeholder="Add Image file"
+          inputProps={{ accept: "image/*" }}
+          error={formik.touched.title && Boolean(formik.errors.title)}
           onChange={(event) => {
             const file = (event.currentTarget as HTMLInputElement).files![0];
             const storageRef = ref(storage, uuid() + " " + file.name);
@@ -157,7 +168,7 @@ function AddProductPage() {
           helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
           variant="standard"
         />
-        <FormControl sx={{minWidth: 120}} required>
+        <FormControl sx={{ minWidth: 120 }} required>
           <InputLabel id="category-label">Category</InputLabel>
           <Select
             labelId="category-label"
