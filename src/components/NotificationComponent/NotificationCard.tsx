@@ -213,7 +213,7 @@ function NotificationCard() {
                   <img
                     src={product.image}
                     alt={product.title}
-                    style={{width: "70px"}}
+                    style={{maxWidth: "100px"}}
                   />
                   <Typography gutterBottom variant="h5" component="div">
                     {product.title}
