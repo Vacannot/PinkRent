@@ -66,7 +66,9 @@ function RegisterForm() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginBottom: "10rem",
+        "@media screen and (max-width: 600px)": {
+          marginBottom:"15rem"
+        },
       }}
     >
       <h2
