@@ -20,8 +20,8 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { createContext, useContext, useState } from "react";
-import { auth, db } from "./firebase";
+import React, {createContext, useContext, useState} from "react";
+import {auth, db} from "./firebase";
 
 interface context {
   signup: (
@@ -31,7 +31,7 @@ interface context {
   ) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => void;
-  updateUser: (info: { displayName: string }) => void;
+  updateUser: (info: {displayName: string}) => void;
   updateUserPassword: (info: {
     oldPassword: string;
     newPassword: string;
@@ -54,6 +54,7 @@ interface context {
       description: string;
       price: string;
       title: string;
+      rented: boolean;
     }
   ) => Promise<void>;
   setProductRented: (productID: any, rented: boolean) => Promise<void>;
@@ -149,7 +150,7 @@ export function AuthProvider(props: any) {
   };
 
   const setProductRented = async (productID: string, rented: boolean) => {
-    await updateDoc(doc(db, "products", productID), { rented });
+    await updateDoc(doc(db, "products", productID), {rented});
   };
 
   const getCategories = async (): Promise<any[]> => {
@@ -224,6 +225,7 @@ export function AuthProvider(props: any) {
       description: string;
       price: string;
       title: string;
+      rented: boolean;
     }
   ) => {
     const col = doc(db, "products", product.id);
@@ -232,6 +234,7 @@ export function AuthProvider(props: any) {
       description: values.description,
       price: values.price,
       title: values.title,
+      rented: values.rented,
     });
   };
 
@@ -254,17 +257,17 @@ export function AuthProvider(props: any) {
       email,
       password
     );
-    await updateProfile(userCredential.user, { displayName: displayName });
+    await updateProfile(userCredential.user, {displayName: displayName});
   };
 
   const logout = async () => {
     await signOut(auth);
   };
 
-  const updateUser = (info: { displayName: string }) => {
+  const updateUser = (info: {displayName: string}) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        updateProfile(user, { displayName: info.displayName }).catch(() => {
+        updateProfile(user, {displayName: info.displayName}).catch(() => {
           console.error("Failed to set Display Name");
         });
       }
