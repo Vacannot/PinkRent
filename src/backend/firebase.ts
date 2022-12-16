@@ -1,5 +1,5 @@
 import {initializeApp} from "firebase/app";
-import {collection, getDocs, getFirestore} from "firebase/firestore";
+import {getFirestore} from "firebase/firestore";
 import {getAuth} from "firebase/auth";
 
 const firebaseConfig = {
@@ -24,19 +24,3 @@ export const app = initializeApp(firebaseConfig);
 // Initialize services
 export const db = getFirestore();
 export const auth = getAuth(app);
-
-// collection ref
-const colNotifs = collection(db, "notifications");
-
-//get notifs data
-getDocs(colNotifs)
-  .then((snapshot) => {
-    let notifs: any = [];
-    snapshot.docs.forEach((doc) => {
-      notifs.push({...doc.data(), id: doc.id});
-    });
-    console.log(notifs);
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
