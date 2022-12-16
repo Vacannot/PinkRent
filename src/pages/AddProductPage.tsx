@@ -106,6 +106,10 @@ function AddProductPage() {
         marginRight: "auto",
         marginLeft: "auto",
         gap: 3,
+        "@media screen and (max-width: 600px)": {
+         marginBottom:"15rem"
+        },
+        
       }}
     >
       <form
