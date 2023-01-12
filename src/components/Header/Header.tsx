@@ -1,4 +1,4 @@
-import { Box } from "@mui/system";
+import {Box} from "@mui/system";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -9,19 +9,18 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Link } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth } from "../../backend/firebase";
-import { useTranslation } from "react-i18next";
-import { useCallback } from "react";
-import { useAuth } from "../../backend/Context";
-import { IconButton } from "@mui/material";
+import {Link} from "react-router-dom";
+import {styled} from "@mui/material/styles";
+import {onAuthStateChanged} from "firebase/auth";
+import {useEffect, useState} from "react";
+import {auth} from "../../backend/firebase";
+import {useTranslation} from "react-i18next";
+import {useCallback} from "react";
+import {useAuth} from "../../backend/Context";
 
 export default function Header() {
-  const { t } = useTranslation();
-  const { width } = useWindowDimensions();
+  const {t} = useTranslation();
+  const {width} = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
@@ -38,7 +37,7 @@ export default function Header() {
 
   let onHover = false;
 
-  const { getNotificationsByUserID } = useAuth();
+  const {getNotificationsByUserID, getName} = useAuth();
 
   const notifbutton = document.getElementById(
     "notifbubtton"
@@ -46,9 +45,12 @@ export default function Header() {
 
   const [disabledNotif, setDisabledNotif] = useState<any>(true);
 
+  const [username, setUsername] = useState("");
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        getName(user.uid).then((name) => setUsername(name));
         getNotificationsByUserID(user.uid).then(async (notifications) => {
           let arr = [];
           for (let notification of notifications) {
@@ -140,17 +142,17 @@ export default function Header() {
           </Link>
         )}
 
-        <Link to="/about" style={{ textDecoration: "none" }}>
+        <Link to="/about" style={{textDecoration: "none"}}>
           <Button variant="text">
-            <Typography variant="body1" sx={{ color: "grey" }}>
+            <Typography variant="body1" sx={{color: "grey"}}>
               {t("about")}
             </Typography>
           </Button>
         </Link>
 
-        <Link to="/contact" style={{ textDecoration: "none" }}>
+        <Link to="/contact" style={{textDecoration: "none"}}>
           <Button variant="text">
-            <Typography variant="body1" sx={{ color: "grey" }}>
+            <Typography variant="body1" sx={{color: "grey"}}>
               {t("contact_us")}
             </Typography>
           </Button>
@@ -167,37 +169,31 @@ export default function Header() {
         <Stack spacing={4} direction="row">
           {auth.currentUser ? (
             <>
-              <Link to="/add" style={{ textDecoration: "none" }}>
+              <Link to="/add" style={{textDecoration: "none"}}>
                 <CustomizedButton
                   startIcon={<AddCircleOutlineIcon color="primary" />}
                   variant="contained"
                 >
-                  <Typography variant="body1" sx={{ color: "grey" }}>
+                  <Typography variant="body1" sx={{color: "grey"}}>
                     {t("add_product")}
                   </Typography>
                 </CustomizedButton>
               </Link>
-              {disabledNotif ? (
-                <>
-                  <IconButton disabled>
+              <Link to="/notifications">
+                <CustomizedButton
+                  type="button"
+                  id="notifbutton"
+                  variant="contained"
+                >
+                  {disabledNotif ? (
                     <NotificationsOffIcon color="primary" />
-                  </IconButton>
-                </>
-              ) : (
-                <>
-                  <Link to="/notifications">
-                    <CustomizedButton
-                      type="button"
-                      id="notifbutton"
-                      variant="contained"
-                    >
-                      <NotificationsIcon color="primary" />
-                    </CustomizedButton>
-                  </Link>
-                </>
-              )}
+                  ) : (
+                    <NotificationsIcon color="primary" />
+                  )}
+                </CustomizedButton>
+              </Link>
 
-              <Link to="/profile" style={{ textDecoration: "none" }}>
+              <Link to="/profile" style={{textDecoration: "none"}}>
                 <CustomizedButton
                   onMouseEnter={() => {
                     onHover = true;
@@ -207,21 +203,21 @@ export default function Header() {
                   }}
                   startIcon={
                     onHover ? (
-                      <AccountCircleIcon sx={{ color: "white" }} />
+                      <AccountCircleIcon sx={{color: "white"}} />
                     ) : (
                       <AccountCircleIcon color="primary" />
                     )
                   }
                   variant="contained"
                 >
-                  <Typography variant="body1" sx={{ color: "grey" }}>
-                    {auth.currentUser!.displayName}
+                  <Typography variant="body1" sx={{color: "grey"}}>
+                    {username}
                   </Typography>
                 </CustomizedButton>
               </Link>
             </>
           ) : (
-            <Link to="/login" style={{ textDecoration: "none" }}>
+            <Link to="/login" style={{textDecoration: "none"}}>
               <CustomizedButton
                 onMouseEnter={() => {
                   onHover = true;
@@ -231,14 +227,14 @@ export default function Header() {
                 }}
                 startIcon={
                   onHover ? (
-                    <AccountCircleIcon sx={{ color: "white" }} />
+                    <AccountCircleIcon sx={{color: "white"}} />
                   ) : (
                     <AccountCircleIcon color="primary" />
                   )
                 }
                 variant="contained"
               >
-                <Typography variant="body1" sx={{ color: "grey" }}>
+                <Typography variant="body1" sx={{color: "grey"}}>
                   {t("login")}
                 </Typography>
               </CustomizedButton>

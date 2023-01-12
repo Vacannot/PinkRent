@@ -4,12 +4,18 @@ import {useNavigate, useParams} from "react-router";
 import {useAuth} from "../backend/Context";
 
 function ProductUserPage() {
-  const {getProductsByUserID} = useAuth();
+  const {getProductsByUserID, getName} = useAuth();
   const [products, setProducts] = useState<any[]>([]);
   let params = useParams();
   const userID = params.userID;
 
   const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    getName(userID!).then((name) => setUsername(name));
+  }, [userID, getName]);
 
   useEffect(() => {
     let product = getProductsByUserID(userID!);
@@ -28,7 +34,7 @@ function ProductUserPage() {
         }}
       >
         <Typography sx={{mb: "3rem", fontSize: "1.5rem", textAlign: "center"}}>
-          Products
+          {username} Products
         </Typography>
         <Box sx={{display: "flex", justifyContent: "space-between"}}>
           <Typography

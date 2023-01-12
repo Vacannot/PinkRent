@@ -8,7 +8,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import {Link, useNavigate} from "react-router-dom";
 import {IconButton, TextField} from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import {useFormik} from "formik";
 import {useAuth} from "../../backend/Context";
 import * as yup from "yup";
@@ -32,15 +32,23 @@ function LoginForm() {
   const {login} = useAuth();
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      login(values.email, values.password).then(() => {
-        navigate("/catalog");
-      });
-
-      formik.resetForm();
+      login(values.email, values.password)
+        .then(() => {
+          formik.resetForm();
+          navigate("/catalog");
+        })
+        .catch(() => {
+          setError("Email or Password was incorrect");
+          setTimeout(() => {
+            setError("");
+          }, 4000);
+        });
     },
   });
   const [values, setValues] = React.useState({
@@ -70,7 +78,7 @@ function LoginForm() {
       <form onSubmit={formik.handleSubmit} className={styles.centerForm}>
         <TextField
           sx={{
-            paddingBottom: "4rem",
+            paddingBottom: "2rem",
             width: "17rem",
             paddingTop: ".5rem",
           }}
@@ -94,7 +102,7 @@ function LoginForm() {
 
         <TextField
           sx={{
-            paddingBottom: "4rem",
+            paddingBottom: "1rem",
             width: "17rem",
             paddingTop: ".5rem",
           }}
@@ -122,7 +130,13 @@ function LoginForm() {
             ),
           }}
         />
-
+        <p
+          style={{
+            color: "red",
+          }}
+        >
+          {error}
+        </p>
         <p
           style={{
             color: "#7E7E7E",

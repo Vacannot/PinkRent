@@ -1,27 +1,35 @@
-import { Box } from "@mui/system";
+import {Box} from "@mui/system";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
+import {IconButton} from "@mui/material";
+import {Link} from "react-router-dom";
 
 import HomeIcon from "@mui/icons-material/Home";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth } from "../../backend/firebase";
-import { useAuth } from "../../backend/Context";
+import {onAuthStateChanged} from "firebase/auth";
+import {useCallback, useEffect, useState} from "react";
+import {auth} from "../../backend/firebase";
+import {useAuth} from "../../backend/Context";
 
 export default function Footer() {
-  const { width } = useWindowDimensions();
+  const {width} = useWindowDimensions();
   let breakpoint = false;
   if (width < 971) {
     breakpoint = true;
   }
+  const [, updateState] = useState<any>();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
-  const { getNotificationsByUserID } = useAuth();
+  useEffect(() => {
+    onAuthStateChanged(auth, () => {
+      forceUpdate();
+    });
+  }, [forceUpdate]);
+
+  const {getNotificationsByUserID} = useAuth();
 
   const notifbutton = document.getElementById(
     "notifbubtton"
@@ -65,23 +73,23 @@ export default function Footer() {
         }}
       >
         <Link to="/catalog">
-          <IconButton sx={{ border: 1, borderColor: "white" }}>
-            <HomeIcon sx={{ color: "white" }} />
+          <IconButton sx={{border: 1, borderColor: "white"}}>
+            <HomeIcon sx={{color: "white"}} />
           </IconButton>
         </Link>
         {auth.currentUser ? (
           <>
             {disabledNotif ? (
               <>
-                <IconButton sx={{ border: 1, borderColor: "white" }}>
-                  <NotificationsOffIcon sx={{ color: "white" }} />
+                <IconButton sx={{border: 1, borderColor: "white"}}>
+                  <NotificationsOffIcon sx={{color: "white"}} />
                 </IconButton>
               </>
             ) : (
               <>
                 <Link to="/notifications">
-                  <IconButton sx={{ border: 1, borderColor: "white" }}>
-                    <NotificationsIcon sx={{ color: "white" }} />
+                  <IconButton sx={{border: 1, borderColor: "white"}}>
+                    <NotificationsIcon sx={{color: "white"}} />
                   </IconButton>
                 </Link>
               </>
@@ -94,21 +102,21 @@ export default function Footer() {
         {auth.currentUser ? (
           <>
             <Link to="/add">
-              <IconButton sx={{ border: 1, borderColor: "white" }}>
-                <AddCircleOutlineIcon sx={{ color: "white" }} />
+              <IconButton sx={{border: 1, borderColor: "white"}}>
+                <AddCircleOutlineIcon sx={{color: "white"}} />
               </IconButton>
             </Link>
             <Link to="/profile">
-              <IconButton sx={{ border: 1, borderColor: "white" }}>
-                <AccountCircleIcon sx={{ color: "white" }} />
+              <IconButton sx={{border: 1, borderColor: "white"}}>
+                <AccountCircleIcon sx={{color: "white"}} />
               </IconButton>
             </Link>
           </>
         ) : (
           <>
             <Link to="/register">
-              <IconButton sx={{ border: 1, borderColor: "white" }}>
-                <AccountCircleIcon sx={{ color: "white" }} />
+              <IconButton sx={{border: 1, borderColor: "white"}}>
+                <AccountCircleIcon sx={{color: "white"}} />
               </IconButton>
             </Link>
           </>

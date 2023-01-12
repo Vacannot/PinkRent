@@ -1,5 +1,4 @@
 import {Box} from "@mui/material";
-import React from "react";
 import LoginForm from "../components/LoginForm/LoginForm";
 
 function LoginPage() {
@@ -8,7 +7,7 @@ function LoginPage() {
       sx={{
         display: "flex",
         justifyContent: "center",
-        marginBottom: "5rem",
+        marginBottom: "15rem",
       }}
     >
       <LoginForm />

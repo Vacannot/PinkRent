@@ -6,7 +6,6 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
-  updateProfile,
   User,
 } from "firebase/auth";
 import {
@@ -17,10 +16,11 @@ import {
   getDoc,
   getDocs,
   query,
+  setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
-import React, {createContext, useContext, useState} from "react";
+import {createContext, useContext, useState} from "react";
 import {auth, db} from "./firebase";
 
 interface context {
@@ -42,6 +42,7 @@ interface context {
   getProductByID: (productID: string) => Promise<any>;
   getCategories: () => Promise<any[]>;
   getProducts: () => Promise<any[]>;
+  getName: (userid: string) => Promise<any>;
   createNotification: (productID: string) => Promise<void>;
   createProduct: (productValues: any) => Promise<void>;
   currentUser?: User;
@@ -86,6 +87,9 @@ export const AuthContext = createContext<context>({
   getProducts: async (): Promise<any[]> => {
     return [];
   },
+  getName: async (): Promise<any> => {
+    return;
+  },
   filter: null,
   setFilter: () => Promise,
   setProduct: async () => {},
@@ -110,7 +114,7 @@ export function AuthProvider(props: any) {
 
   const createProduct = async (productValues: any) => {
     const productCol = collection(db, "products");
-    onAuthStateChanged(auth, (user) => {
+    let unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         addDoc(productCol, {
           title: productValues.title,
@@ -122,25 +126,29 @@ export function AuthProvider(props: any) {
           location: productValues.location,
           phoneNumber: productValues.phoneNumber,
           rented: false,
+        }).finally(() => {
+          unsub();
         });
       } else {
-        alert("To add a product you need to be signed in");
+        console.log("To add a product you need to be signed in");
       }
     });
   };
 
   const createNotification = async (product: any) => {
     const notificationCol = collection(db, "notifications");
-    onAuthStateChanged(auth, (user) => {
+    let unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         addDoc(notificationCol, {
           requester: user.displayName,
           productID: product.id,
           productOwnerID: product.userID,
           accepted: false,
+        }).finally(() => {
+          unsub();
         });
       } else {
-        alert("To request a product you need to be signed in");
+        console.log("To request a product you need to be signed in");
       }
     });
   };
@@ -216,7 +224,13 @@ export function AuthProvider(props: any) {
     });
   };
 
+  const getName = async (userid: string): Promise<any> => {
+    const d = doc(db, "userdata", userid);
+    const snapshot = await getDoc(d);
+    const data = snapshot.data();
 
+    return data ? data.displayName : "";
+  };
 
   const setProduct = async (
     product: any,
@@ -252,12 +266,11 @@ export function AuthProvider(props: any) {
     password: string,
     displayName: string
   ) => {
-    let userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    await updateProfile(userCredential.user, {displayName: displayName});
+    const user = await createUserWithEmailAndPassword(auth, email, password);
+
+    let userID = user.user.uid;
+    const userdataCol = doc(db, "userdata", userID);
+    await setDoc(userdataCol, {displayName, userID});
   };
 
   const logout = async () => {
@@ -265,11 +278,16 @@ export function AuthProvider(props: any) {
   };
 
   const updateUser = (info: {displayName: string}) => {
-    onAuthStateChanged(auth, (user) => {
+    let unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-        updateProfile(user, {displayName: info.displayName}).catch(() => {
-          console.error("Failed to set Display Name");
-        });
+        const userdataCol = doc(db, "userdata", user.uid);
+        setDoc(userdataCol, {displayName: info.displayName})
+          .catch(() => {
+            console.error("Failed to set Display Name");
+          })
+          .finally(() => {
+            unsub();
+          });
       }
     });
   };
@@ -310,6 +328,7 @@ export function AuthProvider(props: any) {
       value={{
         login,
         signup,
+        getName,
         logout,
         updateUser,
         updateUserPassword,

@@ -89,6 +89,7 @@ function AddProductPage() {
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      console.log("Create product??");
       createProduct(values);
       formik.resetForm();
       navigate("/catalog");
@@ -106,6 +107,7 @@ function AddProductPage() {
         marginRight: "auto",
         marginLeft: "auto",
         gap: 3,
+        paddingBottom: "10rem",
       }}
     >
       <form

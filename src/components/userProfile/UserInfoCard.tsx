@@ -17,15 +17,15 @@ import {
   LogoutOutlined,
 } from "@mui/icons-material";
 import styles from "./userProfile.module.scss";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth } from "../../backend/firebase";
-import { useFormik } from "formik";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {useEffect, useState} from "react";
+import {auth} from "../../backend/firebase";
+import {useFormik} from "formik";
 import * as yup from "yup";
-import { useAuth } from "../../backend/Context";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { languageKey } from "../../i18n";
+import {useAuth} from "../../backend/Context";
+import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {languageKey} from "../../i18n";
 
 let lng = "";
 let language = "English";
@@ -44,9 +44,9 @@ export interface SimpleDialogProps {
 }
 
 function SimpleDialog(props: SimpleDialogProps) {
-  const { updateUserPassword } = useAuth();
-  const { onClose, open } = props;
-  const { t } = useTranslation();
+  const {updateUserPassword} = useAuth();
+  const {onClose, open} = props;
+  const {t} = useTranslation();
 
   const [error, setError] = useState<string>("");
 
@@ -126,8 +126,8 @@ function SimpleDialog(props: SimpleDialogProps) {
   );
 }
 
-const View = ({ user }: { user: any }) => {
-  const { t, i18n } = useTranslation();
+const View = ({user, displayName}: {user: any; displayName: string}) => {
+  const {t, i18n} = useTranslation();
 
   const translate = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -135,7 +135,7 @@ const View = ({ user }: { user: any }) => {
     localStorage.setItem(languageKey, lng);
   };
 
-  const { deleteUser, logout } = useAuth();
+  const {deleteUser, logout} = useAuth();
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -163,7 +163,7 @@ const View = ({ user }: { user: any }) => {
   return (
     <>
       <Typography className={styles.spacing}>
-        {t("name")}: {user?.displayName}
+        {t("name")}: {displayName}
       </Typography>
       <Typography className={styles.spacing}>Email: {user?.email}</Typography>
       <Typography
@@ -183,12 +183,12 @@ const View = ({ user }: { user: any }) => {
         onClick={() => setOpen(true)}
         endIcon={<VpnKeyOutlined />}
         color="info"
-        sx={{ marginLeft: "-7px", width: "100%", justifyContent: "flex-start" }}
+        sx={{marginLeft: "-7px", width: "100%", justifyContent: "flex-start"}}
       >
         {t("change_password")}
       </Button>
       <SimpleDialog open={open} onClose={() => setOpen(false)} />
-      <ButtonGroup sx={{ display: "flex", flexDirection: "column" }}>
+      <ButtonGroup sx={{display: "flex", flexDirection: "column"}}>
         <Button
           variant="text"
           color="error"
@@ -227,18 +227,26 @@ const validationSchema = yup.object({
   displayName: yup.string().required(),
 });
 
-const Edit = ({ user, close }: { user: any; close: () => void }) => {
-  const { updateUser } = useAuth();
+const Edit = ({
+  user,
+  displayName,
+  close,
+}: {
+  user: any;
+  displayName: string;
+  close: () => void;
+}) => {
+  const {updateUser} = useAuth();
 
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const initialValues = {
-    displayName: "",
+    displayName,
   };
 
-  if (user) {
-    initialValues.displayName = user.displayName ? user.displayName : "";
-  }
+  // if (user) {
+  //   initialValues.displayName = displayName ? displayName : "";
+  // }
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -267,20 +275,26 @@ const Edit = ({ user, close }: { user: any; close: () => void }) => {
 };
 
 export const UserInfoCard = () => {
+  const {getName} = useAuth();
   const user = getAuth().currentUser;
   const [, setBSUpdate] = useState<any>(null);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const [edit, setEdit] = useState<boolean>(false);
 
+  const [username, setUsername] = useState("");
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) setBSUpdate("Hehehe");
+      if (user) {
+        getName(user.uid).then((name) => setUsername(name));
+        setBSUpdate("Hehehe");
+      }
     });
-  }, []);
+  }, [getName]);
   return (
-    <Card sx={{ width: 335, height: "fit-content" }}>
-      <CardContent sx={{ paddingBottom: "5px" }}>
+    <Card sx={{width: 335, height: "fit-content"}}>
+      <CardContent sx={{paddingBottom: "5px"}}>
         <div id="recaptcha-container"></div>
         <Typography
           sx={{
@@ -304,12 +318,16 @@ export const UserInfoCard = () => {
         {edit ? (
           <Edit
             user={user}
+            displayName={username}
             close={() => {
               setEdit(false);
+              if (user) {
+                getName(user.uid).then((name) => setUsername(name));
+              }
             }}
           />
         ) : (
-          <View user={user} />
+          <View user={user} displayName={username} />
         )}
       </CardContent>
     </Card>

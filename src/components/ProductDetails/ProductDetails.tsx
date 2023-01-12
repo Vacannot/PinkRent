@@ -6,14 +6,20 @@ import {Button, Box, IconButton} from "@mui/material";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import {useAuth} from "../../backend/Context";
 import {LocationOnOutlined, LocalPhoneOutlined} from "@mui/icons-material";
-import {  useNavigate } from "react-router-dom";
-import Person2Icon from '@mui/icons-material/Person2';
+import {useNavigate} from "react-router-dom";
+import Person2Icon from "@mui/icons-material/Person2";
+import {useEffect, useState} from "react";
 
-
-  const ProductDetails = ({product}: {product: any}) => {
-  const {createNotification} = useAuth();
+const ProductDetails = ({product}: {product: any}) => {
+  const {createNotification, getName} = useAuth();
   const {width} = useWindowDimensions();
   const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    getName(product.userID).then((name) => setUsername(name));
+  }, [getName, product.userID]);
 
   let breakpoint = false;
   if (width < 971) {
@@ -22,91 +28,100 @@ import Person2Icon from '@mui/icons-material/Person2';
 
   if (breakpoint)
     return (
-     <Box sx={{ "@media screen and (max-width: 971px)": { marginBottom:"8rem"}, display:"flex", justifyContent:"center"}} >
-      <Card sx={{maxWidth: 345, marginTop:"1rem"}}>
       <Box
-        key={product.id}
         sx={{
+          "@media screen and (max-width: 971px)": {marginBottom: "8rem"},
           display: "flex",
-          flexDirection: "column",
           justifyContent: "center",
         }}
       >
-          <CardMedia
-            component="img"
-            height="200"
-            image={product.image}
-            alt="green iguana"
-          />
-          <CardContent>
-            <Typography
-              sx={{fontSize: "1rem"}}
-              gutterBottom
-              variant="h6"
-              component="div"
-            >
-              {product.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {product.location}
-            </Typography>
-            <Box
-              sx={{
-                fontWeight: "bold",
-                fontSize: 16,
-                paddingTop: "10px",
-              }}
-            >
-              {product.price} kr
+        <Card sx={{maxWidth: 345, marginTop: "1rem"}}>
+          <Box
+            key={product.id}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <CardMedia
+              component="img"
+              height="200"
+              image={product.image}
+              alt="green iguana"
+            />
+            <CardContent>
+              <Typography
+                sx={{fontSize: "1rem"}}
+                gutterBottom
+                variant="h6"
+                component="div"
+              >
+                {product.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {product.location}
+              </Typography>
+              <Box
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: 16,
+                  paddingTop: "10px",
+                }}
+              >
+                {product.price} kr
+              </Box>
+            </CardContent>
+            <Box>
+              <Box>
+                <Typography
+                  variant="subtitle1"
+                  sx={{marginBottom: 1, marginTop: 1, marginLeft: 1}}
+                >
+                  DESCRIPTION
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{maxWidth: "21rem", marginBottom: 1, marginLeft: 2}}
+                >
+                  {product.description}
+                </Typography>
+              </Box>
+              <IconButton
+                onClick={() => {
+                  navigate(`/productUserPage/${product.userID}`);
+                }}
+              >
+                <Person2Icon />
+                <Typography>{username}</Typography>
+              </IconButton>
+              <Box sx={{gap: "10px", display: "flex"}}>
+                <Button
+                  size="medium"
+                  sx={{color: "white", background: "#F06A6A"}}
+                  variant="contained"
+                >
+                  REPORT
+                </Button>
+                <Button
+                  sx={{
+                    color: "white",
+                    padding: "6px 40px",
+                  }}
+                  variant="contained"
+                  onClick={() => {
+                    createNotification(product.id).then(() => {
+                      console.log("Create Notification done");
+                    });
+                  }}
+                >
+                  REQUEST RENTAL
+                </Button>
+              </Box>
             </Box>
-          </CardContent>
-        <Box>
-          <Box>
-            <Typography
-              variant="subtitle1"
-              sx={{marginBottom: 1, marginTop: 1, marginLeft: 1}}
-              >
-              DESCRIPTION
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{maxWidth: "21rem", marginBottom: 1, marginLeft: 2}}
-              >
-              {product.description}
-            </Typography>
           </Box>
-          <IconButton onClick={() => {
-                navigate(`/productUserPage/${product.userID}`);
-              }}>
-            <Person2Icon />
-          </IconButton>
-          <Box sx={{gap: "10px", display: "flex"}}>
-            <Button
-              size="medium"
-              sx={{color: "white", background: "#F06A6A"}}
-              variant="contained"
-              >
-              REPORT
-            </Button>
-            <Button
-              sx={{
-                color: "white",
-                padding: "6px 40px",
-              }}
-              variant="contained"
-              onClick={() => {
-                createNotification(product.id).then(() => {
-                  console.log("Create Notification done");
-                });
-              }}
-              >
-              REQUEST RENTAL
-            </Button>
-          </Box>
-        </Box>
+        </Card>
       </Box>
-    </Card>
-    </Box> 
     );
   // desktop
   return (
@@ -165,11 +180,14 @@ import Person2Icon from '@mui/icons-material/Person2';
               <LocalPhoneOutlined />
               {product.phoneNumber}
             </Typography>
-            <IconButton onClick={() => {
+            <IconButton
+              onClick={() => {
                 navigate(`/productUserPage/${product.userID}`);
-              }}>
-            <Person2Icon />
-          </IconButton>
+              }}
+            >
+              <Person2Icon />
+              <Typography>{username}</Typography>
+            </IconButton>
             <Box
               sx={{
                 fontWeight: "bold",
@@ -207,6 +225,5 @@ import Person2Icon from '@mui/icons-material/Person2';
       </Card>
     </Box>
   );
-           
 };
 export default ProductDetails;
