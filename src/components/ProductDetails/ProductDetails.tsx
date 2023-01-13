@@ -110,7 +110,7 @@ const ProductDetails = ({product}: {product: any}) => {
                   }}
                   variant="contained"
                   onClick={() => {
-                    createNotification(product.id).then(() => {
+                    createNotification(product).then(() => {
                       console.log("Create Notification done");
                     });
                   }}
@@ -205,6 +205,11 @@ const ProductDetails = ({product}: {product: any}) => {
                 padding: "6px 40px",
               }}
               variant="contained"
+              onClick={() => {
+                createNotification(product).then(() => {
+                  console.log("Create Notification done");
+                });
+              }}
             >
               REQUEST RENTAL
             </Button>
@@ -212,11 +217,6 @@ const ProductDetails = ({product}: {product: any}) => {
               size="medium"
               sx={{color: "white", background: "#F06A6A"}}
               variant="contained"
-              onClick={() => {
-                createNotification(product.id).then(() => {
-                  console.log("Create Notification done");
-                });
-              }}
             >
               REPORT
             </Button>

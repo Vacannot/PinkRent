@@ -43,7 +43,7 @@ interface context {
   getCategories: () => Promise<any[]>;
   getProducts: () => Promise<any[]>;
   getName: (userid: string) => Promise<any>;
-  createNotification: (productID: string) => Promise<void>;
+  createNotification: (product: string) => Promise<void>;
   createProduct: (productValues: any) => Promise<void>;
   currentUser?: User;
   filter: string | null;
@@ -137,15 +137,18 @@ export function AuthProvider(props: any) {
 
   const createNotification = async (product: any) => {
     const notificationCol = collection(db, "notifications");
+
     let unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-        addDoc(notificationCol, {
-          requester: user.displayName,
-          productID: product.id,
-          productOwnerID: product.userID,
-          accepted: false,
-        }).finally(() => {
-          unsub();
+        getName(user.uid).then((name) => {
+          addDoc(notificationCol, {
+            requester: name,
+            productID: product.id,
+            productOwnerID: product.userID,
+            accepted: false,
+          }).finally(() => {
+            unsub();
+          });
         });
       } else {
         console.log("To request a product you need to be signed in");
