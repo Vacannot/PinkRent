@@ -140,16 +140,20 @@ export function AuthProvider(props: any) {
 
     let unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-        getName(user.uid).then((name) => {
-          addDoc(notificationCol, {
-            requester: name,
-            productID: product.id,
-            productOwnerID: product.userID,
-            accepted: false,
-          }).finally(() => {
-            unsub();
+        if (user.uid !== product.userID) {
+          getName(user.uid).then((name) => {
+            addDoc(notificationCol, {
+              requester: name,
+              productID: product.id,
+              productOwnerID: product.userID,
+              accepted: false,
+            }).finally(() => {
+              unsub();
+            });
           });
-        });
+        } else {
+          alert("Cant request your own product");
+        }
       } else {
         console.log("To request a product you need to be signed in");
       }

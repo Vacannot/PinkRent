@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import {Button, Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {collection, deleteDoc, getDocs, query, where} from "firebase/firestore";
+import {collection, deleteDoc, getDocs, query} from "firebase/firestore";
 import {db} from "../../backend/firebase";
 
 function ContactPageComponent() {
